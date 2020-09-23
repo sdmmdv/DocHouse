@@ -6,35 +6,36 @@ class Register extends Component {
             <form>
                 <h3>Sign up</h3>
 
-                <div className = "registerForm">
+                <div className = "form-group">
                     <label>
-                        First name
+                        First Name
+                    </label>
+                    <input type="text" className="form-control" placeholder="first name"/>
+                </div>
+
+                <div className = "form-group">
+                    <label>
+                        Last Name
+                    </label>
+                    <input type="text" className="form-control" placeholder="last name"/>
+                </div>
+
+                <div className = "form-group">
+                    <label>
+                        E-mail Address
                     </label>
                     <input type="text" className="form-control" placeholder="e-mail"/>
                 </div>
 
-                <div className = "registerForm">
-                    <label>
-                        Last name
-                    </label>
-                    <input type="text" className="form-control" placeholder="e-mail"/>
-                </div>
-
-                <div className = "registerForm">
-                    <label>
-                        E-mail address
-                    </label>
-                    <input type="text" className="form-control" placeholder="e-mail"/>
-                </div>
-
-                <div className = "registerForm">
+                <div className = "form-group">
                     <label>
                         Password
                     </label>
                     <input type="password" className="form-control" placeholder="password"/>
                 </div>
 
-                <button type="submit">Register</button>
+                <button className="btn btn-primary btn-block" type="submit">Register</button>
+                
                 
             </form>
         );

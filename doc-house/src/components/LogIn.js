@@ -6,21 +6,21 @@ class LogIn extends Component {
             <form>
                 <h3>Sign in</h3>
 
-                <div className = "logInForm">
+                <div className = "form-group">
                     <label>
                         E-mail address
                     </label>
                     <input type="email" className="form-control" placeholder="e-mail"/>
                 </div>
 
-                <div className = "logInForm">
+                <div className = "form-group">
                     <label>
                         Password
                     </label>
                     <input type="password" className="form-control" placeholder="password"/>
                 </div>
 
-                <button type="submit">Login</button>
+                <button className="btn btn-primary btn-block" type="submit">Login</button>
                 
             </form>
         );
