@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './styles.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import LogIn from './components/LogIn';
 import Register from './components/Register';

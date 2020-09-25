@@ -1,0 +1,134 @@
+/* body {
+    background: #0e101c;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+  } */
+
+  body {
+    background: #1C8EF9 !important;
+    min-height: 100vh;
+    display: flex;
+    font-weight: 400;
+    font-family: 'Noto Sans', sans-serif;
+  }
+  
+  form {
+    background: #dddddd;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  h1,h2,h4,h5,h6,label,span {
+    font-weight: 500;
+    font-family: 'Noto Sans', sans-serif;
+  }
+
+  h3 {
+      text-align: center;
+      font-weight: 500;
+      font-family: 'Noto Sans', sans-serif;
+  }
+
+  /* label {
+    line-height: 2;
+    text-align: left;
+    display: block;
+    margin-bottom: 13px;
+    margin-top: 20px;
+    color: white;
+    font-size: 14px;
+    font-weight: 200;
+  } */
+  
+  p {
+    color: #bf1650;
+  }
+  
+  p::before {
+    display: inline;
+    content: "⚠ ";
+  }
+  
+  input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid white;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  button[type="submit"],
+  input[type="submit"] {
+    background: #66b1f7;
+    color: white;
+    text-transform: uppercase;
+    /* border: none; */
+    margin-top: 40px;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 100;
+    letter-spacing: 1px;
+    border: 1px solid #0e0d0a;
+    border-radius: 10px;
+}
+  
+ 
+  button[type="submit"]:hover,
+  input[type="submit"]:hover {
+    background: #4CAF50;
+  }
+  
+  
+  input:disabled {
+    opacity: 0.4;
+  }
+  
+  input[type="button"]:hover {
+    transition: 0.3s all;
+  }
+
+  
+  button[type="submit"],
+  input[type="button"],
+  input[type="submit"] {
+    -webkit-appearance: none;
+  }
+  
+  
+  hr {
+    margin-top: 30px;
+  }
+  
+  .navbar-light {
+    background-color: #dddddd;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  }
+
+   .auth-wrapper {
+    display: auto;
+    margin-top: 150px;
+    /* justify-content: center;
+    flex-direction: column;
+    text-align: left; */
+  }
+
+  .auth-inner {
+    width: 450px;
+    margin: auto;
+    background: #dddddd;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px 55px 45px 55px;
+    border-radius: 15px;
+    transition: all .3s;
+  }
+
+  body, html, .App, #root, .auth-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+
+  
