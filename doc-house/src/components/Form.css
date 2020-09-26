@@ -1,51 +1,33 @@
-/* body {
-    background: #0e101c;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-      sans-serif;
-  } */
-
-  body {
-    background: #1C8EF9 !important;
+ .auth-inner body {
+    background: #1C8EF9;
     min-height: 100vh;
     display: flex;
     font-weight: 400;
     font-family: 'Noto Sans', sans-serif;
   }
   
-  form {
+.auth-inner  form {
     background: #dddddd;
     max-width: 400px;
     margin: 0 auto;
   }
 
-  h1,h2,h4,h5,h6,label,span {
+  .auth-wrapper h1,h2,h4,h5,h6,label,span {
     font-weight: 500;
     font-family: 'Noto Sans', sans-serif;
   }
 
-  h3 {
+  .auth-wrapper  h3 {
       text-align: center;
       font-weight: 500;
       font-family: 'Noto Sans', sans-serif;
   }
-
-  /* label {
-    line-height: 2;
-    text-align: left;
-    display: block;
-    margin-bottom: 13px;
-    margin-top: 20px;
-    color: white;
-    font-size: 14px;
-    font-weight: 200;
-  } */
   
-  p {
+  .auth-wrapper p {
     color: #bf1650;
   }
   
-  p::before {
+  .auth-wrapper p::before {
     display: inline;
     content: "⚠ ";
   }
@@ -126,9 +108,9 @@
     transition: all .3s;
   }
 
-  body, html, .App, #root, .auth-wrapper {
+  /* body, html, .App, #root, .auth-wrapper {
     width: 100%;
     height: 100%;
-  }
+  } */
 
   

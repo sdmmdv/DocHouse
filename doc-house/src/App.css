@@ -1,5 +1,20 @@
-.App {
+body {
+  background: #1C8EF9 !important;
+}
+
+p {
+  align-content: center;
+  margin: auto;
+}
+
+ .App {
   text-align: center;
+  font-family: monospace;
+}
+
+.App-logo {
+  height: 180px;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -16,11 +31,11 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #ffffff;
+  color: white;
 }
 
 .App-link {
-  color: #ffffff;
+  color: #61dafb;
 }
 
 @keyframes App-logo-spin {
@@ -30,80 +45,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.navbar-light {
-  background-color: #dddddd;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-}
-
-body {
-  background: #1C8EF9 !important;
-  min-height: 100vh;
-  display: flex;
-  font-weight: 400;
-  font-family: 'Noto Sans', sans-serif;
-}
-
-.auth-wrapper {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: left;
-}
-
-.auth-inner {
-  width: 450px;
-  margin: auto;
-  background: #dddddd;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  padding: 40px 55px 45px 55px;
-  border-radius: 15px;
-  transition: all .3s;
-}
-
-.auth-wrapper .form-control:focus {
-  border-color: #167bff;
-  box-shadow: auto;
-}
-
-.auth-wrapper .form-control:focus {
-  border-color: #167bff;
-  box-shadow: auto;
-}
-
-.auth-wrapper h3 {
-  text-align: center;
-  margin: 0;
-  line-height: 1;
-  padding-bottom: 20px;
-}
-
-button {
-  display: block;
-  appearance: none;
-  margin-top: 40px;
-  border: 1px solid #333;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  border-radius: 4px;
-}
- 
-/* * {
-  box-sizing: border-box;
-} */
-
-h1,h2,h3,h4,h5,h6,label,span {
-  font-weight: 500;
-  font-family: 'Noto Sans', sans-serif;
-}
-
-body, html, .App, #root, .auth-wrapper {
-  width: 100%;
-  height: 100%;
-}
-
-.custom-control-label {
-  font-weight: 400;
 }
