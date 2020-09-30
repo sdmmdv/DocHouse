@@ -1,16 +1,9 @@
-body {
-  background: #1C8EF9 !important;
-}
-
-p {
-  align-content: center;
-  margin: auto;
-}
-
  .App {
   text-align: center;
   font-family: monospace;
+  background: #1C8EF9 !important;
 }
+
 
 .App-logo {
   height: 180px;
@@ -46,3 +39,4 @@ p {
     transform: rotate(360deg);
   }
 }
+

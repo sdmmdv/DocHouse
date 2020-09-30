@@ -26,7 +26,7 @@
   .auth-wrapper p {
     color: #bf1650;
   }
-  
+
   .auth-wrapper p::before {
     display: inline;
     content: "⚠ ";

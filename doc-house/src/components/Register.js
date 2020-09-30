@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import _ from "lodash/fp";
+import { Link, BrowserRouter as Router} from "react-router-dom";
 import './Form.css';
 
 const Register = (props) => {
@@ -108,6 +109,7 @@ const Register = (props) => {
                         <input type="submit" value="Register" />
                         
                     </form>
+                    <Link className="Link" to='/login' style={{ color: 'blue'}}>Already have an account? Log in here. </Link>
                 </div>
             </div>
     );
