@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link, BrowserRouter as Router} from "react-router-dom";
 import _ from "lodash/fp";
 import './Form.css';
+import loginRequest from '../requests/loginRequest';
 
 const LogIn = (props) => {
 
@@ -11,8 +12,30 @@ const LogIn = (props) => {
 
     const onSubmit = data => {
         alert(JSON.stringify(data));
+        loginRequest(data).then(res => {
+            if(res){
+                if(res.token){
+        
+                  window.$token = res.token;
+                  window.$userId = res.userId;
+                  
+                  profileRequest(window.$userId).then(res => {
+                    window.$fName = res.firstName;
+                    window.$lName = res.lastName;
+                    window.$email = res.email;
+                    window.$phone = res.phone;
+          
+                    this.props.history.push("/user-profile")
+                  })
+                }
+              }
+        });
+
+        //props.history.push('/user');
     };
-        console.log("hey")
+
+
+        // console.log("hey")
         return (
             <div className="auth-wrapper">
                 <div className = "auth-inner">
@@ -29,7 +52,7 @@ const LogIn = (props) => {
                             required: true,
                             pattern: /^\S+@\S+$/i,
                             })}
-                            placeholder="e-mail"
+                            placeholder="e-mail@mail.com"
                         />
                         {_.get("email.type", errors) === "required" && (
                                 <p>This field is required!</p>
@@ -59,7 +82,7 @@ const LogIn = (props) => {
                     </div>
                     <input type="submit" value="Login" />                
                     </form>
-                    <Link className="Link" to='/register' style={{ color: 'blue'}}>Don't have an account? Sign up here. </Link>
+                    <Link className="Link" to='/login-transition' style={{ color: 'blue'}}>Don't have an account? Sign up here. </Link>
                 </div>
             </div>
         

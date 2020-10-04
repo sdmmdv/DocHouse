@@ -4,17 +4,21 @@ import { useForm } from 'react-hook-form';
 import _ from "lodash/fp";
 import { Link, BrowserRouter as Router} from "react-router-dom";
 import './Form.css';
+import patientRegisterRequest from '../requests/patientRegisterRequest';
 
-const Register = (props) => {
+const RegisterPatient = (props) => {
 
     const { register, handleSubmit, watch, errors } = useForm();
 
     const onSubmit = data => {
-        alert(JSON.stringify(data));
-        axios.post('http://localhost:9000/users/add', data)
-        .then(res => console.log(res.data));
-        props.history.push('/user');
-    };
+        // alert(JSON.stringify(data));
+        // axios.post('http://localhost:9000/users/add', data)
+        patientRegisterRequest(data).then(res => {
+            console.log(data);
+            // console.log(email,password,firstName,lastName);
+        });
+        props.history.push('/login');
+    }
 
     return (
         <div className="auth-wrapper">
@@ -115,4 +119,4 @@ const Register = (props) => {
     );
 }
 
-export default Register;
+export default RegisterPatient;
