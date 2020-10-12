@@ -3,8 +3,10 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Link, BrowserRouter as Router} from "react-router-dom";
 import _ from "lodash/fp";
-import './Form.css';
 import loginRequest from '../requests/loginRequest';
+import getPatientProfileRequest from '../requests/getPatientProfileRequest';
+import getDoctorProfileRequest from '../requests/getDoctorProfileRequest';
+
 
 const LogIn = (props) => {
 
@@ -19,7 +21,7 @@ const LogIn = (props) => {
                   window.$token = res.token;
                   window.$userId = res.userId;
                   
-                  profileRequest(window.$userId).then(res => {
+                  getPatientProfileRequest(window.$userId).then(res => {
                     window.$fName = res.firstName;
                     window.$lName = res.lastName;
                     window.$email = res.email;
@@ -82,7 +84,7 @@ const LogIn = (props) => {
                     </div>
                     <input type="submit" value="Login" />                
                     </form>
-                    <Link className="Link" to='/login-transition' style={{ color: 'blue'}}>Don't have an account? Sign up here. </Link>
+                    <Link className="Link" to='/log-transition' style={{ color: 'blue'}}>Don't have an account? Sign up here. </Link>
                 </div>
             </div>
         

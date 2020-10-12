@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const loginRequest = (email, password) => {
+const loginRequest = (data) => {
     return axios({
     method: 'post',
     url: 'http://localhost:9000/users/add',

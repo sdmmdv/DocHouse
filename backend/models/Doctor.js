@@ -5,26 +5,31 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: true,
         min: 2,
-        max: 127
+        max: 255
     },
     last_name: {
         type: String,
         required: true,
         min: 2,
-        max: 127
+        max: 255
+    },
+    phone_number: {
+        type: String,
+        required: true,
+        max: 16
     },
     email: {
         type: String,
         required: true,
-        min: 6,
-        max: 255
+        unique: true,
+        match: /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
     },
     password: {
         type: String,
         required: true,
         trim: true,
         min: 6,
-        max: 1024
+        max: 255
     },
     date: {
         type: Date,
