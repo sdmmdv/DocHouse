@@ -14,6 +14,7 @@ import validateSignupDoctor from '../validation/validateSignUpDoctor';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 
 
@@ -121,7 +122,7 @@ class SignUpPageDoctor extends Component {
     else {
 
       try {
-        const SignupRes = await axios.post(
+        await axios.post(
           "http://localhost:5000/doctors/signup", doctor
         );
         this.setState({
@@ -143,10 +144,10 @@ class SignUpPageDoctor extends Component {
   render() {
     const { classes } = this.props;
     const { errors, successPage } = this.state;
-    console.log(errors);
 
     return (
       <React.Fragment>
+        <Navbar/>
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>

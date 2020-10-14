@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Menu, MenuItem, IconButton, FontIcon, AccessibleFakeButton, IconSeparator, Avatar} from 'react-mdl';
-import { Link, BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import '../App.css';
+import Navbar from './Navbar';
 
 class About extends Component {
     constructor(props) {
@@ -10,7 +8,12 @@ class About extends Component {
     }
     render() { 
         return ( 
-            <div><h1>About Page</h1></div>
+            <div>
+                <Navbar/>
+                <h1>
+                    About Page
+                </h1>
+            </div>
          );
     }
 }

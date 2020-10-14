@@ -7,13 +7,22 @@ const User = require('../models/User');
 const router = new express.Router();
 
 // Get all users
-router.get('/', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json(users);
-  }catch{
-    return res.status(500).json({ err });
-  }
+// router.get('/', async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     res.status(200).json(users);
+//   }catch{
+//     return res.status(500).json({ err });
+//   }
+// });
+
+// Get logged in user
+router.get("/", auth, async (req, res) => {
+  const user = await User.findById(req.user);
+  res.json({
+    displayName: user.displayName,
+    id: user._id,
+  });
 });
 
 // Sign up a user

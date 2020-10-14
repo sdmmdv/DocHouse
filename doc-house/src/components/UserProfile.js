@@ -14,7 +14,7 @@
  
 // export default UserProfile;
 import React, { Component } from 'react';
-import { Grid, Cell, Icon, FontIcon } from 'react-mdl';
+import { Grid, Cell, Icon} from 'react-mdl';
 import '../App.css';
 // import Education from './education';
 // import Experience from './experience';

@@ -14,6 +14,7 @@ import validateSignupUser from '../validation/validateSignupUser';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 
 
@@ -114,7 +115,7 @@ class SignUpPageUser extends Component {
     else {
 
       try {
-        const SignupRes = await axios.post(
+        await axios.post(
           "http://localhost:5000/users/signup", user
         );
         this.setState({
@@ -140,6 +141,7 @@ class SignUpPageUser extends Component {
 
     return (
       <React.Fragment>
+        <Navbar/>
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>

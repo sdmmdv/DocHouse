@@ -6,10 +6,8 @@ import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+      <App/>
+  ,document.getElementById('root')
 );
 
 serviceWorker.unregister();

@@ -15,6 +15,7 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import UserContext from '../context/userContext';
 import ValidateLogin from '../validation/validateLogin';
+import Navbar from '../components/Navbar';
 
 const formLabelsTheme = createMuiTheme({
   overrides: {
@@ -140,6 +141,7 @@ class LoginPageUser extends Component {
 
     return (
       <React.Fragment>
+        <Navbar/>
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>

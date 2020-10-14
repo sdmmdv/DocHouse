@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component,useEffect, useState, useContext} from "react";
+import Navbar from '../components/Navbar';
 
 class HomePage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  }
-    }
     render() { 
-        return ( 
-            <div><h1>Home Page</h1></div>
-         );
+        return (  
+            <div><Navbar/>
+                <h1>Home Page</h1>
+            </div>
+        );
     }
 }
  

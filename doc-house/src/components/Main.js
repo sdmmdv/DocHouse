@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import {Router,withRouter, Switch, Route } from 'react-router-dom';
+import { createBrowserHistory } from "history";
 import About from './About';
 import Contact from './Contact';
 import Projects from './Projects';
@@ -10,8 +11,11 @@ import HomePage from './Homepage';
 import UserProfile from './UserProfile';
 import SignUpPageUser from './SignUpPageUser';
 import SignUpPageDoctor from './SignUpPageDoctor';
+import NotFound404 from './NotFound';
 
-const Main = () => (
+export const history = createBrowserHistory();
+
+const Root = () => (
   <Switch>
     <Route exact path="/" component={HomePage}/>
     <Route path="/about" component={About}/>
@@ -23,7 +27,16 @@ const Main = () => (
     <Route path="/login-user" component={LoginPageUser}/>
     <Route path="/login-doctor" component={LoginPageDoctor}/>
     <Route path="/user-profile" component={UserProfile}/>
+    <Route component={NotFound404}/>
   </Switch>
+)
+
+const App = withRouter(Root)
+
+const Main = () => (
+  <Router history={history}>
+    <App/>
+  </Router>
 )
 
 export default Main;

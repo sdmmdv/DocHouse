@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Navbar from './Navbar';
 
 const styles = theme => ({
   layout: {
@@ -48,6 +49,7 @@ class LogTransition extends Component {
 
         return ( 
       <React.Fragment>
+        <Navbar/>
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>

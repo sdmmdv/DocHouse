@@ -15,6 +15,7 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import UserContext from '../context/userContext';
 import ValidateLogin from '../validation/validateLogin';
+import Navbar from '../components/Navbar';
 
 
 const formLabelsTheme = createMuiTheme({
@@ -99,7 +100,6 @@ class LoginPageDoctor extends Component {
 
     //client side error check
     const { errors, isValid } = ValidateLogin(loginDoctor);
-    console.log(errors, isValid);
     //return login validation errors
     if (!isValid) {
       this.setState({errors: errors})
@@ -147,6 +147,7 @@ class LoginPageDoctor extends Component {
 
     return (
       <React.Fragment>
+        <Navbar/>
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
