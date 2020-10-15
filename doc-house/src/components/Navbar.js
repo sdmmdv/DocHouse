@@ -63,7 +63,8 @@ class Navbar extends Component {
         left: false,
         anchorEl: null,
         token: undefined,
-        user: undefined
+        user: undefined,
+        type: undefined
     };
 
 
@@ -76,7 +77,6 @@ class Navbar extends Component {
       };
 
       checkAuth = () => {
-            console.log('In checkAuth');
             let token = localStorage.getItem("auth-token");
             if (token === null) {
             localStorage.setItem("auth-token", "");
@@ -87,6 +87,17 @@ class Navbar extends Component {
             });
         };
 
+      checkUserType = async () => {
+        let token = localStorage.getItem("auth-token");
+        const tokenRes = await axios.post(
+                  "http://localhost:5000/general/tokenIsValid",
+                    null,
+                  { headers: { "x-auth-token": token } }
+        );
+          this.setState({
+            type: tokenRes.data.type
+        });
+      };
 
         // synchronized authentication make component render delay!
         // ************************************************
@@ -131,6 +142,7 @@ class Navbar extends Component {
       componentDidMount(){
         this.setState({ loading: true });
         this.checkAuth();
+        this.checkUserType();
         setTimeout(() => {
             this.setState({ loading: false });
         }, 500); 
@@ -138,8 +150,7 @@ class Navbar extends Component {
       }
 
   render() {
-    console.log('render');
-    const { left } = this.state;
+    const { left,type} = this.state;
     const { classes, logoutUser, user} = this.props;
     const { anchorEl } = this.state;
     return (
@@ -169,6 +180,20 @@ class Navbar extends Component {
                                     <ListItemText primary="Home"/>
                                 </ListItem>
                                 </Link>
+                                {type === 'user' && 
+                                <Link className={classes.list} to="/user-profile">
+                                <ListItem button>
+                                    <ListItemText primary="Profile"/>
+                                </ListItem>
+                                </Link> }
+
+                                {type === 'doctor' &&
+                                <Link className={classes.list} to="/doctor-profile"> 
+                                <ListItem button>
+                                    <ListItemText primary="Profile"/>
+                                </ListItem>
+                                </Link>}
+
                                 <Link className={classes.list} to="/contact">
                                 <ListItem button>
                                     <ListItemText primary="Contact" />

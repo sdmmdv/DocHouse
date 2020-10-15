@@ -9,6 +9,7 @@ import LoginPageDoctor from './LoginPageDoctor';
 import LogTransition from './LogTransition';
 import HomePage from './Homepage';
 import UserProfile from './UserProfile';
+import DoctorProfile from './DoctorProfile';
 import SignUpPageUser from './SignUpPageUser';
 import SignUpPageDoctor from './SignUpPageDoctor';
 import NotFound404 from './NotFound';
@@ -27,6 +28,7 @@ const Root = () => (
     <Route path="/login-user" component={LoginPageUser}/>
     <Route path="/login-doctor" component={LoginPageDoctor}/>
     <Route path="/user-profile" component={UserProfile}/>
+    <Route path="/doctor-profile" component={DoctorProfile}/>
     <Route component={NotFound404}/>
   </Switch>
 )

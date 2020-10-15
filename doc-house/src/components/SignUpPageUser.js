@@ -137,7 +137,6 @@ class SignUpPageUser extends Component {
   render() {
     const { classes } = this.props;
     const { errors, successPage } = this.state;
-    console.log(errors);
 
     return (
       <React.Fragment>
