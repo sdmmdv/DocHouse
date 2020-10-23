@@ -143,7 +143,6 @@ class LoginPageDoctor extends Component {
   render() {
     const { classes } = this.props;
     const { errors } = this.state;
-    console.log(this.state)
 
     return (
       <React.Fragment>

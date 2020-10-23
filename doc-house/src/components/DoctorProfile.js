@@ -76,7 +76,8 @@ class DoctorProfile extends Component {
             </div>
             {doctor ? 
                     (<div >
-                        <h2 className={classes.topHeader}>{doctor.first_name} {doctor.last_name}</h2>
+                        <h2 className={classes.topHeader}>Dr. {doctor.first_name} {doctor.last_name}</h2>
+                        <h3 >{doctor.speciality}</h3>
                         <h5 >Bio <Icon name="portrait"/></h5>
                         <hr className={classes.divider}/>
                           <p>{doctor.bio}</p>

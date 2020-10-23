@@ -13,6 +13,8 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import validateSignupDoctor from '../validation/validateSignUpDoctor';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
@@ -35,6 +37,40 @@ const formLabelsTheme = createMuiTheme({
     },
 },
 })
+
+const specs = [
+  'Acupuncturist','Allergist (Immunologist)','Audiologist',
+  'Cardiologist (Heart Doctor)','Cardiothoracic Surgeon','Chiropractor','Colorectal Surgeon',
+  'Dentist','Dermatologist','Dietitian / Nutritionist','Diabetes Specialist',
+  'Ear, Nose & Throat Doctor (ENT)','Endocrinologist','Eye Doctor',
+  'Gastroenterologist','Geriatrician',
+  'Hearing Specialist','Headache Specialists','Hematologist (Blood Specialist)',
+  'Infectious Disease Specialist','Infertility Specialist',
+  'Midwife','Naturopathic Doctor','Nephrologist (Kidney Specialist)',
+  'Neurologist','Neurosurgeon',
+  'OB-GYN (Obstetrician-Gynecologist)','Oncologist','Ophthalmologist','Optometrist','Oral Surgeon','Orthodontist','Orthopedic Surgeon (Orthopedist)',
+  'Pain Management Specialist','Pediatric Dentist','Pediatrician','Physiatrist (Physical Medicine)','Physical Therapist',
+  'Plastic Surgeon','Podiatrist (Foot and Ankle Specialist)','Primary Care Physician (PCP)','Prosthodontist','Psychiatrist',
+  'Psychologist','Pulmonologist (Lung Doctor)',
+  'Radiologist','Rheumatologist',
+  'Sleep Medicine Specialist','Sports Medicine Specialist','Surgeon',
+  'Therapist / Counselor',
+  'Urgent Care Specialist','Urological Surgeon','Urologist',
+  'Vascular Surgeon',
+  'Other'
+];
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 
 const styles = theme => ({
   layout: {
@@ -89,6 +125,7 @@ class SignUpPageDoctor extends Component {
     first_name: '',
     last_name: '',
     email: '',
+    speciality: '',
     password: '',
     passwordConfirm: '',
     errors: {},
@@ -102,12 +139,13 @@ class SignUpPageDoctor extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { first_name, last_name, phone_number, email, password, passwordConfirm } = this.state;
+    const { first_name, last_name, phone_number, email,speciality, password, passwordConfirm } = this.state;
     const doctor = {
       first_name,
       last_name,
       phone_number,
       email,
+      speciality,
       password,
       passwordConfirm
     };
@@ -207,6 +245,25 @@ class SignUpPageDoctor extends Component {
                 />
                 <span className={classes.errorText}>{errors.email}</span>
               </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                    <InputLabel id="demo-mutiple-name-label">Speciality</InputLabel>
+                    <Select 
+                    labelId="demo-mutiple-name-label"
+                    id="demo-mutiple-name"
+                    name="speciality"
+                    onChange={this.handleInputChange}
+                    value={this.state.speciality}
+                    error={!!errors.speciality}
+                    MenuProps={MenuProps}
+                    >
+                    {specs.map((spec) => (
+                        <MenuItem key={spec} value={spec}>
+                        {spec}
+                        </MenuItem>
+                    ))}
+                    </Select>
+                    <span className={classes.errorText}>{errors.speciality}</span>
+                </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input

@@ -209,6 +209,12 @@ class Navbar extends Component {
                                     <ListItemText primary="Projects" />
                                 </ListItem>
                                 </Link>
+                                {type === 'user' && 
+                                <Link className={classes.list} to="/search-doctor">
+                                <ListItem button>
+                                    <ListItemText primary="Search Doctor" />
+                                </ListItem>
+                                </Link>}
                         </List>
                     </div>
                 </div>
