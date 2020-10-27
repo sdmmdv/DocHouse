@@ -14,6 +14,7 @@ import SignUpPageUser from './SignUpPageUser';
 import SignUpPageDoctor from './SignUpPageDoctor';
 import NotFound404 from './NotFound';
 import SearchDoctor from './SearchDoctor';
+import ViewProfile from './ViewProfile';
 
 export const history = createBrowserHistory();
 
@@ -30,6 +31,7 @@ const Root = () => (
     <Route path="/login-doctor" component={LoginPageDoctor}/>
     <Route path="/user-profile" component={UserProfile}/>
     <Route path="/doctor-profile" component={DoctorProfile}/>
+    <Route path="/profile/:id" component={ViewProfile}/>
     <Route path="/search-doctor" component={SearchDoctor}/>
     <Route component={NotFound404}/>
   </Switch>

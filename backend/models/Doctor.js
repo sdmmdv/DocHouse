@@ -24,12 +24,24 @@ const doctorSchema = new mongoose.Schema({
         unique: true,
         match: /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
     },
+    speciality: {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
         required: true,
         trim: true,
         min: 6,
         max: 255
+    },
+    bio: {
+        type: String,
+        default: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley oftype and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'
+    },
+    web: {
+        type: String,
+        default: 'www.web.com'
     },
     date: {
         type: Date,

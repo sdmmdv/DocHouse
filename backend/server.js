@@ -31,13 +31,16 @@ connection.once('open', () => {
     console.log('Success! Connected to MongoDB!')
 });
 
+const generalRouter = require('./routes/generalRoute');
 const usersRouter = require('./routes/userRoute');
 const doctorsRouter = require('./routes/doctorRoute');
-const generalRouter = require('./routes/generalRoute');
+const requestsRouter = require('./routes/requestRoute');
 
+app.use('/general', generalRouter);
 app.use('/users',usersRouter);
 app.use('/doctors', doctorsRouter);
-app.use('/general', generalRouter);
+app.use('/requests', requestsRouter);
+
 
 
 app.listen(port,() => {

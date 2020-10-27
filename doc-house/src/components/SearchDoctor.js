@@ -50,6 +50,7 @@ const styles = theme => ({
   },
 
   notFound: {
+    marginTop: '100px',
     marginBottom: '50px',
     margin: 'auto',
     display: 'flex',
@@ -60,16 +61,6 @@ const styles = theme => ({
     transform: 'translate(0%, 250%)',
     boxShadow: theme.shadows[3],
     backgroundColor: 'theme.palette.background.paper'
-
-    // display: 'flex',
-    // marginBottom: '100px',
-    // padding: theme.spacing(2),
-    // margin: 'auto',
-    // maxWidth: 800,
-    // flexDirection: 'column',
-    // backgroundColor: 'theme.palette.background.paper',
-    // boxShadow: theme.shadows[5],
-    // transform: 'translate(0%, 250%)',
   },
   img: {
     width: 128,
@@ -237,6 +228,7 @@ class SearchDoctor extends Component {
                 type="submit"
                 variant="contained"
                 color="primary"
+                href={`/profile/${doctor._id}`}
               >
                 View profile
               </Button>

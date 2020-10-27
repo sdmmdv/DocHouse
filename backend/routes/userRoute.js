@@ -17,11 +17,15 @@ const router = new express.Router();
 // });
 
 // Get logged in user
-router.get("/", auth, async (req, res) => {
+router.get("/current-user", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({
-    displayName: user.displayName,
     id: user._id,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    email: user.email,
+    bio: user.bio,
+    web: user.web
   });
 });
 
@@ -70,7 +74,7 @@ router.post('/login', async (req, res) => {
     }
 
     //Assign token for 2 hours session
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id,email: user.email}, process.env.JWT_SECRET);
     res.json({
       token,
       user: {
@@ -166,6 +170,7 @@ router.post("/tokenIsValid", async (req, res) => {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     if (!verified) return res.json(false);
 
+    //this point you have to make sure if user is USER/ or DOCTOR
     const user = await User.findById(verified.id);
     if (!user) return res.json(false);
 

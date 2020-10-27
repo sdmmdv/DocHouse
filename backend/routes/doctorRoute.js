@@ -4,6 +4,8 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const Doctor = require('../models/Doctor');
+const User = require('../models/User');
+const ObjectId = require('mongodb').ObjectID;
 
 
 // Sign up a Doctor
@@ -23,6 +25,7 @@ router.post('/signup', async (req, res) => {
         last_name: req.body.last_name,
         phone_number: req.body.phone_number,
         email: req.body.email,
+        speciality: req.body.speciality,
         password: hashedPass
       });
 
@@ -51,7 +54,7 @@ router.post('/login', async (req, res) => {
     }
 
     //Assign token for 2 hours session
-    const token = jwt.sign({ id: doctor._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: doctor._id,email: doctor.email}, process.env.JWT_SECRET);
     res.json({
       token,
       doctor: {
@@ -64,6 +67,65 @@ router.post('/login', async (req, res) => {
     });
   }catch (err) {
     return res.status(500).json(err);
+  }
+});
+
+
+// Get logged in doctor
+router.get("/current-doctor", auth, async (req, res) => {
+  const doctor = await Doctor.findById(req.user);
+  res.json({
+    id: doctor._id,
+    first_name: doctor.first_name,
+    last_name: doctor.last_name,
+    phone_number: doctor.phone_number,
+    email: doctor.email,
+    speciality: doctor.speciality,
+    bio: doctor.bio,
+    web: doctor.web
+  });
+});
+
+// Get a doctor by ID
+router.get('/:id',auth, async (req, res) => {
+  const {id} = req.params;
+  try {
+    const doctor = await Doctor.findById(id);
+    if (doctor) {
+      res.status(200).json(doctor);
+    } else {
+      res.status(404).json({ message: 'Doctor has been not found!' });
+    }
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+});
+
+
+// Get all the doctors
+// based on received query
+router.get('/', auth, async (req, res) => {
+  //receive query from get request
+  try{
+  const doctors = await Doctor.find({
+                                      $and: [
+                                              {},
+                                              {
+                                                $and: [{
+                                                    $or: [
+                                                    {first_name: {$regex: req.query.condition_docname,$options: "$i"}},
+                                                    {last_name: {$regex: req.query.condition_docname,$options: "$i"}},
+                                                    {speciality: {$regex: req.query.condition_docname,$options: "$i"}},
+                                                    {bio: {$regex: req.query.condition_docname,$options: "$i"}}
+                                                    ]},
+                                                    {address: {$regex: req.query.city_region,$options: "$i"}}
+                                                  ]
+                                              }
+                                            ]
+                                   })
+  res.status(200).json(doctors);}
+  catch (err) {
+    res.status(500).json({ err });
   }
 });
 
