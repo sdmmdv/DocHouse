@@ -17,6 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+import Specs from '../assets/specialities';
 
 
 
@@ -37,28 +38,6 @@ const formLabelsTheme = createMuiTheme({
     },
 },
 })
-
-const specs = [
-  'Acupuncturist','Allergist (Immunologist)','Audiologist',
-  'Cardiologist (Heart Doctor)','Cardiothoracic Surgeon','Chiropractor','Colorectal Surgeon',
-  'Dentist','Dermatologist','Dietitian / Nutritionist','Diabetes Specialist',
-  'Ear, Nose & Throat Doctor (ENT)','Endocrinologist','Eye Doctor',
-  'Gastroenterologist','Geriatrician',
-  'Hearing Specialist','Headache Specialists','Hematologist (Blood Specialist)',
-  'Infectious Disease Specialist','Infertility Specialist',
-  'Midwife','Naturopathic Doctor','Nephrologist (Kidney Specialist)',
-  'Neurologist','Neurosurgeon',
-  'OB-GYN (Obstetrician-Gynecologist)','Oncologist','Ophthalmologist','Optometrist','Oral Surgeon','Orthodontist','Orthopedic Surgeon (Orthopedist)',
-  'Pain Management Specialist','Pediatric Dentist','Pediatrician','Physiatrist (Physical Medicine)','Physical Therapist',
-  'Plastic Surgeon','Podiatrist (Foot and Ankle Specialist)','Primary Care Physician (PCP)','Prosthodontist','Psychiatrist',
-  'Psychologist','Pulmonologist (Lung Doctor)',
-  'Radiologist','Rheumatologist',
-  'Sleep Medicine Specialist','Sports Medicine Specialist','Surgeon',
-  'Therapist / Counselor',
-  'Urgent Care Specialist','Urological Surgeon','Urologist',
-  'Vascular Surgeon',
-  'Other'
-];
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -256,7 +235,7 @@ class SignUpPageDoctor extends Component {
                     error={!!errors.speciality}
                     MenuProps={MenuProps}
                     >
-                    {specs.map((spec) => (
+                    {Specs.map((spec) => (
                         <MenuItem key={spec} value={spec}>
                         {spec}
                         </MenuItem>

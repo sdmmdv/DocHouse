@@ -22,6 +22,9 @@ import lime from '@material-ui/core/colors/lime';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Loading from './Loading';
 import TextField from '@material-ui/core/TextField';
+import ValidateRequest from '../validation/validateRequest';
+import validateRequest from '../validation/validateRequest';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 
 
@@ -89,6 +92,13 @@ const styles = theme => ({
   submit: {
     marginTop: theme.spacing(3)
   },
+  alert: {
+    color: theme.palette.success.main,
+    fontSize: '2.2rem',
+    "& .MuiAlert-icon": {
+      fontSize: '3rem'
+    }
+  },
   link: {
     textDecoration: 'none',
     color: theme.palette.success.main
@@ -97,15 +107,16 @@ const styles = theme => ({
     marginTop: theme.spacing(2)
   },
   errorText: {
-    color: '#4caf50',
+    color: '#D50000',
     marginTop: '5px'
-  }
+  },
 });
 
 
 class ViewProfile extends Component {
   state = {
     doctor: undefined,
+    errors: {},
     subject: '',
     explanation: '',
     time: '',
@@ -119,23 +130,37 @@ class ViewProfile extends Component {
   };
 
   handleSubmit = async (e) => {
-    // e.preventDefault();
-    // const { subject, explanation, time } = this.state;
-    // try {
-    //   const token = localStorage.getItem('auth-token');
-    //   // make appropriate search result
-    //   const result = await axios.get('http://localhost:5000/doctors/',
-    //     {headers: {"x-auth-token": token},
-    //     params: {'condition_docname': condition_docname, 'city_region': city_region}
-    //   });            
-      
-    //   this.setState({
-    //     doctors: result.data
-    //   });
-    //   this.setState({submitted: true})
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    e.preventDefault();
+    try{
+        const { subject, explanation, time } = this.state;
+        const token = localStorage.getItem('auth-token');
+        const userRes = await axios.get("http://localhost:5000/users/current-user", {
+          headers: { "x-auth-token": token },
+        });
+        console.log(this.state);
+        console.log(userRes.data);
+        const creator_id = userRes.data.id;
+        const receiver_id = this.props.location.pathname.split('/').pop();
+        const request = {creator_id, receiver_id, subject, explanation, time};
+
+        //client side Request check
+        const { errors, isValid } = validateRequest(request);
+        if (!isValid) {
+          this.setState({errors: errors})
+        }
+
+        else {
+          await axios.post(
+            "http://localhost:5000/requests/create-request", request,
+            {headers: { "x-auth-token": token },
+          }).then((res) => {
+            console.log("RESPONSE ==== : ", res);
+          }); 
+          this.setState({submitted: true});
+        }
+      } catch (err) {
+        console.log(err);
+      }
   };
 
   setDoctorProfile = async () => {
@@ -162,7 +187,7 @@ class ViewProfile extends Component {
 
   render() {
     const {classes} = this.props;
-    const {doctor} = this.state;
+    const {errors, doctor, submitted} = this.state;
     console.log(this.state);
     return(
       <div>
@@ -183,10 +208,6 @@ class ViewProfile extends Component {
                         <h5 >Bio <Icon name="portrait"/></h5>
                         <hr className={classes.divider}/>
                           <p>{doctor.bio}</p>
-                            {/* <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                                the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
-                                type and scrambled it to make a type specimen book. It has survived not only five centuries, but
-                                also the leap into electronic typesetting, remaining essentially unchanged.</p> */}
                         <hr className={classes.divider}/>
                         <h5>Phone <Icon name="phone"/></h5>
                             <p>{doctor.phone_number}</p>
@@ -202,7 +223,22 @@ class ViewProfile extends Component {
                     </div>) : <Loading/>}
           </Cell>
           <Cell col={6}>
-                <main className={classes.layout}>
+            {submitted ? 
+                (
+                      <Alert severity="success" className={classes.alert}>
+                          <AlertTitle className={classes.alert}>Success!</AlertTitle>
+                          <Typography variant="body1">Your appointment has been registered.</Typography>
+                          <Typography className={classes.footer} variant="body1">
+                            <NavLink to="/" className={classes.link}>
+                              {'Go back to homepage'}
+                            </NavLink>
+                          </Typography>
+                      </Alert>
+                )
+
+                :
+
+                (<main className={classes.layout}>
                 <Paper className={classes.paper}>
                     <Typography variant="h5">Make an appointment request</Typography>
                     <MuiThemeProvider theme={formLabelsTheme}>
@@ -214,7 +250,9 @@ class ViewProfile extends Component {
                             variant="outlined"
                             name="subject"
                             onChange={this.handleInputChange}
+                            error={!!errors.subject}
                             />
+                          <span className={classes.errorText}>{errors.subject}</span>
                     </FormControl>
                     <FormControl margin="normal" fullWidth>
                     <TextField
@@ -225,7 +263,9 @@ class ViewProfile extends Component {
                         variant="outlined"
                         name="explanation"
                         onChange={this.handleInputChange}
+                        error={!!errors.explanation}
                         />
+                        <span className={classes.errorText}>{errors.explanation}</span>
                     </FormControl>
                     <FormControl margin="normal" fullWidth>
                         <TextField
@@ -238,7 +278,9 @@ class ViewProfile extends Component {
                             }}
                             name="time"
                             onChange={this.handleInputChange}
+                            error={!!errors.time}
                         />
+                        <span className={classes.errorText}>{errors.time}</span>
                     </FormControl>
                     <Button
                         type="submit"
@@ -252,7 +294,7 @@ class ViewProfile extends Component {
                     </form>
                     </MuiThemeProvider>
                 </Paper>
-                </main>
+                </main>)}
           </Cell>
         </Grid>
       </div>
