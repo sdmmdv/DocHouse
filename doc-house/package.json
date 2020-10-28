@@ -19,6 +19,7 @@
     "react-mdl": "^2.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-swipeable-views": "^0.13.9",
     "react-user-profile": "^1.0.3",
     "react-with-styles": "^4.1.0",
     "styled-components": "^5.2.0",

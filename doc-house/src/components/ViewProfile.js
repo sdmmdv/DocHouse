@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import { Grid, Cell, Icon} from 'react-mdl';
 import axios from 'axios';
 import '../App.css';
@@ -192,7 +192,8 @@ class ViewProfile extends Component {
     return(
       <div>
         <Navbar/>
-        <Grid >
+        {doctor ? 
+        (<Grid >
           <Cell col={6}>
             <div style={{textAlign: 'center'}}>
               <img className="container-div"
@@ -201,8 +202,7 @@ class ViewProfile extends Component {
                 style={{height: '200px', margin: 'auto'}}
                  />
             </div>
-            {doctor ? 
-                    (<div >
+                    <div >
                         <h2 className={classes.topHeader}>Dr. {doctor.first_name} {doctor.last_name}</h2>
                         <h3 >{doctor.speciality}</h3>
                         <h5 >Bio <Icon name="portrait"/></h5>
@@ -220,12 +220,11 @@ class ViewProfile extends Component {
                         <hr className={classes.divider}/>
                         <h5>Web <Icon name="language"/></h5>
                             <p>somewebsite.com</p>
-                    </div>) : <Loading/>}
+                    </div>
           </Cell>
           <Cell col={6}>
             {submitted ? 
-                (
-                      <Alert severity="success" className={classes.alert}>
+                      (<Alert severity="success" className={classes.alert}>
                           <AlertTitle className={classes.alert}>Success!</AlertTitle>
                           <Typography variant="body1">Your appointment has been registered.</Typography>
                           <Typography className={classes.footer} variant="body1">
@@ -233,11 +232,8 @@ class ViewProfile extends Component {
                               {'Go back to homepage'}
                             </NavLink>
                           </Typography>
-                      </Alert>
-                )
-
-                :
-
+                      </Alert>)
+              :
                 (<main className={classes.layout}>
                 <Paper className={classes.paper}>
                     <Typography variant="h5">Make an appointment request</Typography>
@@ -296,7 +292,7 @@ class ViewProfile extends Component {
                 </Paper>
                 </main>)}
           </Cell>
-        </Grid>
+        </Grid>)  : (<Loading/>)}
       </div>
     )
   }

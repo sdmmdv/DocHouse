@@ -13,6 +13,7 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import validateSignupUser from '../validation/validateSignupUser';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
@@ -62,7 +63,8 @@ const styles = theme => ({
     marginTop: theme.spacing(3)
   },
   link: {
-    textDecoration: 'none'
+    textDecoration: 'none',
+    color: theme.palette.success.main
   },
   footer: {
     marginTop: theme.spacing(2)
@@ -149,9 +151,12 @@ class SignUpPageUser extends Component {
             </Avatar>
             <Typography variant="h5">Sign Up - User</Typography>
             {successPage && (
-              <NavLink to="/login" className={classes.successText}>
-                Successfull registration! Click here to log in.
-              </NavLink>
+              <Alert severity="success" className={classes.successText}>
+                <AlertTitle className={classes.link}>Successfull registration!</AlertTitle>
+                    <NavLink to="/log-transition" className={classes.link}>
+                      {'Click here to log in.'}
+                    </NavLink>
+              </Alert>
             )}
             <MuiThemeProvider theme={formLabelsTheme}>
             <form onSubmit={this.handleSubmit} noValidate>

@@ -18,6 +18,7 @@ import Select from '@material-ui/core/Select';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Specs from '../assets/specialities';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 
 
@@ -172,10 +173,13 @@ class SignUpPageDoctor extends Component {
               <LockIcon />
             </Avatar>
             <Typography variant="h5">Sign Up - Doctor</Typography>
-            {successPage && (
-              <NavLink to="/login" className={classes.successText}>
-                Successfull registration! Click here to log in.
-              </NavLink>
+            {successPage && (             
+              <Alert severity="success" className={classes.successText}>
+                <AlertTitle className={classes.link}>Successfull registration!</AlertTitle>
+                    <NavLink to="/log-transition" className={classes.link}>
+                      {'Click here to log in.'}
+                    </NavLink>
+              </Alert>
             )}
             <MuiThemeProvider theme={formLabelsTheme}>
             <form onSubmit={this.handleSubmit} noValidate>
