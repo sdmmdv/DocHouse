@@ -25,6 +25,7 @@ router.get("/current-user", auth, async (req, res) => {
     last_name: user.last_name,
     email: user.email,
     bio: user.bio,
+    address: user.address,
     web: user.web
   });
 });
@@ -109,54 +110,26 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Update a user's information
-router.patch('/:id', async (req, res) => {
+// Update User Information
+router.patch('/:id', auth, async (req, res) => {
   const { id } = req.params;
-
   try {
-    const user = await User.findOneAndUpdate(
-      { _id: id },
+    const user = await User.findOneAndUpdate({ _id: id},
       {
         $set: {
-          avatarColor: req.body.avatarColor,
-          bio: req.body.bio || '',
-          email: req.body.email,
-          first_name: req.body.first_name,
-          last_name: req.body.last_name,
-          showEmail: req.body.showEmail
+          bio: req.body.bio,
+          address: req.body.address,
+          web: req.body.web,
         }
       },
-      { new: true, upsert: true, setDefaultsOnInsert: true },
-      (err) => {
-        if (err != null && err.name === 'MongoError' && err.code === 11000) {
-          return res
-            .status(500)
-            .send({ message: 'This email is already in use.' });
-        }
-      }
+      {new: true, upsert: true,
+      setDefaultsOnInsert: true, useFindAndModify: false },
     );
+    console.log(user);
     if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
+      return res.status(404).json({ message: 'User not found!'});
     }
-
-    const token = jwt.sign(
-      {
-        avatarColor: user.avatarColor,
-        bio: user.bio,
-        createdAt: user.createdAt,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        showEmail: user.showEmail,
-        userId: user._id
-      },
-      process.env.REACT_APP_JWT_KEY || require('../secrets').jwtKey,
-      {
-        expiresIn: '24h'
-      }
-    );
-
-    return res.json({ user, token });
+    return res.status(200).json({user});
   } catch (err) {
     return res.status(500).json({ message: err });
   }

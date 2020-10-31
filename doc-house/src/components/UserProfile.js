@@ -6,24 +6,68 @@ import '../App.css';
 import Navbar from './Navbar';
 import Loading from './Loading';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import LinkIcon from '@material-ui/icons/Link';
+import Modal from '@material-ui/core/Modal';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
-const styles = {
+const styles = theme => ({
   divider: {
     borderTop: '3px solid #3f51b5',
     width: '50%'
   },
   topHeader: {
     paddingTop: '2em'
-  }
-};
+  },
+  editButton: {
+    margin: theme.spacing(1),
+    position: 'absolute',
+    // left: '1vw',
+    // top: '50vh'
+  },
+  saveButton: {
+    margin: theme.spacing(1)
+  },
+  formContainer: {
+    alignItems: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center'
+  },
+  paper: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    height: 140,
+    justifyContent: 'center',
+    width: '33.3%'
+  },
+  modalPaper: {
+    position: 'absolute',
+    width: theme.spacing(50),
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(4),
+    top: '50%',
+    left: '50%',
+    outline: 'none',
+    transform: 'translate(-50%, -50%)'
+  },
+
+});
 
 
 class UserProfile extends Component {
   state = {
     user: undefined,
+    bio: '',
+    address: '',
+    web: '',
     token: undefined,
+    modalOpen: false,
     loading:  true
   };
 
@@ -45,6 +89,9 @@ class UserProfile extends Component {
           this.setState({
             token: token,
             user: userRes.data,
+            bio: userRes.data.bio,
+            address: userRes.data.address,
+            web: userRes.data.web,
           });
         }
     }
@@ -57,13 +104,122 @@ class UserProfile extends Component {
       }, 500); 
     }
 
+    handleChange = (event) => {
+      const { name, value } = event.target;
+      this.setState(() => ({ [name]: value }));
+    };
+
+    handleModalOpen = () => {
+      this.setState({ modalOpen: true });
+    };
+  
+    handleModalClose = () => {
+      this.setState({ modalOpen: false });
+    };
+
+    handleSubmit = async (e) => {
+      e.preventDefault();
+      const {user,token, bio, address, web} = this.state;
+      const updates = {
+        bio,
+        address, 
+        web
+      };
+
+      try {
+        axios.patch(`http://localhost:5000/users/${user.id}`, updates, {headers: {"x-auth-token": token}})
+        .then((res) => {
+          window.location.reload();
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
+
   render() {
     const {classes} = this.props;
-    const {user} = this.state;
-    console.log(user);
+    const {user, modalOpen} = this.state;
+    // console.log(this.state);
     return(
       <div>
         <Navbar/>
+        {user && <Modal
+          aria-labelledby="modal-title"
+          aria-describedby="modal-description"
+          open={modalOpen}
+          onClose={this.handleModalClose}
+        >
+          <div className={classes.modalPaper}>
+            <form
+              className={classes.formContainer}
+              autoComplete="off"
+              onSubmit={this.handleSubmit}
+            >
+              <Typography
+                variant="title"
+                id="modal-title"
+                className={classes.spacing}
+              >
+                Edit Profile
+              </Typography>
+              <TextField
+                fullWidth
+                className={classes.textField}
+                defaultValue= {user.address}
+                id="address"
+                label="Address"
+                margin="normal"
+                name="address"
+                onChange={this.handleChange}
+                placeholder="Enter your home address."
+              />
+              <TextField
+                fullWidth
+                className={classes.textField}
+                defaultValue= {user.web}
+                id="web"
+                label="Web"
+                margin="normal"
+                name="web"
+                onChange={this.handleChange}
+                placeholder="Enter your Web, Blog etc."
+              />
+              <TextField
+                fullWidth
+                multiline
+                className={classes.textField}
+                defaultValue={user.bio}
+                id="bio"
+                label="Bio"
+                margin="normal"
+                name="bio"
+                onChange={this.handleChange}
+                placeholder="Enter you Biography."
+              />
+              <Button
+                fullWidth
+                color="primary"
+                className={classes.saveButton}
+                type="submit"
+                variant="contained"
+              >
+                Save
+              </Button>
+              <Button
+                fullWidth
+                className={classes.saveButton}
+                variant="contained"
+                onClick={this.handleModalClose}
+              >
+                Cancel
+              </Button>
+            </form>
+          </div>
+        </Modal> }
+
+         
         <Grid >
           <Cell col={6}>
             <div style={{textAlign: 'center'}}>
@@ -75,26 +231,27 @@ class UserProfile extends Component {
             </div>
             {user ? 
                     (<div >
+                        <Button
+                        variant="contained"
+                        className={classes.editButton}
+                        onClick={this.handleModalOpen}
+                        >
+                        Edit Profile
+                        </Button>
+
                         <h2 className={classes.topHeader}>{user.first_name} {user.last_name}</h2>
+                        <hr className={classes.divider}/>
                         <h5 >Bio <Icon name="portrait"/></h5>
-                        <hr className={classes.divider}/>
                           <p>{user.bio}</p>
-                            {/* <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                                the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
-                                type and scrambled it to make a type specimen book. It has survived not only five centuries, but
-                                also the leap into electronic typesetting, remaining essentially unchanged.</p> */}
-                        <hr className={classes.divider}/>
-                        <h5>Phone <Icon name="phone"/></h5>
-                            <p>+59023434423</p>
                         <hr className={classes.divider}/>
                         <h5>Email <Icon name="email"/></h5>
                             <p>{user.email}</p>
                         <hr className={classes.divider}/>
                         <h5>Address <Icon name="home"/></h5>
-                            <p>1 Hacker Way Menlo Park, 94025</p>
+                            <p>{user.address}</p>
                         <hr className={classes.divider}/>
                         <h5>Web <Icon name="language"/></h5>
-                            <p>somewebsite.com</p>
+                            <p>{user.web}</p>
                     </div>) : <Loading/>}
           </Cell>
           {/* <Cell className="button_placeholder" col={8}>

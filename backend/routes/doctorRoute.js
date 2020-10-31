@@ -79,6 +79,7 @@ router.get("/current-doctor", auth, async (req, res) => {
     first_name: doctor.first_name,
     last_name: doctor.last_name,
     phone_number: doctor.phone_number,
+    address: doctor.address,
     email: doctor.email,
     speciality: doctor.speciality,
     bio: doctor.bio,
@@ -98,6 +99,32 @@ router.get('/:id',auth, async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ err });
+  }
+});
+
+// Update User Information
+router.patch('/:id', auth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const doctor = await Doctor.findOneAndUpdate({ _id: id},
+      {
+        $set: {
+          bio: req.body.bio,
+          address: req.body.address,
+          phone_number: req.body.phone_number,
+          web: req.body.web,
+        }
+      },
+      {new: true, upsert: true,
+      setDefaultsOnInsert: true, useFindAndModify: false },
+    );
+    console.log(doctor);
+    if (!doctor) {
+      return res.status(404).json({ message: 'Doctor not found!'});
+    }
+    return res.status(200).json({doctor});
+  } catch (err) {
+    return res.status(500).json({message: err});
   }
 });
 

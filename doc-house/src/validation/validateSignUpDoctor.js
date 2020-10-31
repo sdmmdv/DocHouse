@@ -44,8 +44,8 @@ const validateSignUpDoctor = (data) => {
     errors.phone_number = '⚠ Invalid Phone Number format!';
   }
 
-  if (!validator.isLength(data.phone_number, { max: 11 })) {
-    errors.phone_number = '⚠ Phone Number may contain at most 11 digits!';
+  if (!validator.isLength(data.phone_number, { max: 12 })) {
+    errors.phone_number = '⚠ Phone Number may contain at most 12 digits!';
   }
 
   if (validator.isEmpty(data.phone_number)) {
