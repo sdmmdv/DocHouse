@@ -109,6 +109,7 @@ router.patch('/:id', auth, async (req, res) => {
     const doctor = await Doctor.findOneAndUpdate({ _id: id},
       {
         $set: {
+          speciality: req.body.speciality,
           bio: req.body.bio,
           address: req.body.address,
           phone_number: req.body.phone_number,

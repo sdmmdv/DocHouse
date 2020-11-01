@@ -6,10 +6,11 @@ const Request = require('../models/Request');
 const router = new express.Router();
 
 router.post("/create-request", auth, async (req, res) => {
-
 const newRequest = new Request({
     creator_id: req.body.creator_id,
     receiver_id: req.body.receiver_id,
+    creator_name: req.body.creator_name,
+    receiver_name: req.body.receiver_name,
     subject: req.body.subject,
     explanation: req.body.explanation,
     time: req.body.time,

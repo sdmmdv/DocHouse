@@ -9,6 +9,16 @@ const requestSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    creator_name: {
+        type: String,
+        required: true,
+        default: "creator_name"
+    },
+    receiver_name: {
+        type: String,
+        required: true,
+        default: "receiver_name"
+    },
     subject: {
         type: String,
         required: true,
