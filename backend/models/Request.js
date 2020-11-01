@@ -19,6 +19,16 @@ const requestSchema = new mongoose.Schema({
         required: true,
         default: "receiver_name"
     },
+    creator_visibility: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
+    receiver_visibility: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
     subject: {
         type: String,
         required: true,

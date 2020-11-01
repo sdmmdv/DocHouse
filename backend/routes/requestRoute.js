@@ -28,7 +28,7 @@ const newRequest = new Request({
 router.get('/user-request/',auth, async (req, res) => {
   const {creator_id, status} = req.query;
   try {
-    const requests = await Request.find({creator_id: creator_id, status: status});
+    const requests = await Request.find({creator_id: creator_id, status: status, creator_visibility: true});
     res.status(200).json(requests);
   } catch (err) {
     res.status(500).json(err);
@@ -37,12 +37,46 @@ router.get('/user-request/',auth, async (req, res) => {
 
 // Get Request by Receiver_id (Doctor ID)
 router.get('/doctor-request/',auth, async (req, res) => {
-  const {receiver_id} = req.query;
+  const {receiver_id, status} = req.query;
   try {
-    const requests = await Request.find({receiver_id: receiver_id});
+    const requests = await Request.find({receiver_id: receiver_id, status: status, receiver_visibility: true});
     res.status(200).json(requests);
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+// Update User Request visibility (Delete item from UI)
+router.patch('/hide_creator/:id', auth, async (req, res) => {
+  const {id} = req.params;
+  try {
+    await Request.findOneAndUpdate({_id: id},
+      {
+        $set: {
+          creator_visibility: req.body.creator_visibility,
+        }
+      }
+    );
+    return res.status(200).json({message: "Successfully changed!"});
+  } catch (err) {
+    return res.status(500).json({message: err});
+  }
+});
+
+// Update Doctor Request visibility (Delete item from UI)
+router.patch('/hide_receiver/:id', auth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Request.findOneAndUpdate({ _id: id},
+      {
+        $set: {
+          receiver_visibility: req.body.receiver_visibility,
+        }
+      }
+    );
+    return res.status(200).json({message: "Successfully changed!"});
+  } catch (err) {
+    return res.status(500).json({message: err});
   }
 });
 
