@@ -5,7 +5,7 @@ const validateRequest = (data) => {
   const errors = {};
   data.subject = !isEmpty(data.subject) ? data.subject : '';
   data.explanation = !isEmpty(data.explanation) ? data.explanation : '';
-  data.time = !isEmpty(data.time) ? data.time : '';
+  data.time = !isEmpty(data.display_time) ? data.display_time : '';
 
   if (validator.isEmpty(data.subject)) {
     errors.subject = '⚠ Subject is required!';
@@ -15,7 +15,7 @@ const validateRequest = (data) => {
     errors.explanation = '⚠ Explanation is required!';
   }
 
-  if (validator.isEmpty(data.time)) {
+  if (validator.isEmpty(data.display_time)) {
     errors.time = '⚠ Time is required!';
   }
 

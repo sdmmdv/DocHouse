@@ -117,7 +117,7 @@ class LoginPageDoctor extends Component {
             doctor: loginRes.data.doctor,
           });
           localStorage.setItem("auth-token", loginRes.data.token);
-          this.props.history.push("/");
+          this.props.history.push("/doctor-dashboard");
         } catch (err) {
           if(err.response.data.error_type === 'password'){
             this.setState(prevState => {

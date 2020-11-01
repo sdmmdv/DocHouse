@@ -24,6 +24,7 @@ import Loading from './Loading';
 import TextField from '@material-ui/core/TextField';
 import ValidateRequest from '../validation/validateRequest';
 import validateRequest from '../validation/validateRequest';
+import moment from 'moment';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
 
@@ -141,8 +142,10 @@ class ViewProfile extends Component {
         console.log(userRes.data);
         const creator_id = userRes.data.id;
         const receiver_id = this.props.location.pathname.split('/').pop();
-        const request = {creator_id, receiver_id, subject, explanation, time};
-
+        const creator_name = userRes.data.first_name + ' ' + userRes.data.last_name;
+        const receiver_name = this.state.doctor.first_name + ' ' + this.state.doctor.last_name;
+        const display_time = moment(time).format('DD MMM YYYY, hh:mm a')
+        const request = {creator_id, receiver_id, creator_name, receiver_name, subject, explanation, display_time};
         //client side Request check
         const { errors, isValid } = validateRequest(request);
         if (!isValid) {

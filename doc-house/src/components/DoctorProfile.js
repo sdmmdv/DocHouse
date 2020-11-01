@@ -50,6 +50,7 @@ const styles = theme => ({
     position: 'absolute',
     width: theme.spacing(50),
     backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.spacing(2),
     boxShadow: theme.shadows[5],
     padding: theme.spacing(4),
     top: '50%',
@@ -65,9 +66,10 @@ class DoctorProfile extends Component {
   state = {
     doctor: undefined,
     token: undefined,
+    speciality: '',
     bio: '',
     address: '',
-    phone: '',
+    phone_number: '',
     web: '',
     modalOpen: false,
     loading:  true
@@ -93,9 +95,10 @@ class DoctorProfile extends Component {
           this.setState({
             token: token,
             doctor: doctorRes.data,
+            speciality: doctorRes.data.speciality,
             bio: doctorRes.data.bio,
             address: doctorRes.data.address,
-            phone: doctorRes.data.phone_number,
+            phone_number: doctorRes.data.phone_number,
             web: doctorRes.data.web,
           });
         }
@@ -124,8 +127,9 @@ class DoctorProfile extends Component {
 
     handleSubmit = async (e) => {
       e.preventDefault();
-      const {doctor,token, bio, address, phone_number, web} = this.state;
+      const {doctor,token,speciality, bio, address, phone_number, web} = this.state;
       const updates = {
+        speciality,
         bio,
         address, 
         phone_number,
@@ -134,8 +138,7 @@ class DoctorProfile extends Component {
 
       try {
         axios.patch(`http://localhost:5000/doctors/${doctor.id}`, updates, {headers: {"x-auth-token": token}})
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           window.location.reload();
         })
       } catch (error) {
@@ -170,6 +173,19 @@ class DoctorProfile extends Component {
                 Edit Profile
               </Typography>
               <TextField
+                required
+                fullWidth
+                className={classes.textField}
+                defaultValue= {doctor.speciality}
+                id="speciality"
+                label="Speciality"
+                margin="normal"
+                name="speciality"
+                onChange={this.handleChange}
+                placeholder="Enter your speciality."
+              />
+              <TextField
+                required
                 fullWidth
                 className={classes.textField}
                 defaultValue= {doctor.address}
@@ -181,6 +197,7 @@ class DoctorProfile extends Component {
                 placeholder="Enter your home address."
               />
               <TextField
+                required
                 fullWidth
                 className={classes.textField}
                 defaultValue= {doctor.phone_number}
@@ -192,6 +209,7 @@ class DoctorProfile extends Component {
                 placeholder="Enter your phone number."
               />
               <TextField
+                required
                 fullWidth
                 className={classes.textField}
                 defaultValue= {doctor.web}
@@ -203,6 +221,7 @@ class DoctorProfile extends Component {
                 placeholder="Enter your Web, Blog etc."
               />
               <TextField
+                required
                 fullWidth
                 multiline
                 className={classes.textField}

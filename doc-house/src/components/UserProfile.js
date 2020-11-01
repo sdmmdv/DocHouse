@@ -50,6 +50,7 @@ const styles = theme => ({
     width: theme.spacing(50),
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
+    borderRadius: theme.spacing(2),
     padding: theme.spacing(4),
     top: '50%',
     left: '50%',
@@ -128,7 +129,7 @@ class UserProfile extends Component {
 
       try {
         axios.patch(`http://localhost:5000/users/${user.id}`, updates, {headers: {"x-auth-token": token}})
-        .then((res) => {
+        .then(() => {
           window.location.reload();
         })
       } catch (error) {
@@ -150,6 +151,7 @@ class UserProfile extends Component {
           aria-describedby="modal-description"
           open={modalOpen}
           onClose={this.handleModalClose}
+          // disableBackdropClick
         >
           <div className={classes.modalPaper}>
             <form
@@ -165,6 +167,7 @@ class UserProfile extends Component {
                 Edit Profile
               </Typography>
               <TextField
+                required
                 fullWidth
                 className={classes.textField}
                 defaultValue= {user.address}

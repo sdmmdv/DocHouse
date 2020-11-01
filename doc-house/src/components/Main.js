@@ -7,7 +7,8 @@ import Projects from './Projects';
 import LoginPageUser from './LoginPageUser';
 import LoginPageDoctor from './LoginPageDoctor';
 import LogTransition from './LogTransition';
-import HomePage from './Homepage';
+// import HomePage from './UserDashboard';
+import UserDashboard from './UserDashboard';
 import UserProfile from './UserProfile';
 import DoctorProfile from './DoctorProfile';
 import SignUpPageUser from './SignUpPageUser';
@@ -20,7 +21,9 @@ export const history = createBrowserHistory();
 
 const Root = () => (
   <Switch>
-    <Route exact path="/" component={HomePage}/>
+    <Route exact path="/" component={About}/>
+    <Route exact path="/user-dashboard" component={UserDashboard}/>
+    <Route exact path="/doctor-dashboard" component={UserDashboard}/>
     <Route path="/about" component={About}/>
     <Route path="/contact" component={Contact} />
     <Route path="/projects" component={Projects}/>

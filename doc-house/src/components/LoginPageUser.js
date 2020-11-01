@@ -111,7 +111,7 @@ class LoginPageUser extends Component {
             user: loginRes.data.user,
           });
           localStorage.setItem("auth-token", loginRes.data.token);
-          this.props.history.push("/");
+          this.props.history.push("/user-dashboard");
         } catch (err) {
           if(err.response.data.error_type === 'password'){
             this.setState(prevState => {
