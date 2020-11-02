@@ -72,9 +72,47 @@ router.patch('/hide_receiver/:id', auth, async (req, res) => {
         $set: {
           receiver_visibility: req.body.receiver_visibility,
         }
-      }
+      },
+      {useFindAndModify: false}
     );
     return res.status(200).json({message: "Successfully changed!"});
+  } catch (err) {
+    return res.status(500).json({message: err});
+  }
+});
+
+// Doctor Accept request
+router.patch('/accept/:id', auth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Request.findOneAndUpdate({ _id: id},
+      {
+        $set: {
+          status: req.body.status,
+        }
+      },
+      {useFindAndModify: false}
+    );
+    return res.status(200).json({message: "Request accepted!"});
+  } catch (err) {
+    return res.status(500).json({message: err});
+  }
+});
+
+
+// Doctor Delete request
+router.patch('/reject/:id', auth, async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Request.findOneAndUpdate({ _id: id},
+      {
+        $set: {
+          status: req.body.status,
+        }
+      },
+      {useFindAndModify: false}
+    );
+    return res.status(200).json({message: "Request deleted!"});
   } catch (err) {
     return res.status(500).json({message: err});
   }

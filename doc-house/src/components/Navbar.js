@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,15 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
-import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import axios from 'axios';
 
   const styles = {
@@ -174,12 +170,19 @@ class Navbar extends Component {
                 >
                     <div className={classes.list}>
                         <List>
-                            {/* <FolderListItems user={'user'} /> */}
-                                <Link className={classes.list} to="/">
+                                {type === 'user' && 
+                                <Link className={classes.list} to="/user-dashboard">
                                 <ListItem button>
-                                    <ListItemText primary="Home"/>
+                                    <ListItemText primary="Dashboard"/>
                                 </ListItem>
-                                </Link>
+                                </Link> }
+
+                                {type === 'doctor' &&
+                                <Link className={classes.list} to="/doctor-dashboard"> 
+                                <ListItem button>
+                                    <ListItemText primary="Dashboard"/>
+                                </ListItem>
+                                </Link>}
                                 {type === 'user' && 
                                 <Link className={classes.list} to="/user-profile">
                                 <ListItem button>

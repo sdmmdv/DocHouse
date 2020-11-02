@@ -21,7 +21,8 @@ import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 
-class UserDashboard extends Component {
+
+class DoctorDashboard extends Component {
     state = {
         activeTabValue: 0,
         index: 0,
@@ -46,13 +47,13 @@ class UserDashboard extends Component {
 
         try {
             const token = localStorage.getItem('auth-token');  
-            const userRes = await axios.get("http://localhost:5000/users/current-user", {
+            const doctorRes = await axios.get("http://localhost:5000/doctors/current-doctor", {
               headers: { "x-auth-token": token },});
-            const creator_id = userRes.data.id;
+            const receiver_id = doctorRes.data.id;
 
-            const result = await axios.get("http://localhost:5000/requests/user-request", {
+            const result = await axios.get("http://localhost:5000/requests/doctor-request", {
               headers: {"x-auth-token": token },
-              params:  {"creator_id": creator_id, "status": status}
+              params:  {"receiver_id": receiver_id, "status": status}
             });
                                     
             this.setState({requests: result.data});
@@ -90,10 +91,40 @@ class UserDashboard extends Component {
   handleDeleteRequest = async(e) => {
     e.preventDefault();
       const {target_id} = this.state;
-      const creator_visibility = false;
+      const receiver_visibility = false;
     try {
       const token = localStorage.getItem('auth-token');  
-      axios.patch(`http://localhost:5000/requests/hide_creator/${target_id}`, {creator_visibility}, {headers: {"x-auth-token": token}})
+      axios.patch(`http://localhost:5000/requests/hide_receiver/${target_id}`, {receiver_visibility}, {headers: {"x-auth-token": token}})
+      .then(() => {
+        window.location.reload();
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  handleAcceptRequest = async(e) => {
+      e.preventDefault();
+      const {modalInfo} = this.state;
+      const status = 'accepted';
+    try {
+      const token = localStorage.getItem('auth-token');  
+      axios.patch(`http://localhost:5000/requests/accept/${modalInfo._id}`, {status}, {headers: {"x-auth-token": token}})
+      .then(() => {
+        window.location.reload();
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  handleRejectRequest = async(e) => {
+      e.preventDefault();
+      const {modalInfo} = this.state;
+      const status = 'rejected';
+    try {
+      const token = localStorage.getItem('auth-token');  
+      axios.patch(`http://localhost:5000/requests/reject/${modalInfo._id}`, {status}, {headers: {"x-auth-token": token}})
       .then(() => {
         window.location.reload();
       })
@@ -116,7 +147,7 @@ class UserDashboard extends Component {
   }
 
   render(){
-    console.log(this.state.target_id);
+    console.log(this.state.modalInfo);
     const {classes} = this.props;
     const {modalInfo, activeTabValue, requests, modalOpen, dialogOpen} = this.state;
     
@@ -171,9 +202,9 @@ class UserDashboard extends Component {
               </Typography>
 
 
-              <Typography variant="h6" >Doctor</Typography>
+              <Typography variant="h6" >Applicant</Typography>
               <Typography variant="body1" gutterBottom>
-                  {modalInfo.receiver_name}
+                  {modalInfo.creator_name}
               </Typography>
 
               <Typography variant="h6" >Appointment Time</Typography>
@@ -187,12 +218,29 @@ class UserDashboard extends Component {
               </Typography>
               <Button
                 fullWidth
-                color="primary"
                 variant="contained"
                 className={classes.modalButton}
                 onClick={this.handleModalClose}
               >
                 Close
+              </Button>
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                className={classes.modalButton}
+                onClick={this.handleAcceptRequest}
+              >
+                Accept
+              </Button>
+              <Button
+                fullWidth
+                color="secondary"
+                variant="contained"
+                className={classes.modalButton}
+                onClick={this.handleRejectRequest}
+              >
+                Reject
               </Button>
           </div>
         </Modal> }
@@ -211,8 +259,11 @@ class UserDashboard extends Component {
                               <Grid xs={3} item>
                                   <Typography style={{fontWeight: "bold"}} variant="subtitle1">Time</Typography>
                               </Grid>
-                              <Grid xs={3} item>
+                              <Grid xs={2} item>
                                   <Typography style={{fontWeight: "bold"}} variant="subtitle1">Actions</Typography>
+                              </Grid>
+                              <Grid xs={1} item>
+                                  <Typography style={{fontWeight: "bold"}} variant="subtitle1">Status</Typography>
                               </Grid>
                             </Grid>
                         </Grid>
@@ -228,7 +279,7 @@ class UserDashboard extends Component {
                                 <Typography variant="subtitle1">{request.subject}</Typography>
                             </Grid>
                             <Grid xs={3} item>
-                                <Typography variant="subtitle1">{request.receiver_name}</Typography>
+                                <Typography variant="subtitle1">{request.creator_name}</Typography>
                             </Grid>
                             <Grid xs={3} item>
                                 <Typography variant="subtitle1">{request.time}</Typography>
@@ -278,9 +329,13 @@ class UserDashboard extends Component {
                             <Grid xs={3} item>
                                 <Typography style={{fontWeight: "bold"}} variant="subtitle1">Time</Typography>
                             </Grid>
-                            <Grid xs={3} item>
+                            <Grid xs={1} item>
+                                  <Typography style={{fontWeight: "bold"}} variant="subtitle1">Status</Typography>
+                              </Grid>
+                            <Grid xs={2} item>
                                 <Typography style={{fontWeight: "bold"}} variant="subtitle1">Actions</Typography>
                             </Grid>
+
                             </Grid>
                         </Grid>
                         </Grid>
@@ -295,12 +350,16 @@ class UserDashboard extends Component {
                                 <Typography variant="subtitle1">{request.subject}</Typography>
                             </Grid>
                             <Grid xs={3} item>
-                                <Typography variant="subtitle1">{request.receiver_name}</Typography>
+                                <Typography variant="subtitle1">{request.creator_name}</Typography>
                             </Grid>
                             <Grid xs={3} item>
                                 <Typography variant="subtitle1">{request.time}</Typography>
                             </Grid>
-                            <Grid xs={3} item>
+                            <Grid xs={1} item>
+                                <DoneIcon className={classes.doneIcon}/>
+                            </Grid>
+                            <Grid xs={2} item>
+                            {/* <DoneIcon className={classes.doneIcon}/> */}
                                 <Button
                                 variant="contained"
                                 color="primary"
@@ -319,9 +378,8 @@ class UserDashboard extends Component {
                                 startIcon={<DeleteIcon />}
                                 onClick={() => this.handleDialogOpen(request)}
                               >
-                                Delete
+                                Del
                           </Button>
-                          <DoneIcon className={classes.doneIcon}/>
                             </Grid>
                             </Grid>
                         </Grid>
@@ -362,7 +420,7 @@ class UserDashboard extends Component {
                                 <Typography variant="subtitle1">{request.subject}</Typography>
                             </Grid>
                             <Grid xs={3} item>
-                                <Typography variant="subtitle1">{request.receiver_name}</Typography>
+                                <Typography variant="subtitle1">{request.creator_name}</Typography>
                             </Grid>
                             <Grid xs={3} item>
                                 <Typography variant="subtitle1">{request.time}</Typography>
@@ -384,7 +442,7 @@ class UserDashboard extends Component {
                                 size="small"
                                 className={classes.button}
                                 startIcon={<DeleteIcon />}
-                                onClick={this.handleDialogOpen}
+                                onClick={() => this.handleDialogOpen(request)}
                               >
                                 Delete
                           </Button>
@@ -402,4 +460,4 @@ class UserDashboard extends Component {
   }
 }
 
-export default withStyles(styles)(UserDashboard);
+export default withStyles(styles)(DoctorDashboard);

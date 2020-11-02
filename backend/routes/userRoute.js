@@ -6,17 +6,7 @@ const User = require('../models/User');
 
 const router = new express.Router();
 
-// Get all users
-// router.get('/', async (req, res) => {
-//   try {
-//     const users = await User.find();
-//     res.status(200).json(users);
-//   }catch{
-//     return res.status(500).json({ err });
-//   }
-// });
 
-// Get logged in user
 router.get("/current-user", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({
@@ -114,7 +104,7 @@ router.get('/:id', async (req, res) => {
 router.patch('/:id', auth, async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findOneAndUpdate({ _id: id},
+    await User.findOneAndUpdate({ _id: id},
       {
         $set: {
           bio: req.body.bio,
@@ -122,14 +112,9 @@ router.patch('/:id', auth, async (req, res) => {
           web: req.body.web,
         }
       },
-      {new: true, upsert: true,
-      setDefaultsOnInsert: true, useFindAndModify: false },
+      {useFindAndModify: false}
     );
-    console.log(user);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found!'});
-    }
-    return res.status(200).json({user});
+    return res.status(200).json({message: "Successfully changed!"});
   } catch (err) {
     return res.status(500).json({ message: err });
   }

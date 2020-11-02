@@ -106,7 +106,7 @@ router.get('/:id',auth, async (req, res) => {
 router.patch('/:id', auth, async (req, res) => {
   const { id } = req.params;
   try {
-    const doctor = await Doctor.findOneAndUpdate({ _id: id},
+    await Doctor.findOneAndUpdate({ _id: id},
       {
         $set: {
           speciality: req.body.speciality,
@@ -116,14 +116,9 @@ router.patch('/:id', auth, async (req, res) => {
           web: req.body.web,
         }
       },
-      {new: true, upsert: true,
-      setDefaultsOnInsert: true, useFindAndModify: false },
+      {useFindAndModify: false }
     );
-    console.log(doctor);
-    if (!doctor) {
-      return res.status(404).json({ message: 'Doctor not found!'});
-    }
-    return res.status(200).json({doctor});
+    return res.status(200).json({message: "Successfully changed!"});
   } catch (err) {
     return res.status(500).json({message: err});
   }

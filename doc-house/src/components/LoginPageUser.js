@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react';
+import React, { Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
@@ -13,7 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import UserContext from '../context/userContext';
 import ValidateLogin from '../validation/validateLogin';
 import Navbar from '../components/Navbar';
 

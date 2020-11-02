@@ -7,11 +7,8 @@ import Navbar from './Navbar';
 import Loading from './Loading';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import LinkIcon from '@material-ui/icons/Link';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 const styles = theme => ({
