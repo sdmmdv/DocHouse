@@ -20,9 +20,11 @@ import {TabPanel, a11yProps } from './TabPanel';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import Loading from './Loading';
 
 class UserDashboard extends Component {
     state = {
+        loading:  true,
         activeTabValue: 0,
         index: 0,
         modalOpen: false,
@@ -103,7 +105,10 @@ class UserDashboard extends Component {
   }
 
   componentDidMount(){
-    this.fetchRequests(this.state.activeTabValue);
+    setTimeout(() => {
+      this.fetchRequests(this.state.activeTabValue);
+    }, 1000); 
+    this.setState({ loading: false });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -111,7 +116,7 @@ class UserDashboard extends Component {
       this.state.activeTabValue !==
       prevState.activeTabValue
     ) {
-      this.fetchRequests(this.state.activeTabValue)
+      this.fetchRequests(this.state.activeTabValue);
     }
   }
 
@@ -201,24 +206,27 @@ class UserDashboard extends Component {
                     <Paper className={classes.paper}>
                         <Grid container spacing={2}>
                         <Grid item xs={12} sm container>
-                            <Grid item xs container direction="row" spacing={2}>
+                            <Grid item xs container direction="row" spacing={2} styles={{margin: "auto"}}>
                               <Grid xs={3} item>
                                   <Typography style={{fontWeight: "bold"}} variant="subtitle1">Subject</Typography>
                               </Grid>
-                              <Grid xs={3} item>
+                              <Grid xs={3} item >
                                   <Typography style={{fontWeight: "bold"}} variant="subtitle1">Applicant</Typography>
                               </Grid>
                               <Grid xs={3} item>
                                   <Typography style={{fontWeight: "bold"}} variant="subtitle1">Time</Typography>
                               </Grid>
-                              <Grid xs={3} item>
-                                  <Typography style={{fontWeight: "bold"}} variant="subtitle1">Actions</Typography>
+                              <Grid xs={1} item>
+                                  <Typography style={{fontWeight: "bold"}} variant="subtitle1">Status</Typography>
                               </Grid>
+                            <Grid xs={2} item>
+                                <Typography style={{fontWeight: "bold"}} variant="subtitle1">Actions</Typography>
+                            </Grid>
                             </Grid>
                         </Grid>
                         </Grid>
                     </Paper>
-                    {requests.map(
+                    {requests.length ? (requests.map(
                         request =>
                     <Paper key={request._id} className={classes.paper}>
                         <Grid container spacing={2}>
@@ -233,7 +241,10 @@ class UserDashboard extends Component {
                             <Grid xs={3} item>
                                 <Typography variant="subtitle1">{request.time}</Typography>
                             </Grid>
-                            <Grid xs={3} item >
+                            <Grid xs={1} item>
+                                <HourglassEmptyIcon className={classes.glassIcon}/>
+                            </Grid>
+                            <Grid xs={2} item >
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -254,13 +265,12 @@ class UserDashboard extends Component {
                               >
                                 Delete
                           </Button>
-                          <HourglassEmptyIcon className={classes.glassIcon}/>
                             </Grid>
                             </Grid>
                         </Grid>
                         </Grid>
                     </Paper>
-                    )}
+                    )) : (<Loading/>)}
                 </div>
             </TabPanel>
             <TabPanel value={activeTabValue} index={1}>
@@ -278,14 +288,17 @@ class UserDashboard extends Component {
                             <Grid xs={3} item>
                                 <Typography style={{fontWeight: "bold"}} variant="subtitle1">Time</Typography>
                             </Grid>
-                            <Grid xs={3} item>
+                            <Grid xs={1} item>
+                                <Typography style={{fontWeight: "bold"}} variant="subtitle1">Status</Typography>
+                            </Grid>
+                            <Grid xs={2} item>
                                 <Typography style={{fontWeight: "bold"}} variant="subtitle1">Actions</Typography>
                             </Grid>
                             </Grid>
                         </Grid>
                         </Grid>
                     </Paper>
-                    {requests.map(
+                    {requests.length ? (requests.map(
                         request =>
                     <Paper key={request._id} className={classes.paper}>
                         <Grid container spacing={2}>
@@ -300,7 +313,10 @@ class UserDashboard extends Component {
                             <Grid xs={3} item>
                                 <Typography variant="subtitle1">{request.time}</Typography>
                             </Grid>
-                            <Grid xs={3} item>
+                            <Grid xs={1} item>
+                                <DoneIcon className={classes.doneIcon}/>
+                            </Grid>
+                            <Grid xs={2} item>
                                 <Button
                                 variant="contained"
                                 color="primary"
@@ -321,13 +337,12 @@ class UserDashboard extends Component {
                               >
                                 Delete
                           </Button>
-                          <DoneIcon className={classes.doneIcon}/>
                             </Grid>
                             </Grid>
                         </Grid>
                         </Grid>
                     </Paper>
-                    )}
+                    )) : (<Loading/>)}
                 </div>
             </TabPanel>
             <TabPanel value={activeTabValue} index={2}>
@@ -345,14 +360,17 @@ class UserDashboard extends Component {
                             <Grid xs={3} item>
                                 <Typography style={{fontWeight: "bold"}} variant="subtitle1">Time</Typography>
                             </Grid>
-                            <Grid xs={3} item>
+                            <Grid xs={1} item>
+                              <Typography style={{fontWeight: "bold"}} variant="subtitle1">Status</Typography>
+                            </Grid>
+                            <Grid xs={2} item>
                               <Typography style={{fontWeight: "bold"}} variant="subtitle1">Actions</Typography>
                             </Grid>
                             </Grid>
                         </Grid>
                         </Grid>
                     </Paper>
-                    {requests.map(
+                    {requests.length ? (requests.map(
                         request =>
                     <Paper key={request._id} className={classes.paper}>
                         <Grid container spacing={2}>
@@ -367,7 +385,10 @@ class UserDashboard extends Component {
                             <Grid xs={3} item>
                                 <Typography variant="subtitle1">{request.time}</Typography>
                             </Grid>
-                            <Grid xs={3} item>
+                            <Grid xs={1} item>
+                                <ClearIcon className={classes.clearIcon}/>
+                            </Grid>
+                            <Grid xs={2} item>
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -388,13 +409,12 @@ class UserDashboard extends Component {
                               >
                                 Delete
                           </Button>
-                          <ClearIcon className={classes.clearIcon}/>
                             </Grid>
                             </Grid>
                         </Grid>
                         </Grid>
                     </Paper>
-                    )}
+                    )) : (<Loading/>)}
                 </div>
             </TabPanel>
         </React.Fragment>

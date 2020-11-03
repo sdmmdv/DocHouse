@@ -1,3 +1,4 @@
+import { TextareaAutosize } from "@material-ui/core";
 
 
 
@@ -23,31 +24,31 @@ export const styles = (theme) => ({
       flexGrow: 1,
     },
     button: {
-      margin: theme.spacing(1),
+      marginRight: theme.spacing(1),
       "&:disabled": {
         backgroundColor: "#8c9eff"
       }
     },
     glassIcon: {
-        margin: theme.spacing(1),
+        marginLeft: theme.spacing(1),
         color: theme.palette.warning.light,
-        fontSize: '1.6rem',
+        fontSize: '1.8rem',
       },
     doneIcon: {
-        margin: theme.spacing(1),
+        marginLeft: theme.spacing(1),
         color: theme.palette.success.dark,
-        fontSize: '1.6rem',
+        fontSize: '1.8rem',
       },
     clearIcon: {
-        margin: theme.spacing(1),
+        marginLeft: theme.spacing(1),
         color: theme.palette.error.dark,
-        fontSize: '1.6rem',
+        fontSize: '1.8rem',
       },
     modalButton: {
       marginTop: theme.spacing(2)
     },
     paper: {
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
       margin: "auto",
       marginTop: "2px",
       maxWidth: 1200,

@@ -120,7 +120,7 @@ class ViewProfile extends Component {
     errors: {},
     subject: '',
     explanation: '',
-    time: '',
+    time: '2021-01-01T11:30',
     loading:  true,
     submitted: false
   };

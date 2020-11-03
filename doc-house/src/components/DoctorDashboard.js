@@ -259,12 +259,12 @@ class DoctorDashboard extends Component {
                               <Grid xs={3} item>
                                   <Typography style={{fontWeight: "bold"}} variant="subtitle1">Time</Typography>
                               </Grid>
-                              <Grid xs={2} item>
-                                  <Typography style={{fontWeight: "bold"}} variant="subtitle1">Actions</Typography>
-                              </Grid>
                               <Grid xs={1} item>
                                   <Typography style={{fontWeight: "bold"}} variant="subtitle1">Status</Typography>
                               </Grid>
+                            <Grid xs={2} item>
+                                <Typography style={{fontWeight: "bold"}} variant="subtitle1">Actions</Typography>
+                            </Grid>
                             </Grid>
                         </Grid>
                         </Grid>
@@ -284,7 +284,10 @@ class DoctorDashboard extends Component {
                             <Grid xs={3} item>
                                 <Typography variant="subtitle1">{request.time}</Typography>
                             </Grid>
-                            <Grid xs={3} item >
+                            <Grid xs={1} item>
+                                <HourglassEmptyIcon className={classes.glassIcon}/>
+                            </Grid>
+                            <Grid xs={2} item >
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -305,7 +308,6 @@ class DoctorDashboard extends Component {
                               >
                                 Delete
                           </Button>
-                          <HourglassEmptyIcon className={classes.glassIcon}/>
                             </Grid>
                             </Grid>
                         </Grid>
@@ -378,7 +380,7 @@ class DoctorDashboard extends Component {
                                 startIcon={<DeleteIcon />}
                                 onClick={() => this.handleDialogOpen(request)}
                               >
-                                Del
+                                Delete
                           </Button>
                             </Grid>
                             </Grid>
@@ -403,8 +405,11 @@ class DoctorDashboard extends Component {
                             <Grid xs={3} item>
                                 <Typography style={{fontWeight: "bold"}} variant="subtitle1">Time</Typography>
                             </Grid>
-                            <Grid xs={3} item>
-                              <Typography style={{fontWeight: "bold"}} variant="subtitle1">Actions</Typography>
+                            <Grid xs={1} item>
+                                  <Typography style={{fontWeight: "bold"}} variant="subtitle1">Status</Typography>
+                              </Grid>
+                            <Grid xs={2} item>
+                                <Typography style={{fontWeight: "bold"}} variant="subtitle1">Actions</Typography>
                             </Grid>
                             </Grid>
                         </Grid>
@@ -425,7 +430,10 @@ class DoctorDashboard extends Component {
                             <Grid xs={3} item>
                                 <Typography variant="subtitle1">{request.time}</Typography>
                             </Grid>
-                            <Grid xs={3} item>
+                            <Grid xs={1} item>
+                                <ClearIcon className={classes.clearIcon}/>  
+                            </Grid>  
+                            <Grid xs={2} item>
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -446,7 +454,6 @@ class DoctorDashboard extends Component {
                               >
                                 Delete
                           </Button>
-                          <ClearIcon className={classes.clearIcon}/>
                             </Grid>
                             </Grid>
                         </Grid>
