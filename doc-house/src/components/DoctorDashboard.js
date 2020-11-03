@@ -20,6 +20,7 @@ import {TabPanel, a11yProps } from './TabPanel';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import Loading from './Loading';
 
 
 class DoctorDashboard extends Component {
@@ -30,7 +31,7 @@ class DoctorDashboard extends Component {
         dialogOpen: false,
         target_id: '',
         modalInfo: {},
-        requests: []
+        requests: {},
     }
 
 
@@ -134,15 +135,23 @@ class DoctorDashboard extends Component {
   }
 
   componentDidMount(){
-    this.fetchRequests(this.state.activeTabValue);
+    // console.log("component Did Mount")
+    setTimeout(() => {
+      this.fetchRequests(this.state.activeTabValue);
+    }, 500); 
+    this.setState({loading: false});
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // console.log("component Did Update")
     if (
-      this.state.activeTabValue !==
-      prevState.activeTabValue
+      this.state.activeTabValue !== prevState.activeTabValue
     ) {
-      this.fetchRequests(this.state.activeTabValue)
+      this.setState({ requests: {},retrieved: false});
+      setTimeout(() => {
+        this.fetchRequests(this.state.activeTabValue);
+      }, 500); 
+      this.setState({ loading: false});
     }
   }
 
@@ -224,24 +233,28 @@ class DoctorDashboard extends Component {
               >
                 Close
               </Button>
-              <Button
-                fullWidth
-                color="primary"
-                variant="contained"
-                className={classes.modalButton}
-                onClick={this.handleAcceptRequest}
-              >
-                Accept
-              </Button>
-              <Button
-                fullWidth
-                color="secondary"
-                variant="contained"
-                className={classes.modalButton}
-                onClick={this.handleRejectRequest}
-              >
-                Reject
-              </Button>
+              {modalInfo.status == 'pending' && 
+                <div>
+                  <Button
+                    fullWidth
+                    color="primary"
+                    variant="contained"
+                    className={classes.modalButton}
+                    onClick={this.handleAcceptRequest}
+                  >
+                    Accept
+                  </Button>
+                  <Button
+                      fullWidth
+                      color="secondary"
+                      variant="contained"
+                      className={classes.modalButton}
+                      onClick={this.handleRejectRequest}
+                  >
+                      Reject
+                  </Button>
+                </div>
+            }
           </div>
         </Modal> }
             <TabPanel value={activeTabValue} index={0}>
@@ -269,7 +282,7 @@ class DoctorDashboard extends Component {
                         </Grid>
                         </Grid>
                     </Paper>
-                    {requests.map(
+                    {requests.length >= 0 ? requests.map(
                         request =>
                     <Paper key={request._id} className={classes.paper}>
                         <Grid container spacing={2}>
@@ -313,7 +326,7 @@ class DoctorDashboard extends Component {
                         </Grid>
                         </Grid>
                     </Paper>
-                    )}
+                    ) : <Loading/>}
                 </div>
             </TabPanel>
             <TabPanel value={activeTabValue} index={1}>
@@ -342,7 +355,7 @@ class DoctorDashboard extends Component {
                         </Grid>
                         </Grid>
                     </Paper>
-                    {requests.map(
+                    {requests.length >= 0 ? requests.map(
                         request =>
                     <Paper key={request._id} className={classes.paper}>
                         <Grid container spacing={2}>
@@ -387,7 +400,7 @@ class DoctorDashboard extends Component {
                         </Grid>
                         </Grid>
                     </Paper>
-                    )}
+                    ) : <Loading/>}
                 </div>
             </TabPanel>
             <TabPanel value={activeTabValue} index={2}>
@@ -415,7 +428,7 @@ class DoctorDashboard extends Component {
                         </Grid>
                         </Grid>
                     </Paper>
-                    {requests.map(
+                    {requests.length >= 0 ? requests.map(
                         request =>
                     <Paper key={request._id} className={classes.paper}>
                         <Grid container spacing={2}>
@@ -459,7 +472,7 @@ class DoctorDashboard extends Component {
                         </Grid>
                         </Grid>
                     </Paper>
-                    )}
+                    ) : <Loading/>}
                 </div>
             </TabPanel>
         </React.Fragment>

@@ -21,6 +21,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import Loading from './Loading';
+import { Alert } from '@material-ui/lab';
 
 class UserDashboard extends Component {
     state = {
@@ -31,7 +32,7 @@ class UserDashboard extends Component {
         dialogOpen: false,
         target_id: '',
         modalInfo: {},
-        requests: []
+        requests: {}
     }
 
 
@@ -105,23 +106,27 @@ class UserDashboard extends Component {
   }
 
   componentDidMount(){
+    // console.log("component Did Mount")
     setTimeout(() => {
       this.fetchRequests(this.state.activeTabValue);
-    }, 1000); 
-    this.setState({ loading: false });
+    }, 500); 
+    this.setState({loading: false});
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // console.log("component Did Update")
     if (
-      this.state.activeTabValue !==
-      prevState.activeTabValue
+      this.state.activeTabValue !== prevState.activeTabValue
     ) {
-      this.fetchRequests(this.state.activeTabValue);
+      this.setState({ requests: {},retrieved: false});
+      setTimeout(() => {
+        this.fetchRequests(this.state.activeTabValue);
+      }, 500); 
+      this.setState({ loading: false});
     }
   }
 
   render(){
-    console.log(this.state.target_id);
     const {classes} = this.props;
     const {modalInfo, activeTabValue, requests, modalOpen, dialogOpen} = this.state;
     
@@ -226,7 +231,7 @@ class UserDashboard extends Component {
                         </Grid>
                         </Grid>
                     </Paper>
-                    {requests.length ? (requests.map(
+                    {requests.length >= 0 ? (requests.map(
                         request =>
                     <Paper key={request._id} className={classes.paper}>
                         <Grid container spacing={2}>
@@ -298,7 +303,7 @@ class UserDashboard extends Component {
                         </Grid>
                         </Grid>
                     </Paper>
-                    {requests.length ? (requests.map(
+                    {requests.length >= 0 ? (requests.map(
                         request =>
                     <Paper key={request._id} className={classes.paper}>
                         <Grid container spacing={2}>
@@ -370,7 +375,7 @@ class UserDashboard extends Component {
                         </Grid>
                         </Grid>
                     </Paper>
-                    {requests.length ? (requests.map(
+                    {requests.length >= 0 ? (requests.map(
                         request =>
                     <Paper key={request._id} className={classes.paper}>
                         <Grid container spacing={2}>
@@ -405,7 +410,7 @@ class UserDashboard extends Component {
                                 size="small"
                                 className={classes.button}
                                 startIcon={<DeleteIcon />}
-                                onClick={this.handleDialogOpen}
+                                onClick={() => this.handleDialogOpen(request)}
                               >
                                 Delete
                           </Button>

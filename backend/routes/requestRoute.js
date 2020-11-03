@@ -55,7 +55,8 @@ router.patch('/hide_creator/:id', auth, async (req, res) => {
         $set: {
           creator_visibility: req.body.creator_visibility,
         }
-      }
+      },
+      {useFindAndModify: false}
     );
     return res.status(200).json({message: "Successfully changed!"});
   } catch (err) {
