@@ -38,9 +38,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -52,7 +50,7 @@ const StyledRating = withStyles({
 })(Rating);
 
   //// FUnction to calculate the avreage
-  const average = (array) => (array.reduce((total,next) => total + next.rating, 0) / array.length).toFixed(2);
+  const average = (array) => (array.reduce((total,next) => (next !== null ? (total + next.rating) : 0), 0) / array.length).toFixed(2);
 
 
 
@@ -373,7 +371,7 @@ class ViewProfile extends Component {
                     <div >
                         <h2 className={classes.topHeader}>Dr. {doctor.first_name} {doctor.last_name}</h2>
                         <h3 >{doctor.speciality}</h3>
-                        <h4 > <StarBorderIcon fontSize="inherit" /> {average(doctor.reviews)} ({doctor.reviews.length} reviews)</h4>
+                        <h4 > <StarBorderIcon fontSize="inherit" /> {doctor.reviews.length ? average(doctor.reviews) : '0.0'} ({doctor.reviews.length} reviews)</h4>
                         <h5 >Bio <Icon name="portrait"/></h5>
                         <hr className={classes.divider}/>
                           <p>{doctor.bio}</p>
@@ -391,11 +389,11 @@ class ViewProfile extends Component {
                             <p>somewebsite.com</p>
                             <hr className={classes.divider}/>
                             <React.Fragment>
-                                  <ExpansionPanel className={classes.expansion}>
-                                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                  <Accordion className={classes.expansion}>
+                                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                   <Typography variant="h5" className={classes.heading}>Reviews</Typography>
-                                </ExpansionPanelSummary>
-                                <ExpansionPanelDetails>
+                                </AccordionSummary>
+                                <AccordionDetails>
                                 <List className={classes.list}>
                                 {(doctor.reviews).map(                             
                                                     review =>
@@ -428,8 +426,8 @@ class ViewProfile extends Component {
                               </ListItem>)}
                               <hr className={classes.divider}/>
                             </List>
-                                </ExpansionPanelDetails>
-                              </ExpansionPanel>
+                                </AccordionDetails>
+                              </Accordion>
                           </React.Fragment>
                     </div>
           </Cell>

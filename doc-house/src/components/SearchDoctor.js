@@ -20,7 +20,8 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 
-const average = (array) => (array.reduce((total,next) => total + next.rating, 0) / array.length).toFixed(2);
+// const average = (array) => (array.reduce((total,next) => total + next.rating, 0) / array.length).toFixed(2) || 0;
+const average = (array) => (array.reduce((total,next) => (next !== null ? (total + next.rating) : 0), 0) / array.length).toFixed(2);
 
 
 const formLabelsTheme = createMuiTheme({
@@ -146,6 +147,7 @@ class SearchDoctor extends Component {
   render() {
     const {classes} = this.props;
     const {doctors,searched} = this.state;
+    console.log(doctors.map(doctor => average(doctor.reviews)));
     console.log(this.state)
 
     return (
@@ -218,7 +220,7 @@ class SearchDoctor extends Component {
                 </Typography>
                 <Typography gutterBottom variant="subtitle1">
                   <StarBorderIcon fontSize="inherit" /> 
-                    {average(doctor.reviews)} ({doctor.reviews.length} reviews)
+                    {doctor.reviews.length ? average(doctor.reviews) : '0.0'} ({doctor.reviews.length} reviews)
                 </Typography>
               </Grid>
               <Grid item >
