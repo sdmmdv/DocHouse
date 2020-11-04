@@ -26,6 +26,33 @@ import ValidateRequest from '../validation/validateRequest';
 import validateRequest from '../validation/validateRequest';
 import moment from 'moment';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import Modal from '@material-ui/core/Modal';
+import Rating from "@material-ui/lab/Rating";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import Box from "@material-ui/core/Box";
+
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+
+const StyledRating = withStyles({
+  iconFilled: {
+    color: "#ff6d75"
+  },
+  iconHover: {
+    color: "#ff3d47"
+  }
+})(Rating);
+
+  //// FUnction to calculate the avreage
+  const average = (array) => (array.reduce((total,next) => total + next.rating, 0) / array.length).toFixed(2);
 
 
 
@@ -39,6 +66,9 @@ const formLabelsTheme = createMuiTheme({
   }
 })
 
+
+
+
 const styles = theme => ({
     divider: {
         borderTop: '3px solid #4caf50',
@@ -47,18 +77,22 @@ const styles = theme => ({
       topHeader: {
         paddingTop: '2em'
       },
-  container: {
-    display: 'flex',
-    marginTop: '20px',
-    marginBottom: '20px',
-    padding: theme.spacing(2),
-    margin: 'auto',
-    maxWidth: 800,
-    flexDirection: 'column',
-    backgroundColor: 'theme.palette.background.paper',
-    boxShadow: theme.shadows[5],
-    transform: 'translate(0%, 250%)',
-  },
+      list: {
+        flex: theme.spacing(1),
+        width: 800,
+        backgroundColor: theme.palette.background.paper,
+      },
+      expansion: {
+        width: 600,
+        boxShadow: theme.shadows[5],
+      },
+      inline: {
+        display: 'inline',
+      },
+      large: {
+        width: theme.spacing(6),
+        height: theme.spacing(6),
+      },
 
   notFound: {
     marginTop: '100px',
@@ -90,6 +124,31 @@ const styles = theme => ({
     backgroundColor: 'theme.palette.background.paper',
     boxShadow: theme.shadows[5]
   },
+  modalButton: {
+    marginTop: theme.spacing(2)
+  },
+  modalPaper: {
+    position: 'absolute',
+    width: theme.spacing(65),
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(4),
+    borderRadius: theme.spacing(2),
+    top: '50%',
+    left: '50%',
+    outline: 'none',
+    transform: 'translate(-50%, -50%)'
+  },
+  formContainer: {
+    alignItems: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center'
+  },
+  img: {
+    width: 64,
+    height: 64,
+  },
   submit: {
     marginTop: theme.spacing(3)
   },
@@ -104,6 +163,12 @@ const styles = theme => ({
     textDecoration: 'none',
     color: theme.palette.success.main
   },
+  editButton: {
+    margin: theme.spacing(1),
+    position: 'absolute',
+    // left: '1vw',
+    // top: '50vh'
+  },
   footer: {
     marginTop: theme.spacing(2)
   },
@@ -117,6 +182,9 @@ const styles = theme => ({
 class ViewProfile extends Component {
   state = {
     doctor: undefined,
+    modalOpen: false,
+    opinion: '',
+    rating: 0,
     errors: {},
     subject: '',
     explanation: '',
@@ -166,6 +234,26 @@ class ViewProfile extends Component {
       }
   };
 
+  handleReviewSubmit = async (e) => {
+      e.preventDefault();
+      const token = localStorage.getItem('auth-token');
+      const userRes = await axios.get("http://localhost:5000/users/current-user", {
+        headers: { "x-auth-token": token },
+      });
+      const author = userRes.data.first_name + ' ' + userRes.data.last_name;
+      const {doctor, opinion, rating} = this.state;
+      const review = {author,opinion,rating};
+      console.log(doctor);
+      try {
+        axios.patch(`http://localhost:5000/general/post-review/${doctor._id}`, review, {headers: {"x-auth-token": token}})
+        .then(() => {
+          window.location.reload();
+        })        
+      } catch (error) {
+        console.log(error);
+      }
+  }
+
   setDoctorProfile = async () => {
     try {
         const token = localStorage.getItem('auth-token');  
@@ -180,6 +268,16 @@ class ViewProfile extends Component {
       }
   }
 
+  handleModalOpen = () => {
+    this.setState({ modalOpen: true});
+  };
+
+  handleModalClose = () => {
+    this.setState({ modalOpen: false });
+  };
+
+
+
     componentDidMount(){
       this.setState({ loading: true });
       this.setDoctorProfile();
@@ -190,11 +288,71 @@ class ViewProfile extends Component {
 
   render() {
     const {classes} = this.props;
-    const {errors, doctor, submitted} = this.state;
+    const {errors, doctor, submitted, modalOpen} = this.state;
     console.log(this.state);
     return(
       <div>
         <Navbar/>
+        <Modal
+                  aria-labelledby="modal-title"
+                  aria-describedby="modal-description"
+                  open={modalOpen}
+                  onClose={this.handleModalClose}
+                  disableBackdropClick
+                >
+                  <div className={classes.modalPaper}>
+                    <form
+                      className={classes.formContainer}
+                      autoComplete="off"
+                      onSubmit={this.handleReviewSubmit}
+                    >
+                      <Typography
+                        variant="title"
+                        id="modal-title"
+                        className={classes.spacing}
+                      >
+                        Evaluate the doctor's service
+                      </Typography>
+                      <Box component="fieldset"  margin="auto" borderColor="transparent">
+                          <Rating
+                            size="large"
+                            name="rating"
+                            precision={0.5}
+                            onChange={this.handleInputChange}
+                            emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                          />
+                      </Box>
+                      <TextField
+                        fullWidth
+                        multiline
+                        className={classes.textField}
+                        id="opinion"
+                        label="Your Opinion"
+                        margin="normal"
+                        name="opinion"
+                        onChange={this.handleInputChange}
+                        placeholder="Share your own experience about the doctor."
+                      />
+                      <Button
+                        fullWidth
+                        color="primary"
+                        className={classes.modalButton}
+                        type="submit"
+                        variant="contained"
+                      >
+                        Post
+                      </Button>
+                      <Button
+                        fullWidth
+                        className={classes.modalButton}
+                        variant="contained"
+                        onClick={this.handleModalClose}
+                      >
+                        Cancel
+                      </Button>
+                    </form>
+                  </div>
+                </Modal>
         {doctor ? 
         (<Grid >
           <Cell col={6}>
@@ -202,12 +360,20 @@ class ViewProfile extends Component {
               <img className="container-div"
                 src={require('../assets/avatarDoctor.png')}
                 alt="avatar"
-                style={{height: '200px', margin: 'auto'}}
+                style={{height: '200px'}}
                  />
             </div>
+             <Button
+                        variant="contained"
+                        className={classes.editButton}
+                        onClick={this.handleModalOpen}
+                        >
+                        Review Doctor
+             </Button>
                     <div >
                         <h2 className={classes.topHeader}>Dr. {doctor.first_name} {doctor.last_name}</h2>
                         <h3 >{doctor.speciality}</h3>
+                        <h4 > <StarBorderIcon fontSize="inherit" /> {average(doctor.reviews)} ({doctor.reviews.length} reviews)</h4>
                         <h5 >Bio <Icon name="portrait"/></h5>
                         <hr className={classes.divider}/>
                           <p>{doctor.bio}</p>
@@ -223,6 +389,48 @@ class ViewProfile extends Component {
                         <hr className={classes.divider}/>
                         <h5>Web <Icon name="language"/></h5>
                             <p>somewebsite.com</p>
+                            <hr className={classes.divider}/>
+                            <React.Fragment>
+                                  <ExpansionPanel className={classes.expansion}>
+                                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                  <Typography variant="h5" className={classes.heading}>Reviews</Typography>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                <List className={classes.list}>
+                                {(doctor.reviews).map(                             
+                                                    review =>
+                              <ListItem key={review._id} alignItems="flex-start">
+                                <ListItemAvatar>
+                                  <Avatar alt="user" className={classes.large} src={require('../assets/avatarDoctor.png')} />
+                                </ListItemAvatar>
+                                <ListItemText
+                                  primary={review.author}
+                                  secondary={
+                                    <React.Fragment>
+                                      <Box component="fieldset"  margin="auto" borderColor="transparent">
+                                                  <Rating
+                                                    readOnly
+                                                    size="small"
+                                                    name="rating"
+                                                    value={review.rating}
+                                                    precision={0.5}
+                                                    emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                                                  />
+                                        </Box>
+                                                      <Typography component="span" variant="body2" className={classes.inline}>
+                                                            {review.opinion}
+                                                      </Typography>
+                                                      
+                                    
+                                    </React.Fragment>
+                                  }
+                                />
+                              </ListItem>)}
+                              <hr className={classes.divider}/>
+                            </List>
+                                </ExpansionPanelDetails>
+                              </ExpansionPanel>
+                          </React.Fragment>
                     </div>
           </Cell>
           <Cell col={6}>

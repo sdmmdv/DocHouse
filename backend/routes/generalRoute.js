@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Doctor = require('../models/Doctor');
+const auth = require('../middleware/auth');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = new express.Router();
@@ -19,7 +20,24 @@ router.get('/get-type', async (req, res) => {
   res.status(200).json(ret_val);
 }); 
 
-
+// Store review to the Doctor schema
+router.patch('/post-review/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  const review = req.body;
+  try {
+    await Doctor.findOneAndUpdate({ _id: id},
+      {
+        $push: { reviews: review },
+      },
+        {useFindAndModify: false }
+      );
+    return res.status(200).json({message: "Reviews updated!"});
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({message: err});
+  }
+});
 
 //Check if token is valid
 router.post("/tokenIsValid", async (req, res) => {

@@ -17,9 +17,10 @@ import amber from '@material-ui/core/colors/amber';
 import lime from '@material-ui/core/colors/lime';
 import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 
-
+const average = (array) => (array.reduce((total,next) => total + next.rating, 0) / array.length).toFixed(2);
 
 
 const formLabelsTheme = createMuiTheme({
@@ -216,7 +217,8 @@ class SearchDoctor extends Component {
                   110 West 14th StreetNew YorkNY10011
                 </Typography>
                 <Typography gutterBottom variant="subtitle1">
-                  * 4.41 (254 Reviews)
+                  <StarBorderIcon fontSize="inherit" /> 
+                    {average(doctor.reviews)} ({doctor.reviews.length} reviews)
                 </Typography>
               </Grid>
               <Grid item >

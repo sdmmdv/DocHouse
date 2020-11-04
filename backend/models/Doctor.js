@@ -47,6 +47,9 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         default: 'Default avenue, Red street 5'
     },
+    reviews: {
+        type: [{author : String, opinion : String, rating: Number}]
+    },
     date: {
         type: Date,
         default: Date.now

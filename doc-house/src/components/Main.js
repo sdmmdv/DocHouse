@@ -16,14 +16,16 @@ import SignUpPageDoctor from './SignUpPageDoctor';
 import NotFound404 from './NotFound';
 import SearchDoctor from './SearchDoctor';
 import ViewProfile from './ViewProfile';
+import Test from './Test';
 
 export const history = createBrowserHistory();
 
 const Root = () => (
   <Switch>
     <Route exact path="/" component={About}/>
-    <Route exact path="/user-dashboard" component={UserDashboard}/>
-    <Route exact path="/doctor-dashboard" component={DoctorDashboard}/>
+    <Route exact path="/test" component={Test}/>
+    <Route path="/user-dashboard" component={UserDashboard}/>
+    <Route path="/doctor-dashboard" component={DoctorDashboard}/>
     <Route path="/about" component={About}/>
     <Route path="/contact" component={Contact} />
     <Route path="/projects" component={Projects}/>
