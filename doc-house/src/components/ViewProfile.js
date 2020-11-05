@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { Grid, Cell, Icon} from 'react-mdl';
 import axios from 'axios';
-import '../App.css';
+import '../Profile.css';
 import Navbar from './Navbar';
 import { NavLink } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
@@ -397,7 +397,8 @@ class ViewProfile extends Component {
                                 <List className={classes.list}>
                                 {(doctor.reviews).map(                             
                                                     review =>
-                              <ListItem key={review._id} alignItems="flex-start">
+                              <div key={review._id}>
+                              <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                   <Avatar alt="user" className={classes.large} src={require('../assets/avatarDoctor.png')} />
                                 </ListItemAvatar>
@@ -423,8 +424,9 @@ class ViewProfile extends Component {
                                     </React.Fragment>
                                   }
                                 />
-                              </ListItem>)}
+                              </ListItem>
                               <hr className={classes.divider}/>
+                              </div>)}
                             </List>
                                 </AccordionDetails>
                               </Accordion>

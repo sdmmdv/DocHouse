@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Cell, Icon} from 'react-mdl';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
-import '../App.css';
+import '../Profile.css';
 import Navbar from './Navbar';
 import Loading from './Loading';
 import { withStyles } from '@material-ui/core/styles';
