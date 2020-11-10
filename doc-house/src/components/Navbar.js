@@ -197,6 +197,13 @@ class Navbar extends Component {
                                 </ListItem>
                                 </Link>}
 
+                                {(type === 'doctor' || type == 'user') &&
+                                <Link className={classes.list} to="/chat"> 
+                                <ListItem button>
+                                    <ListItemText primary="Chat"/>
+                                </ListItem>
+                                </Link>}
+
                                 <Link className={classes.list} to="/contact">
                                 <ListItem button>
                                     <ListItemText primary="Contact" />
@@ -234,7 +241,6 @@ class Navbar extends Component {
               </Link>
             </Typography>
             <div>
-              {/* <NavbarRightMenu logoutUser={logoutUser} user={user} /> */}
                     {this.state.token 
                       ?
                         (<Button 
@@ -251,31 +257,6 @@ class Navbar extends Component {
                         >
                         Login
                         </Button>)}
-
-                    {/* <Button 
-                    aria-owns={anchorEl ? 'right-menu' : null}
-                    aria-haspopup="true"
-                    className={classes.userButton}
-                    onClick={this.handleClick}
-                    >
-                    user.name
-                    </Button>
-                    <Menu
-                    id="right-menu"
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={this.handleClose}
-                    >
-                    <Link className={classes.link} to={`/profile/${'user.userId'}`}>
-                        <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    </Link>
-                    <Divider/>
-                    <Link className={classes.link} to="/settings">
-                        <MenuItem onClick={this.handleClose}>Settings</MenuItem>
-                    </Link>
-                    <Divider/>
-                        <MenuItem onClick={logoutUser}>Logout</MenuItem>
-                    </Menu> */}
             </div>
           </Toolbar>
         </AppBar>

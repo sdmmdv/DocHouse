@@ -23,7 +23,7 @@ router.get('/get-type', async (req, res) => {
 // Store review to the Doctor schema
 router.patch('/post-review/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+  console.log(req.query);
   const review = req.body;
   try {
     await Doctor.findOneAndUpdate({ _id: id},
@@ -72,5 +72,9 @@ router.post("/tokenIsValid", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+//Create Message post
+// Store review to the Doctor schema
+
 
 module.exports = router;

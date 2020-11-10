@@ -45,18 +45,19 @@ mongoose.connect(process.env.DB_URI, {
 
 const db = mongoose.connection;
 db.once('open', () => {
-    console.log('Success! Connected to MongoDB!')
-    changeStream = db.collection("messages").watch();
-
+    console.log('Success! Connected to MongoDB!');
+    changeStream = db.collection("rooms").watch();
     changeStream.on("change", (change) => {
-        console.log(change);
-        if(change.operationType == "insert"){
-            const messageDetails = change.fullDocument;
-            pusher.trigger("messages", "inserted" , {
+        // console.log(change);
+        if(change.operationType == "update"){
+            const messageDetails = Object.values(change.updateDescription.updatedFields)[0];
+            console.log(messageDetails);
+            pusher.trigger("rooms", "updated" , {
                 author: messageDetails.author,
                 message: messageDetails.message,
                 timestamp: messageDetails.timestamp,
-                received: messageDetails.received
+                received: messageDetails.received,
+                room_id: messageDetails.room_id
             });
         }
     });
@@ -72,7 +73,7 @@ app.use('/general', generalRouter);
 app.use('/users',usersRouter);
 app.use('/doctors', doctorsRouter);
 app.use('/requests', requestsRouter);
-app.use('/messages', chatRouter);
+app.use('/chat', chatRouter);
 
 
 

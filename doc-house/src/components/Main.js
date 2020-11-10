@@ -39,7 +39,8 @@ const Root = () => (
     <Route path="/doctor-profile" component={DoctorProfile}/>
     <Route path="/profile/:id" component={ViewProfile}/>
     <Route path="/search-doctor" component={SearchDoctor}/>
-    <Route path="/chat" component={ChatApp}/>
+    <Route exact path="/chat" render={(props) => <ChatApp {...props} />} />
+    <Route path="/chat/rooms/:roomId" render={(props) => <ChatApp {...props} />} />
     <Route component={NotFound404}/>
   </Switch>
 )

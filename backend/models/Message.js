@@ -16,6 +16,10 @@ const messageSchema = new mongoose.Schema({
     received: {
         type: Boolean,
         required: true,
+    },
+    room_id: {
+        type: String,
+        reuired: true
     }
 })
 
