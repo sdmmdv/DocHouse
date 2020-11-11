@@ -21,7 +21,7 @@ function Chat() {
        if(roomId){
             axios.get(`chat/rooms/${roomId}`).then(res => {
                 // console.log(res.data);
-                setRoomName(res.data.members[1]);
+                setRoomName(res.data.members[1].user_name);
                 setMessages(res.data.messages);
             })
         }
@@ -50,7 +50,7 @@ function Chat() {
 
         await axios.post("chat/messages/new", {
             message: input,
-            author: "Sadi",
+            author: 'qasqaldax',
             timestamp: new Date().toUTCString(),
             received: true,
             room_id: roomId
@@ -74,7 +74,7 @@ function Chat() {
                     <p key={message._id} className={`chat__message ${message.received && "chat__receiver"}`}>
                         {message.message}
                     <span className="chat__timestamp">
-                        {message.timestamp}
+                        {(new Date(message.timestamp)).toLocaleString()}
                     </span>
                     </p> 
                  ))}

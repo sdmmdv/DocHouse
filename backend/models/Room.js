@@ -9,8 +9,8 @@ const roomSchema = new mongoose.Schema({
     ],
     members: [
         {
-            type: String,
-            required: true
+            user_id: String,
+            user_name: String
         }
     ]
 })

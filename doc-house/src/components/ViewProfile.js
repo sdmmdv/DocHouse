@@ -252,6 +252,31 @@ class ViewProfile extends Component {
       }
   }
 
+  handleMessage = async (e) => {
+    // "members" : [
+//     {"user_id" : "id1", "user_name" : "username1"},
+//     {"user_id" : "id2", "user_name" : "username2"}
+// ]
+    try {
+      const {doctor} = this.state;
+      const token = localStorage.getItem('auth-token');
+      const userRes = await axios.get("http://localhost:5000/users/current-user", {
+        headers: { "x-auth-token": token },
+      });
+      const user_name = userRes.data.first_name + ' ' + userRes.data.last_name;
+      const doctor_name = doctor.first_name + ' ' + doctor.last_name;
+      const user_id = userRes.data.id;
+      const doctor_id = doctor._id;
+      const members = [{"user_id": user_id, "user_name": user_name},{"user_id" : doctor_id, "user_name" : doctor_name}];
+      const room_id = await axios.post("http://localhost:5000/chat/rooms/new",{members});
+      if(room_id){
+         this.props.history.push(`/chat/rooms/${room_id}`);
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   setDoctorProfile = async () => {
     try {
         const token = localStorage.getItem('auth-token');  
@@ -363,10 +388,17 @@ class ViewProfile extends Component {
             </div>
              <Button
                         variant="contained"
-                        className={classes.editButton}
+                        // className={classes.editButton}
                         onClick={this.handleModalOpen}
                         >
                         Review Doctor
+             </Button>
+             <Button
+                        variant="contained"
+                        // className={classes.editButton}
+                        onClick={this.handleMessage}
+                        >
+                        Message Doctor
              </Button>
                     <div >
                         <h2 className={classes.topHeader}>Dr. {doctor.first_name} {doctor.last_name}</h2>

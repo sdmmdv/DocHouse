@@ -4,6 +4,7 @@ const auth = require('../middleware/auth');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = new express.Router();
+const ObjectId = require('mongodb').ObjectID;
 
 // Get type of logged in user
 router.get('/get-type', async (req, res) => {
@@ -62,14 +63,36 @@ router.post("/tokenIsValid", async (req, res) => {
       data = await Doctor.findById(verified.id);
     } 
 
-
+   
     if (!data) {
       return res.json(false);
     }
+    console.log(data);
 
-    return res.json({isValid: true,type: type});
+    return res.json({isValid: true,type: type,result : data});
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// Get any type of User
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+    const doctor = await Doctor.findById(id);
+    if (user) {
+      res.json(user);
+    }
+    else if(doctor) {
+      res.json(doctor)
+    } else {
+      res.status(404).json({ message: 'User or Doctor has been not found' });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err });
   }
 });
 

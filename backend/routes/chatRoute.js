@@ -36,6 +36,11 @@ router.post('/messages/new', async (req, res) => {
 // Create new a room
 router.post('/rooms/new', async (req, res) => {
 
+// "members" : [
+//     {"user_id" : "id1", "user_name" : "username1"},
+//     {"user_id" : "id2", "user_name" : "username2"}
+// ]
+
   try {
       const newRoom = new Room({
         members: req.body.members
@@ -55,6 +60,27 @@ router.get('/rooms', async (req, res) => {
     res.status(200).json(rooms);
   } catch (error) {
     res.status(500).json({err});
+  }
+});
+
+// Get a room by a user ID
+router.get('/rooms/user/:id', async (req, res) => {
+  const {id} = req.params;
+  console.log(id);
+  try {
+    // const doctor = await Doctor.findById(id);
+    const rooms = await Room.find(
+      {"members.user_id": ObjectId(id)},
+    );
+    console.log(rooms.map(room => {room.members}));
+    if (rooms) {
+        res.status(200).json(rooms);
+    } else {
+      res.status(404).json({ message: 'Room has been not found!' });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err });
   }
 });
 

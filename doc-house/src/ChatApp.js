@@ -20,10 +20,10 @@ function ChatApp() {
     const { roomId } = useParams();
 
     useEffect(() => {
-        axios.get('chat/messages/').then(res => {
-                setMessages(res.data)
-        });
-        console.log(roomId);
+        // axios.get('chat/messages/').then(res => {
+        //         setMessages(res.data)
+        // });
+        console.log('chat app js');
     }, []);
 
     // useEffect(() => {
