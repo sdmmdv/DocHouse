@@ -253,10 +253,6 @@ class ViewProfile extends Component {
   }
 
   handleMessage = async (e) => {
-    // "members" : [
-//     {"user_id" : "id1", "user_name" : "username1"},
-//     {"user_id" : "id2", "user_name" : "username2"}
-// ]
     try {
       const {doctor} = this.state;
       const token = localStorage.getItem('auth-token');
@@ -268,9 +264,10 @@ class ViewProfile extends Component {
       const user_id = userRes.data.id;
       const doctor_id = doctor._id;
       const members = [{"user_id": user_id, "user_name": user_name},{"user_id" : doctor_id, "user_name" : doctor_name}];
-      const room_id = await axios.post("http://localhost:5000/chat/rooms/new",{members});
-      if(room_id){
-         this.props.history.push(`/chat/rooms/${room_id}`);
+      const result = await axios.post("http://localhost:5000/chat/rooms/new",{members});
+      console.log(result);
+      if(result){
+         this.props.history.push(`/chat/rooms/${result.data._id}`);
       }
     } catch (error) {
       console.log(error)

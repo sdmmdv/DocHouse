@@ -9,12 +9,12 @@ const messageSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    timestamp: {
+    author_id: {
         type: String,
         required: true,
     },
-    received: {
-        type: Boolean,
+    timestamp: {
+        type: String,
         required: true,
     },
     room_id: {

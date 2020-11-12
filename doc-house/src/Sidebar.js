@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import "./Sidebar.css";
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import {Avatar, IconButton} from '@material-ui/core';
@@ -7,39 +7,19 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchOutlined from '@material-ui/icons/SearchOutlined';
 import SidebarChat from './SidebarChat';
 import axios from './axios';
+import UserContext from './context/userContext';
 
 function Sidebar() {
     const [rooms, setRooms] = useState([]);
-    const [userId, setUserId] = useState('');
-    //must depend on user Id // rooms that belong to user should be fetched
-    // useEffect(() => {
-    //     axios.get('chat/rooms/').then(res => {
-    //             setRooms(res.data);
-    //     });
-    // }, []);
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
-        const token = localStorage.getItem('auth-token');
-        console.log(token);
-        const checkAuth = async () => {
-            const userRes = await axios.post("http://localhost:5000/general/tokenIsValid",null, {
-                headers: { "x-auth-token": token },
-            });
-            setUserId(userRes.data.result._id);
-            console.log(userId);
-        }
-        
-
-        checkAuth();
-    }, []);
-
-    useEffect(() => {
-        if(userId){
-            axios.get(`chat/rooms/user/${userId}`).then(res => {
+        if(user._id){
+            axios.get(`chat/rooms/user/${user._id}`).then(res => {
                 setRooms(res.data);
             });
         }
-    }, [userId]);
+    }, [user]);
 
 
     return (
@@ -53,7 +33,8 @@ function Sidebar() {
        
             <div className="sidebar__chats">
                 {rooms.map((room) => (
-                    <SidebarChat key={room._id} id = {room._id} name = {room.members[1].user_name} />
+                    <SidebarChat key={room._id} id = {room._id} name = {user.type === 'user' ? room.members[1].user_name : 
+                                                                        (user.type === 'doctor' ? room.members[0].user_name : '')} />
                  ))}
             </div>
         </div>

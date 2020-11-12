@@ -48,15 +48,17 @@ db.once('open', () => {
     console.log('Success! Connected to MongoDB!');
     changeStream = db.collection("rooms").watch();
     changeStream.on("change", (change) => {
-        // console.log(change);
+        console.log(change);
         if(change.operationType == "update"){
-            const messageDetails = Object.values(change.updateDescription.updatedFields)[0];
-            console.log(messageDetails);
+            let messageDetails = Object.values(change.updateDescription.updatedFields)[0];
+            if(change.updateDescription.updatedFields.messages)
+                messageDetails = change.updateDescription.updatedFields.messages[0];
+            
             pusher.trigger("rooms", "updated" , {
                 author: messageDetails.author,
+                author_id: messageDetails.author_id,
                 message: messageDetails.message,
                 timestamp: messageDetails.timestamp,
-                received: messageDetails.received,
                 room_id: messageDetails.room_id
             });
         }

@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const auth = require('../middleware/auth');
-const Message = require('../models/Message');
 const Room = require('../models/Room');
 const ObjectId = require('mongodb').ObjectID;
 
@@ -8,13 +7,13 @@ const ObjectId = require('mongodb').ObjectID;
 // Create new a message
 router.post('/messages/new', async (req, res) => {
   try {
-      const newMessage = new Message({
+      const newMessage = {
         message: req.body.message,
         author: req.body.author,
+        author_id: req.body.author_id,
         timestamp: req.body.timestamp,
-        received: req.body.received,
         room_id: req.body.room_id
-      });
+      }
     
 
     Room.updateOne(
@@ -41,10 +40,23 @@ router.post('/rooms/new', async (req, res) => {
 //     {"user_id" : "id2", "user_name" : "username2"}
 // ]
 
+
   try {
-      const newRoom = new Room({
+    const room = await Room.find({ members: {
+       $elemMatch: {
+          user_id: req.body.members[0].user_id,
+          user_id: req.body.members[1].user_id
+        }
+      }
+    });
+    
+    if (room.length > 0) {
+      return res.status(200).json(room[0]);
+    }
+
+    const newRoom = new Room({
         members: req.body.members
-      });
+    });
     const savedRoom = await newRoom.save();
     res.status(201).json(savedRoom);
   } catch (err) {
@@ -85,15 +97,15 @@ router.get('/rooms/user/:id', async (req, res) => {
 });
 
 
-// Get all the messages
-router.get('/messages', async (req, res) => {
-  try {
-    const messages = await Message.find();
-    res.status(200).json(messages);
-  } catch (error) {
-    res.status(500).json({err});
-  }
-});
+// // Get all the messages
+// router.get('/messages', async (req, res) => {
+//   try {
+//     const messages = await Message.find();
+//     res.status(200).json(messages);
+//   } catch (error) {
+//     res.status(500).json({err});
+//   }
+// });
 
 
 //Get room name by id

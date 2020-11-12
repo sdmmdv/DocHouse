@@ -1,14 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import "./Chat.css";
-import { Avatar, IconButton } from '@material-ui/core';
-import MoreVert from '@material-ui/icons/MoreVert';
-import SearchOutlined from '@material-ui/icons/SearchOutlined';
-import AttachFile from '@material-ui/icons/AttachFile';
+import { Avatar} from '@material-ui/core';
 import InsertEmotionIcon from '@material-ui/icons/InsertEmoticon';
-import SelectInput from '@material-ui/core/Select/SelectInput';
 import axios from './axios';
 import Pusher from "pusher-js";
 import { useParams } from 'react-router-dom';
+import UserContext from './context/userContext';
 
 function Chat() {
     
@@ -16,12 +13,16 @@ function Chat() {
     const { roomId } = useParams();
     const [roomName, setRoomName] = useState('');
     const [messages, setMessages] = useState([]);
-
+    const {user} = useContext(UserContext);
+    const author = user.first_name + ' ' + user.last_name;
+   // a ? b : (c ? d : e)
     useEffect(() => {
        if(roomId){
             axios.get(`chat/rooms/${roomId}`).then(res => {
                 // console.log(res.data);
-                setRoomName(res.data.members[1].user_name);
+                setRoomName(user.type === 'user' ? res.data.members[1].user_name : 
+                     (user.type === 'doctor' ? res.data.members[0].user_name : '')
+                );
                 setMessages(res.data.messages);
             })
         }
@@ -50,9 +51,9 @@ function Chat() {
 
         await axios.post("chat/messages/new", {
             message: input,
-            author: 'qasqaldax',
+            author: author,
+            author_id: user._id,
             timestamp: new Date().toUTCString(),
-            received: true,
             room_id: roomId
         });
 
@@ -71,7 +72,7 @@ function Chat() {
 
              <div className="chat__body">
                  {messages.map((message) => (
-                    <p key={message._id} className={`chat__message ${message.received && "chat__receiver"}`}>
+                    <p key={message._id} className={`chat__message ${message.author_id !== user._id && "chat__receiver"}`}>
                         {message.message}
                     <span className="chat__timestamp">
                         {(new Date(message.timestamp)).toLocaleString()}
