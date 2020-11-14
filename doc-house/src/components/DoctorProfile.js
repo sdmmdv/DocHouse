@@ -36,7 +36,7 @@ const styles = theme => ({
     alignItems: 'center',
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   paper: {
     alignItems: 'center',
@@ -50,13 +50,14 @@ const styles = theme => ({
     position: 'absolute',
     width: theme.spacing(50),
     backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.spacing(2),
     boxShadow: theme.shadows[5],
     padding: theme.spacing(4),
     top: '50%',
     left: '50%',
     outline: 'none',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
+    maxHeight: '80vh',
+    overflow: 'scroll'
   },
 
 });
@@ -70,6 +71,7 @@ class DoctorProfile extends Component {
     bio: '',
     address: '',
     phone_number: '',
+    appointment_fee: 0,
     web: '',
     modalOpen: false,
     loading:  true
@@ -92,6 +94,7 @@ class DoctorProfile extends Component {
           const doctorRes = await axios.get("http://localhost:5000/doctors/current-doctor", {
             headers: { "x-auth-token": token },
           });
+          console.log(doctorRes);
           this.setState({
             token: token,
             doctor: doctorRes.data,
@@ -100,6 +103,7 @@ class DoctorProfile extends Component {
             address: doctorRes.data.address,
             phone_number: doctorRes.data.phone_number,
             web: doctorRes.data.web,
+            appointment_fee: doctorRes.data.appointment_fee,
           });
         }
     }
@@ -127,13 +131,14 @@ class DoctorProfile extends Component {
 
     handleSubmit = async (e) => {
       e.preventDefault();
-      const {doctor,token,speciality, bio, address, phone_number, web} = this.state;
+      const {doctor,token,speciality, bio, address, phone_number, web, appointment_fee} = this.state;
       const updates = {
         speciality,
         bio,
         address, 
         phone_number,
-        web
+        web,
+        appointment_fee
       };
 
       try {
@@ -208,6 +213,20 @@ class DoctorProfile extends Component {
                 onChange={this.handleChange}
                 placeholder="Enter your phone number."
               />
+                <TextField
+                  required
+                  defaultValue= {doctor.appointment_fee}
+                  fullWidth
+                  id="appointment_fee"
+                  label="Appointment fee ($)"
+                  name="appointment_fee"
+                  type="number"
+                  margin="normal"
+                  onChange={this.handleChange}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+               />
               <TextField
                 required
                 fullWidth

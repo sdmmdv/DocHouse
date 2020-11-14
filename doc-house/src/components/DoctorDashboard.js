@@ -221,6 +221,16 @@ class DoctorDashboard extends Component {
                   {modalInfo.time}
               </Typography>
 
+              <Typography variant="h6" >Payment</Typography>
+              <Typography variant="body1" gutterBottom>
+                  Appointment fee: {!modalInfo.appointment_fee ? 'Free of charge' : modalInfo.appointment_fee + ' $'}
+              </Typography>
+              <Typography variant="body1">
+                  Status: 
+                  {modalInfo.fee_status === 'success' && ' Paid'}
+                  {modalInfo.fee_status === 'unsettled' && ' Unsettled'}
+              </Typography>
+
               <Typography variant="h6" >Explanation</Typography>
               <Typography variant="body1" gutterBottom>
                   {modalInfo.explanation}

@@ -8,6 +8,7 @@ const validateSignUpDoctor = (data) => {
   data.phone_number = !isEmpty(data.phone_number) ? data.phone_number : '';
   data.email = !isEmpty(data.email) ? data.email : '';
   data.speciality = !isEmpty(data.speciality) ? data.speciality : '';
+  data.address = !isEmpty(data.address) ? data.address : '';
   data.password = !isEmpty(data.password) ? data.password : '';
   data.passwordConfirm = !isEmpty(data.passwordConfirm) ? data.passwordConfirm : '';
 
@@ -58,6 +59,10 @@ const validateSignUpDoctor = (data) => {
 
   if (validator.isEmpty(data.speciality)) {
     errors.speciality = '⚠ Speciality is required!';
+  }
+
+  if (validator.isEmpty(data.address)) {
+    errors.address = '⚠ Work Address is required!';
   }
 
   if (!validator.isLength(data.password, { min: 6, max: 30 })) {

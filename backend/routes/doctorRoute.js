@@ -26,6 +26,7 @@ router.post('/signup', async (req, res) => {
         phone_number: req.body.phone_number,
         email: req.body.email,
         speciality: req.body.speciality,
+        address: req.body.address,
         password: hashedPass
       });
 
@@ -83,7 +84,8 @@ router.get("/current-doctor", auth, async (req, res) => {
     email: doctor.email,
     speciality: doctor.speciality,
     bio: doctor.bio,
-    web: doctor.web
+    web: doctor.web,
+    appointment_fee: doctor.appointment_fee
   });
 });
 
@@ -114,6 +116,7 @@ router.patch('/:id', auth, async (req, res) => {
           address: req.body.address,
           phone_number: req.body.phone_number,
           web: req.body.web,
+          appointment_fee: req.body.appointment_fee
         }
       },
       {useFindAndModify: false }

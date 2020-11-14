@@ -106,6 +106,7 @@ class SignUpPageDoctor extends Component {
     last_name: '',
     email: '',
     speciality: '',
+    address: '',
     password: '',
     passwordConfirm: '',
     errors: {},
@@ -119,13 +120,14 @@ class SignUpPageDoctor extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { first_name, last_name, phone_number, email,speciality, password, passwordConfirm } = this.state;
+    const { first_name, last_name, phone_number, email,speciality, address, password, passwordConfirm } = this.state;
     const doctor = {
       first_name,
       last_name,
       phone_number,
       email,
       speciality,
+      address,
       password,
       passwordConfirm
     };
@@ -247,6 +249,17 @@ class SignUpPageDoctor extends Component {
                     </Select>
                     <span className={classes.errorText}>{errors.speciality}</span>
                 </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="address">Work Address</InputLabel>
+                <Input
+                  onChange={this.handleInputChange}
+                  id="address"
+                  name="address"
+                  autoComplete="address"
+                  error={!!errors.address}
+                />
+                <span className={classes.errorText}>{errors.address}</span>
+              </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input

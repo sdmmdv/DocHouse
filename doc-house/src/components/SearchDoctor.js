@@ -216,7 +216,7 @@ class SearchDoctor extends Component {
                   {doctor.speciality}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  110 West 14th StreetNew YorkNY10011
+                  {doctor.address}
                 </Typography>
                 <Typography gutterBottom variant="subtitle1">
                   <StarBorderIcon fontSize="inherit" /> 
@@ -236,7 +236,7 @@ class SearchDoctor extends Component {
               </Grid>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle1">Free Consultation</Typography>
+              <Typography variant="subtitle1">{doctor.appointment_fee > 0 ? 'Consultation fee: ' + doctor.appointment_fee + '$' : 'Free Consultation'}</Typography>
             </Grid>
           </Grid>
         </Grid>

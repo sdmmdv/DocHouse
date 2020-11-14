@@ -134,7 +134,6 @@ class UserDashboard extends Component {
   }
 
   handlePaymentStatus = async (status) => {
-    // this.handleModalClose();
     this.setState({payment_status: status}); 
     console.log("in payment status");
     const {modalInfo, payment_status} = this.state;
@@ -169,6 +168,7 @@ class UserDashboard extends Component {
     // console.log("component Did Update")
     if (
       this.state.activeTabValue !== prevState.activeTabValue
+      || this.state.payment_status !== prevState.payment_status
     ) {
       this.setState({ requests: {},retrieved: false});
       setTimeout(() => {
@@ -217,7 +217,6 @@ class UserDashboard extends Component {
                               {alert.text}
                           </Alert>
                     </Collapse>
-
             <Dialog
               open={dialogOpen}
               onClose={this.handleDialogClose}
@@ -263,14 +262,15 @@ class UserDashboard extends Component {
               <Typography variant="body1">
                   Status: 
                   {modalInfo.fee_status === 'success' && ' Paid'}
-                  {modalInfo.fee_status === 'failure' && ' Not paid'}
                   {modalInfo.fee_status === 'unsettled' && ' Unsettled'}
               </Typography>
               <Typography variant="h6" >Explanation</Typography>
               <Typography variant="body1" gutterBottom>
                   {modalInfo.explanation}
               </Typography>
-              {modalInfo.appointment_fee > 0 && modalInfo.fee_status !== 'success' && <Payment fee = {modalInfo.appointment_fee} parentCallback={this.handlePaymentStatus}/>}
+              <div onClick={this.handleModalClose}>
+                {modalInfo.appointment_fee > 0 && modalInfo.fee_status !== 'success' && <Payment fee = {modalInfo.appointment_fee} parentCallback={this.handlePaymentStatus}/>}
+              </div>
               <Button
                 fullWidth
                 color="primary"
@@ -282,6 +282,7 @@ class UserDashboard extends Component {
               </Button>
           </div>
         </Modal> }
+
             <TabPanel value={activeTabValue} index={0}>
                 <div className={classes.root}>
                     <Paper className={classes.paper}>
