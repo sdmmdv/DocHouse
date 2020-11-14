@@ -44,6 +44,14 @@ const requestSchema = new mongoose.Schema({
     status: {
         type: String,
         default: "pending"
+    },
+    appointment_fee: {
+        type: Number,
+        default: 0
+    },
+    fee_status: {
+        type: String,
+        default: "unsettled"
     }
 })
 

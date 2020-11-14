@@ -30,7 +30,8 @@ import Modal from '@material-ui/core/Modal';
 import Rating from "@material-ui/lab/Rating";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import Box from "@material-ui/core/Box";
-
+import InfoIcon from '@material-ui/icons/Info';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -39,6 +40,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import Payment from './Payment';
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -122,6 +124,14 @@ const styles = theme => ({
     backgroundColor: 'theme.palette.background.paper',
     boxShadow: theme.shadows[5]
   },
+  paymentPaper : {
+    position: 'relative',
+    padding: theme.spacing(3),
+    backgroundColor: 'theme.palette.background.paper',
+    boxShadow: theme.shadows[3],
+    display: "flex",
+    alignItems: "baseline"
+  },
   modalButton: {
     marginTop: theme.spacing(2)
   },
@@ -188,15 +198,22 @@ class ViewProfile extends Component {
     explanation: '',
     time: '2021-01-01T11:30',
     loading:  true,
-    submitted: false
+    submitted: false,
+    status: '',
+    showPayment: false
   };
+
+
+  handlePaymentStatus = (status) => {
+    this.setState({status: status});
+  }
 
   handleInputChange = (e) => {
     const { name, value } = e.target;
     this.setState(() => ({ [name]: value }));
   };
 
-  handleSubmit = async (e) => {
+  handleModalSubmit = async (e) => {
     e.preventDefault();
     try{
         const { subject, explanation, time } = this.state;
@@ -210,8 +227,9 @@ class ViewProfile extends Component {
         const receiver_id = this.props.location.pathname.split('/').pop();
         const creator_name = userRes.data.first_name + ' ' + userRes.data.last_name;
         const receiver_name = this.state.doctor.first_name + ' ' + this.state.doctor.last_name;
-        const display_time = moment(time).format('DD MMM YYYY, hh:mm a')
-        const request = {creator_id, receiver_id, creator_name, receiver_name, subject, explanation, display_time};
+        const display_time = moment(time).format('DD MMM YYYY, hh:mm a');
+        const app_fee = this.state.doctor.appointment_fee;
+        const request = {creator_id, receiver_id, creator_name, receiver_name, subject, explanation, display_time, app_fee};
         //client side Request check
         const { errors, isValid } = validateRequest(request);
         if (!isValid) {
@@ -219,13 +237,14 @@ class ViewProfile extends Component {
         }
 
         else {
-          await axios.post(
-            "http://localhost:5000/requests/create-request", request,
-            {headers: { "x-auth-token": token },
-          }).then((res) => {
-            console.log("RESPONSE ==== : ", res);
-          }); 
-          this.setState({submitted: true});
+                  await axios.post(
+                    "http://localhost:5000/requests/create-request", request,
+                    {headers: { "x-auth-token": token },
+                  }).then((res) => {
+                    console.log("RESPONSE ==== : ", res);
+                  }); 
+                  this.setState({submitted: true});
+  
         }
       } catch (err) {
         console.log(err);
@@ -468,17 +487,17 @@ class ViewProfile extends Component {
                           <AlertTitle className={classes.alert}>Success!</AlertTitle>
                           <Typography variant="body1">Your appointment has been registered.</Typography>
                           <Typography className={classes.footer} variant="body1">
-                            <NavLink to="/" className={classes.link}>
-                              {'Go back to homepage'}
+                            <NavLink to="/user-dashboard" className={classes.link}>
+                              {'Go back to dashboard'}
                             </NavLink>
                           </Typography>
                       </Alert>)
-              :
+              : 
                 (<main className={classes.layout}>
                 <Paper className={classes.paper}>
                     <Typography variant="h5">Make an appointment request</Typography>
                     <MuiThemeProvider theme={formLabelsTheme}>
-                    <form onSubmit={this.handleSubmit} noValidate>
+                    <form onSubmit={this.handleModalSubmit} noValidate>
 
                     <FormControl margin="normal" fullWidth>
                         <TextField 
@@ -518,6 +537,15 @@ class ViewProfile extends Component {
                         />
                         <span className={classes.errorText}>{errors.time}</span>
                     </FormControl>
+                          <div className={classes.paymentPaper}>
+                            <Typography variant="subtitle1">
+                                <LocalOfferIcon/> 
+                                  &nbsp;Appointment Fee:&nbsp;
+                            </Typography>
+                            <Typography variant="body1" style={{color: '#4caf50'}}>
+                                &nbsp;{doctor.appointment_fee + '$'}
+                            </Typography>
+                          </div>
                     <Button
                         type="submit"
                         fullWidth
@@ -530,7 +558,19 @@ class ViewProfile extends Component {
                     </form>
                     </MuiThemeProvider>
                 </Paper>
-                </main>)}
+                </main>)
+                                  //   <div className={classes.paymentPaper}>
+                                  //   <Typography variant="subtitle1">
+                                  //       <LocalOfferIcon/> 
+                                  //         &nbsp;Appointment Fee:&nbsp;
+                                  //   </Typography>
+                                  //   <Typography variant="body1" style={{color: '#4caf50'}}>
+                                  //        &nbsp;{doctor.appointment_fee + '$'}
+                                  //   </Typography>
+                                  //   &emsp;
+                                  //   <Payment fee = {doctor.appointment_fee} parentCallback={this.handlePaymentStatus}/>
+                                  // </div>
+                }
           </Cell>
         </Grid>)  : (<Loading/>)}
       </div>

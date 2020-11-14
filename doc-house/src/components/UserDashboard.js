@@ -21,7 +21,21 @@ import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import Loading from './Loading';
-import { Alert } from '@material-ui/lab';
+import Payment from './Payment';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Collapse from '@material-ui/core/Collapse';
+
+
+
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 
 class UserDashboard extends Component {
     state = {
@@ -30,7 +44,13 @@ class UserDashboard extends Component {
         index: 0,
         modalOpen: false,
         dialogOpen: false,
+        alert: {
+          severity: 'success',
+          text: 'default',
+          alertOpen: false
+        },
         target_id: '',
+        payment_status: '',
         modalInfo: {},
         requests: {}
     }
@@ -90,6 +110,14 @@ class UserDashboard extends Component {
     this.setState({ dialogOpen: false });
   };
 
+  handleAlertOpen = (severity, text) => {
+    this.setState({alert: { ...this.state.alert, alertOpen: true, text: text, severity: severity} });
+  };
+
+  handleAlertClose = () => {
+    this.setState({alert: { ...this.state.alert, alertOpen: false}});
+  };
+
   handleDeleteRequest = async(e) => {
     e.preventDefault();
       const {target_id} = this.state;
@@ -105,10 +133,34 @@ class UserDashboard extends Component {
     }
   }
 
+  handlePaymentStatus = async (status) => {
+    // this.handleModalClose();
+    this.setState({payment_status: status}); 
+    console.log("in payment status");
+    const {modalInfo, payment_status} = this.state;
+    let text = "";
+    let severity = "";
+    if (payment_status === "success") {
+      text = "Payment was successful!";
+      severity = "success";
+    } else {
+        text = "Something went wrong!";
+        severity = "warning";
+    }
+    this.handleAlertOpen(severity, text);
+
+      try {
+        const token = localStorage.getItem('auth-token');  
+        axios.patch(`http://localhost:5000/requests/update-payment-status/${modalInfo._id}`, {payment_status}, {headers: {"x-auth-token": token}})
+      } catch (error) {
+        console.log(error)
+      }
+  }
+
   componentDidMount(){
     // console.log("component Did Mount")
     setTimeout(() => {
-      this.fetchRequests(this.state.activeTabValue);
+     this.fetchRequests(this.state.activeTabValue);
     }, 500); 
     this.setState({loading: false});
   }
@@ -126,9 +178,11 @@ class UserDashboard extends Component {
     }
   }
 
+
   render(){
     const {classes} = this.props;
-    const {modalInfo, activeTabValue, requests, modalOpen, dialogOpen} = this.state;
+    const {modalInfo, activeTabValue, requests, modalOpen, dialogOpen, alert} = this.state;
+    // console.log(this.state);
     
 
     return (
@@ -148,6 +202,21 @@ class UserDashboard extends Component {
                 <Tab label="Rejected Requests" {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
+
+                    <Collapse in={alert.alertOpen}>     
+                          <Alert severity={alert.severity} action={
+                                <IconButton
+                                  aria-label="close"
+                                  color="inherit"
+                                  size="small"
+                                  onClick={this.handleAlertClose}
+                                >
+                                  <CloseIcon fontSize="inherit" />
+                                </IconButton>
+                              }>
+                              {alert.text}
+                          </Alert>
+                    </Collapse>
 
             <Dialog
               open={dialogOpen}
@@ -178,23 +247,30 @@ class UserDashboard extends Component {
               <Typography variant="h6" >Subject</Typography>
               <Typography variant="body1" gutterBottom>
                   {modalInfo.subject}
-              </Typography>
-
-
+              </Typography>  
               <Typography variant="h6" >Doctor</Typography>
               <Typography variant="body1" gutterBottom>
                   {modalInfo.receiver_name}
               </Typography>
-
               <Typography variant="h6" >Appointment Time</Typography>
               <Typography variant="body1" gutterBottom>
                   {modalInfo.time}
               </Typography>
-
+              <Typography variant="h6" >Payment</Typography>
+              <Typography variant="body1" gutterBottom>
+                  Appointment fee: {!modalInfo.appointment_fee ? 'Free of charge' : modalInfo.appointment_fee + ' $'}
+              </Typography>
+              <Typography variant="body1">
+                  Status: 
+                  {modalInfo.fee_status === 'success' && ' Paid'}
+                  {modalInfo.fee_status === 'failure' && ' Not paid'}
+                  {modalInfo.fee_status === 'unsettled' && ' Unsettled'}
+              </Typography>
               <Typography variant="h6" >Explanation</Typography>
               <Typography variant="body1" gutterBottom>
                   {modalInfo.explanation}
               </Typography>
+              {modalInfo.appointment_fee > 0 && modalInfo.fee_status !== 'success' && <Payment fee = {modalInfo.appointment_fee} parentCallback={this.handlePaymentStatus}/>}
               <Button
                 fullWidth
                 color="primary"

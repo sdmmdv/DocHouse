@@ -70,12 +70,14 @@ const usersRouter = require('./routes/userRoute');
 const doctorsRouter = require('./routes/doctorRoute');
 const requestsRouter = require('./routes/requestRoute');
 const chatRouter = require('./routes/chatRoute');
+const paymentRouter = require('./routes/paymentRoute');
 
 app.use('/general', generalRouter);
 app.use('/users',usersRouter);
 app.use('/doctors', doctorsRouter);
 app.use('/requests', requestsRouter);
 app.use('/chat', chatRouter);
+app.use('/payment', paymentRouter);
 
 
 

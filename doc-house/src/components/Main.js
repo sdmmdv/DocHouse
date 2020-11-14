@@ -17,6 +17,7 @@ import NotFound404 from './NotFound';
 import SearchDoctor from './SearchDoctor';
 import ViewProfile from './ViewProfile';
 import ChatApp from '../ChatApp';
+import Payment from './Payment';
 import Test from './Test';
 
 export const history = createBrowserHistory();
@@ -41,6 +42,7 @@ const Root = () => (
     <Route path="/search-doctor" component={SearchDoctor}/>
     <Route exact path="/chat" render={(props) => <ChatApp {...props} />} />
     <Route path="/chat/rooms/:roomId" render={(props) => <ChatApp {...props} />} />
+    <Route path="/payment" render={(props) => <Payment {...props} />} />
     <Route component={NotFound404}/>
   </Switch>
 )

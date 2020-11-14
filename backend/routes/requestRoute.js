@@ -14,6 +14,7 @@ const newRequest = new Request({
     subject: req.body.subject,
     explanation: req.body.explanation,
     time: req.body.time,
+    appointment_fee: req.body.app_fee
     });  
   try {
     const savedRequest = await newRequest.save();
@@ -77,6 +78,24 @@ router.patch('/hide_receiver/:id', auth, async (req, res) => {
       {useFindAndModify: false}
     );
     return res.status(200).json({message: "Successfully changed!"});
+  } catch (err) {
+    return res.status(500).json({message: err});
+  }
+});
+
+// Update Payment Status (Settled/Unsettled)
+router.patch('/update-payment-status/:id', auth, async (req, res) => {
+  const {id} = req.params;
+  try {
+    await Request.findOneAndUpdate({_id: id},
+      {
+        $set: {
+          fee_status: req.body.payment_status
+        }
+      },
+      {useFindAndModify: false}
+    );
+    return res.status(200).json({message: "Successfully updated!"});
   } catch (err) {
     return res.status(500).json({message: err});
   }

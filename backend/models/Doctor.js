@@ -50,6 +50,10 @@ const doctorSchema = new mongoose.Schema({
     reviews: {
         type: [{author : String, opinion : String, rating: Number}]
     },
+    appointment_fee: {
+        type: Number,
+        default: 0
+    },
     date: {
         type: Date,
         default: Date.now
