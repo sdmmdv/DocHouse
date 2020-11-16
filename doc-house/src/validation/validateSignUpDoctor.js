@@ -41,6 +41,7 @@ const validateSignUpDoctor = (data) => {
     errors.email = '⚠ Invalid E-mail format!';
   }
 
+  //eslint-disable-next-line
   if (!(data.phone_number).match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/)) {
     errors.phone_number = '⚠ Invalid Phone Number format!';
   }

@@ -1,7 +1,3 @@
-import { TextareaAutosize } from "@material-ui/core";
-
-
-
 export const styles = (theme) => ({
     layout: {
       position: 'static',

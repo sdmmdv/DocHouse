@@ -48,7 +48,7 @@ db.once('open', () => {
     console.log('Success! Connected to MongoDB!');
     changeStream = db.collection("rooms").watch();
     changeStream.on("change", (change) => {
-        console.log(change);
+        // console.log(change);
         if(change.operationType == "update"){
             let messageDetails = Object.values(change.updateDescription.updatedFields)[0];
             if(change.updateDescription.updatedFields.messages)

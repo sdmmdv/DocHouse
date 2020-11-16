@@ -2,17 +2,18 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const express = require('express');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const auth = require('../middleware/auth');
-const stripe = require("stripe")("sk_test_51Hn21bJDJbmlLgF3iGnEdU2w6W6vrpz61a7cv5p5zGhl15Y0LgUN9q1wvsZ4BsjyGkJGLuEkqfGRpsIIM62xlLCN004XHBJENE");
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { v4: uuidv4 } = require('uuid');
 // uuidv4();
 
 router.post("/checkout", async (req, res) => {
-    console.log("Request:", req.body);
+    
     let status = '';
     try {
       const { checkout, token } = req.body;
-      console.log(checkout);
+      // console.log(checkout);
   
       const customer = await stripe.customers.create({
         email: token.email,
@@ -41,7 +42,7 @@ router.post("/checkout", async (req, res) => {
           idempotencyKey
         }
       );
-      console.log("Charge:", { charge });
+      // console.log("Charge:", { charge });
       status = "success";
     } catch (error) {
       console.error("Error:", error);

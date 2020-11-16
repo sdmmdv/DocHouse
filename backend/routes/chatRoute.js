@@ -21,7 +21,7 @@ router.post('/messages/new', async (req, res) => {
         {$push: {messages: newMessage}},
         function(err, data) {
           if(err) console.log(err);
-          console.log(data);
+          // console.log(data);
         }
     );
 
@@ -78,13 +78,12 @@ router.get('/rooms', async (req, res) => {
 // Get a room by a user ID
 router.get('/rooms/user/:id', async (req, res) => {
   const {id} = req.params;
-  console.log(id);
   try {
     // const doctor = await Doctor.findById(id);
     const rooms = await Room.find(
       {"members.user_id": ObjectId(id)},
     );
-    console.log(rooms.map(room => {room.members}));
+    
     if (rooms) {
         res.status(200).json(rooms);
     } else {

@@ -24,7 +24,6 @@ router.get('/get-type', async (req, res) => {
 // Store review to the Doctor schema
 router.patch('/post-review/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(req.query);
   const review = req.body;
   try {
     await Doctor.findOneAndUpdate({ _id: id},
@@ -67,7 +66,7 @@ router.post("/tokenIsValid", async (req, res) => {
     if (!data) {
       return res.json(false);
     }
-    console.log(data);
+  
 
     return res.json({isValid: true,type: type,result : data});
   } catch (err) {
