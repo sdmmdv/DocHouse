@@ -7,6 +7,15 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard';
+import PersonIcon from '@material-ui/icons/Person';
+import ChatIcon from '@material-ui/icons/Chat';
+import SearchIcon from '@material-ui/icons/Search';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -139,58 +148,90 @@ class Navbar extends Component {
                         <List>
                                 <Link className={classes.list} to="/">
                                 <ListItem button>
+                                    <ListItemIcon>
+                                      <HomeIcon />
+                                    </ListItemIcon>
                                     <ListItemText primary="Home" />
                                 </ListItem>
                                 </Link>
                                 {type === 'user' && 
                                 <Link className={classes.list} to="/user-dashboard">
                                 <ListItem button>
-                                    <ListItemText primary="Dashboard"/>
-                                </ListItem>
-                                </Link> }
-
-                                {type === 'doctor' &&
-                                <Link className={classes.list} to="/doctor-dashboard"> 
-                                <ListItem button>
-                                    <ListItemText primary="Dashboard"/>
+                                    <ListItemIcon>
+                                      <DeveloperBoardIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Dashboard"  />
                                 </ListItem>
                                 </Link>}
+
+                                {type === 'doctor' &&
+                                <Link className={classes.list} to="/doctor-dashboard">
+                                <ListItem button>
+                                    <ListItemIcon>
+                                      <DeveloperBoardIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Dashboard"  />
+                                </ListItem>
+                                </Link>}
+
                                 {type === 'user' && 
                                 <Link className={classes.list} to="/user-profile">
                                 <ListItem button>
-                                    <ListItemText primary="Profile"/>
+                                    <ListItemIcon>
+                                      <PersonIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Profile"  />
                                 </ListItem>
-                                </Link> }
+                                </Link>}
 
                                 {type === 'doctor' &&
-                                <Link className={classes.list} to="/doctor-profile"> 
+                                <Link className={classes.list} to="/doctor-profile">
                                 <ListItem button>
-                                    <ListItemText primary="Profile"/>
+                                    <ListItemIcon>
+                                      <ChatIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Profile"  />
                                 </ListItem>
                                 </Link>}
 
                                 {(type === 'doctor' || type === 'user') &&
-                                <Link className={classes.list} to="/chat"> 
+                                <Link className={classes.list} to="/chat">
                                 <ListItem button>
-                                    <ListItemText primary="Chat"/>
+                                    <ListItemIcon>
+                                      <ChatIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Chat"  />
                                 </ListItem>
                                 </Link>}
+
                                 {type === 'user' && 
                                 <Link className={classes.list} to="/search-doctor">
                                 <ListItem button>
-                                    <ListItemText primary="Search Doctor" />
+                                    <ListItemIcon>
+                                      <SearchIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Search Doctor"  />
                                 </ListItem>
                                 </Link>}
+                                
+
                                 {type !== 'user' && type !== 'doctor' &&
                                 <Link className={classes.list} to="/log-transition">
                                 <ListItem button>
-                                    <ListItemText primary="Login" />
+                                    <ListItemIcon>
+                                      <ExitToAppIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Login"  />
                                 </ListItem>
-                                </Link>}
+                                </Link>
+                                }
                                 {(type === 'user' || type === 'doctor') &&
                                 <Link className={classes.list} to="/log-transition" onClick={this.logOut}>
                                 <ListItem button>
-                                    <ListItemText primary="Logout" />
+                                    <ListItemIcon>
+                                      <ArrowBackIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Logout"  />
                                 </ListItem>
                                 </Link>}
                         </List>
