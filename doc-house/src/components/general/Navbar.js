@@ -188,7 +188,7 @@ class Navbar extends Component {
                                 <Link className={classes.list} to="/doctor-profile">
                                 <ListItem button>
                                     <ListItemIcon>
-                                      <ChatIcon />
+                                      <PersonIcon />
                                     </ListItemIcon>
                                     <ListItemText primary="Profile"  />
                                 </ListItem>
