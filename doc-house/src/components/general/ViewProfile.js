@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { Grid, Cell, Icon} from 'react-mdl';
+import { Grid, Cell} from 'react-mdl';
 import axios from 'axios';
 import '../../Profile.css';
 import Navbar from './Navbar';
@@ -10,10 +10,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-import amber from '@material-ui/core/colors/amber';
-import lime from '@material-ui/core/colors/lime';
 import Loading from './Loading';
 import TextField from '@material-ui/core/TextField';
 import validateRequest from '../../validation/validateRequest';
@@ -24,6 +20,13 @@ import Rating from "@material-ui/lab/Rating";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import Box from "@material-ui/core/Box";
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+
+import LanguageIcon from '@material-ui/icons/Language';
+import BusinessIcon from '@material-ui/icons/Business';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import SchoolIcon from '@material-ui/icons/School';
+import PhoneIcon from '@material-ui/icons/Phone';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -36,72 +39,49 @@ import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core
   //// FUnction to calculate the avreage
   const average = (array) => (array.reduce((total,next) => (next !== null ? (total + next.rating) : 0), 0) / array.length).toFixed(2);
 
-
-
-const formLabelsTheme = createMuiTheme({
-    palette: {
-      error: {
-        main: '#4caf50',
-      },
-        primary: amber,
-        secondary: lime,
-  }
-})
-
-
-
-
 const styles = theme => ({
-    divider: {
-        borderTop: '3px solid #4caf50',
-        width: '50%'
-      },
-      topHeader: {
-        paddingTop: '2em'
-      },
-      list: {
-        flex: theme.spacing(1),
-        width: 800,
-        backgroundColor: theme.palette.background.paper,
-      },
-      expansion: {
-        width: 600,
-        boxShadow: theme.shadows[5],
-      },
-      inline: {
-        display: 'inline',
-      },
-      large: {
-        width: theme.spacing(6),
-        height: theme.spacing(6),
-      },
+  divider: {
+      borderTop: '3px solid #4caf50',
+      width: '80%'
+    },
+  dividerReview: {
+    borderTop: '3px solid #3f51b5',
+    width: '100%'
+  },
+    list: {
+      flex: theme.spacing(1),
+      width: 800,
+      backgroundColor: theme.palette.background.paper,
+    },
+    expansion: {
+      width: '80%',
+      boxShadow: theme.shadows[5],
+    },
+    inline: {
+      display: 'inline',
+    },
+    text: {
+      maxWidth: "80%",
+    },
 
-  notFound: {
-    marginTop: '100px',
-    marginBottom: '50px',
-    margin: 'auto',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    padding: theme.spacing(2),
-    maxWidth: 800,
-    transform: 'translate(0%, 250%)',
-    boxShadow: theme.shadows[3],
-    backgroundColor: 'theme.palette.background.paper'
-  },
-  img: {
-    width: 128,
-    height: 128,
-  },
+    container: {
+      alignItems: 'center',
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      outline: 'none',
+      padding: theme.spacing(6),
+      margin: 'auto',
+    },
   layout: {
     width: 'auto',
     display: 'block',
-    marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
   },
   paper: {
     position: 'relative',
     padding: theme.spacing(4),
+    margin: 'auto',
     flexDirection: 'column',
     backgroundColor: 'theme.palette.background.paper',
     boxShadow: theme.shadows[5]
@@ -149,14 +129,21 @@ const styles = theme => ({
     textDecoration: 'none',
     color: theme.palette.success.main
   },
-  editButton: {
-    margin: theme.spacing(1),
-    position: 'absolute',
-    // left: '1vw',
-    // top: '50vh'
+  icons: {
+    paddingBottom: '0.2em'
+  },
+  buttons: {
+      '& > *': {
+        margin: theme.spacing(2),
+      }
   },
   footer: {
     marginTop: theme.spacing(2)
+  },
+  avatar: {
+    margin: theme.spacing(5),
+    height: theme.spacing(25),
+    width: theme.spacing(25),
   },
   errorText: {
     color: '#D50000',
@@ -367,53 +354,53 @@ class ViewProfile extends Component {
                   </div>
                 </Modal>
         {doctor ? 
-        (<Grid >
+        (  <div>
+                <div className={classes.container}>
+                       <Avatar src={require('../../assets/avatarDoctor.png')} className={classes.avatar}/>
+                       <Typography variant="h3" >Dr. {doctor.first_name} {doctor.last_name}</Typography>
+                       <Typography variant="h5" ><SchoolIcon className={classes.icons}/> {doctor.speciality}</Typography>
+                       <Typography variant="h5" ><StarBorderIcon className={classes.icons} /> {doctor.reviews.length ? average(doctor.reviews) : '0.0'} ({doctor.reviews.length} reviews)</Typography>
+                       <div className={classes.buttons}>
+                            <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.handleModalOpen}
+                                        >
+                                        Review Doctor
+                            </Button>
+                            <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.handleMessage}
+                                        >
+                                        Message Doctor
+                            </Button>
+                       </div>
+                </div>       
+        <Grid >
           <Cell col={6}>
-            <div style={{textAlign: 'center'}}>
-              <img className="container-div"
-                src={require('../../assets/avatarDoctor.png')}
-                alt="avatar"
-                style={{height: '200px'}}
-                 />
-            </div>
-             <Button
-                        variant="contained"
-                        // className={classes.editButton}
-                        onClick={this.handleModalOpen}
-                        >
-                        Review Doctor
-             </Button>
-             <Button
-                        variant="contained"
-                        // className={classes.editButton}
-                        onClick={this.handleMessage}
-                        >
-                        Message Doctor
-             </Button>
                     <div >
-                        <h2 className={classes.topHeader}>Dr. {doctor.first_name} {doctor.last_name}</h2>
-                        <h3 >{doctor.speciality}</h3>
-                        <h4 > <StarBorderIcon fontSize="inherit" /> {doctor.reviews.length ? average(doctor.reviews) : '0.0'} ({doctor.reviews.length} reviews)</h4>
-                        <h5 >Bio <Icon name="portrait"/></h5>
-                        <hr className={classes.divider}/>
-                          <p>{doctor.bio}</p>
-                        <hr className={classes.divider}/>
-                        <h5>Phone <Icon name="phone"/></h5>
-                            <p>{doctor.phone_number}</p>
-                        <hr className={classes.divider}/>
-                        <h5>Email <Icon name="email"/></h5>
-                            <p>{doctor.email}</p>
-                        <hr className={classes.divider}/>
-                        <h5>Address <Icon name="home"/></h5>
-                            <p>1 Hacker Way Menlo Park, 94025</p>
-                        <hr className={classes.divider}/>
-                        <h5>Web <Icon name="language"/></h5>
-                            <p>somewebsite.com</p>
-                            <hr className={classes.divider}/>
-                            <React.Fragment>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom ><AccountBoxIcon className={classes.icons}/> Bio</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.bio} ergergegr erg cercgecgnegnecg evrgn venr env eg evenbgvenvg engvegvnebgve vne gvenbgvnebr</Typography>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom ><PhoneIcon className={classes.icons}/> Phone</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.phone_number}</Typography>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom><MailOutlineIcon className={classes.icons}/> Email</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.email}</Typography>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom><BusinessIcon className={classes.icons}/> Address</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.address}</Typography>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom><LanguageIcon className={classes.icons}/> Web</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.web}</Typography>
+                           <hr className={classes.divider}/>
+
+                       <React.Fragment>
                                   <Accordion className={classes.expansion}>
                                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                  <Typography variant="h5" className={classes.heading}>Reviews</Typography>
+                                  <Typography variant="h5">Reviews</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                 <List className={classes.list}>
@@ -447,7 +434,7 @@ class ViewProfile extends Component {
                                   }
                                 />
                               </ListItem>
-                              <hr className={classes.divider}/>
+                              <hr className={classes.dividerReview}/>
                               </div>)}
                             </List>
                                 </AccordionDetails>
@@ -470,7 +457,6 @@ class ViewProfile extends Component {
                 (<main className={classes.layout}>
                 <Paper className={classes.paper}>
                     <Typography variant="h5">Make an appointment request</Typography>
-                    <MuiThemeProvider theme={formLabelsTheme}>
                     <form onSubmit={this.handleModalSubmit} noValidate>
 
                     <FormControl margin="normal" fullWidth>
@@ -530,23 +516,12 @@ class ViewProfile extends Component {
                         Book
                     </Button>
                     </form>
-                    </MuiThemeProvider>
                 </Paper>
                 </main>)
-                                  //   <div className={classes.paymentPaper}>
-                                  //   <Typography variant="subtitle1">
-                                  //       <LocalOfferIcon/> 
-                                  //         &nbsp;Appointment Fee:&nbsp;
-                                  //   </Typography>
-                                  //   <Typography variant="body1" style={{color: '#4caf50'}}>
-                                  //        &nbsp;{doctor.appointment_fee + '$'}
-                                  //   </Typography>
-                                  //   &emsp;
-                                  //   <Payment fee = {doctor.appointment_fee} parentCallback={this.handlePaymentStatus}/>
-                                  // </div>
                 }
           </Cell>
-        </Grid>)  : (<Loading/>)}
+        </Grid>
+        </div> )  : (<Loading/>)}
       </div>
     )
   }

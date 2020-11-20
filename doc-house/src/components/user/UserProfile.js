@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Grid, Cell, Icon} from 'react-mdl';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import '../../Profile.css';
@@ -9,21 +8,31 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
+import LanguageIcon from '@material-ui/icons/Language';
+import BusinessIcon from '@material-ui/icons/Business';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import {Avatar} from '@material-ui/core';
 
 
 const styles = theme => ({
+  container: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    outline: 'none',
+    padding: theme.spacing(6),
+    margin: 'auto',
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#3f51b5'
+  },
   divider: {
     borderTop: '3px solid #3f51b5',
-    width: '50%'
-  },
-  topHeader: {
-    paddingTop: '2em'
-  },
-  editButton: {
-    margin: theme.spacing(1),
-    position: 'absolute',
-    // left: '1vw',
-    // top: '50vh'
+    width: '60%',
+    margin: theme.spacing(2)
   },
   saveButton: {
     margin: theme.spacing(1)
@@ -34,13 +43,20 @@ const styles = theme => ({
     flexWrap: 'wrap',
     justifyContent: 'center'
   },
-  paper: {
+  buttons: {
     alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    height: 140,
-    justifyContent: 'center',
-    width: '33.3%'
+    marginBottom: theme.spacing(3)
+  },
+  icons: {
+    paddingBottom: '0.2em'
+  },
+  text: {
+    maxWidth: "60%",
+  },
+  avatar: {
+    margin: theme.spacing(5),
+    height: theme.spacing(25),
+    width: theme.spacing(25),
   },
   modalPaper: {
     position: 'absolute',
@@ -220,43 +236,33 @@ class UserProfile extends Component {
         </Modal> }
 
          
-        <Grid >
-          <Cell col={6}>
-            <div style={{textAlign: 'center'}}>
-              <img className="container-div"
-                src={require('../../assets/avatar.png')}
-                alt="avatar"
-                style={{height: '200px', margin: 'auto'}}
-                 />
-            </div>
-            {user ? 
-                    (<div >
-                        <Button
-                        variant="contained"
-                        className={classes.editButton}
-                        onClick={this.handleModalOpen}
-                        >
-                        Edit Profile
-                        </Button>
 
-                        <h2 className={classes.topHeader}>{user.first_name} {user.last_name}</h2>
-                        <hr className={classes.divider}/>
-                        <h5 >Bio <Icon name="portrait"/></h5>
-                          <p>{user.bio}</p>
-                        <hr className={classes.divider}/>
-                        <h5>Email <Icon name="email"/></h5>
-                            <p>{user.email}</p>
-                        <hr className={classes.divider}/>
-                        <h5>Address <Icon name="home"/></h5>
-                            <p>{user.address}</p>
-                        <hr className={classes.divider}/>
-                        <h5>Web <Icon name="language"/></h5>
-                            <p>{user.web}</p>
+            {user ? 
+                    (<div className={classes.container}>
+                        <Avatar src={require('../../assets/avatar.png')} className={classes.avatar}/>
+                        <div className={classes.buttons}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={this.handleModalOpen}
+                            >
+                            Edit Profile 
+                            </Button>
+                        </div>
+                        <Typography variant="h3" className={classes.text}>{user.first_name} {user.last_name}</Typography>
+                            <hr className={classes.divider}/>
+                        <Typography variant="h5" gutterBottom ><AccountBoxIcon className={classes.icons}/> Bio</Typography>
+                        <Typography variant="body1" className={classes.text}>{user.bio}</Typography>
+                            <hr className={classes.divider}/>
+                        <Typography variant="h5" gutterBottom><MailOutlineIcon className={classes.icons}/> Email</Typography>
+                        <Typography variant="body1" className={classes.text}>{user.email}</Typography>
+                            <hr className={classes.divider}/>
+                        <Typography variant="h5" gutterBottom><BusinessIcon className={classes.icons}/> Address</Typography>
+                        <Typography variant="body1" className={classes.text}>{user.address}</Typography>
+                            <hr className={classes.divider}/>
+                        <Typography variant="h5" gutterBottom><LanguageIcon className={classes.icons}/> Web</Typography>
+                        <Typography variant="body1" className={classes.text}>{user.web}</Typography>
                     </div>) : <Loading/>}
-          </Cell>
-          {/* <Cell className="button_placeholder" col={8}>
-          </Cell> */}
-        </Grid>
       </div>
     )
   }

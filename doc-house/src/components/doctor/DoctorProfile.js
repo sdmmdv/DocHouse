@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Grid, Cell, Icon} from 'react-mdl';
 import axios from 'axios';
 import '../../Profile.css';
 import Navbar from '../general/Navbar';
@@ -9,22 +8,34 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
+import LanguageIcon from '@material-ui/icons/Language';
+import BusinessIcon from '@material-ui/icons/Business';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import SchoolIcon from '@material-ui/icons/School';
+import {Avatar} from '@material-ui/core';
+import PhoneIcon from '@material-ui/icons/Phone';
 
 
 
 const styles = theme => ({
+  container: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    outline: 'none',
+    padding: theme.spacing(6),
+    margin: 'auto',
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#3f51b5'
+  },
   divider: {
     borderTop: '3px solid  #4caf50',
-    width: '50%'
-  },
-  topHeader: {
-    paddingTop: '2em'
-  },
-  editButton: {
-    margin: theme.spacing(1),
-    position: 'absolute',
-    // left: '1vw',
-    // top: '50vh'
+    width: '60%',
+    margin: theme.spacing(2)
   },
   saveButton: {
     margin: theme.spacing(1)
@@ -33,15 +44,22 @@ const styles = theme => ({
     alignItems: 'center',
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
-  paper: {
+  buttons: {
     alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    height: 140,
-    justifyContent: 'center',
-    width: '33.3%'
+    marginBottom: theme.spacing(3)
+  },
+  icons: {
+    paddingBottom: '0.2em'
+  },
+  text: {
+    maxWidth: "60%",
+  },
+  avatar: {
+    margin: theme.spacing(5),
+    height: theme.spacing(25),
+    width: theme.spacing(25),
   },
   modalPaper: {
     position: 'absolute',
@@ -56,7 +74,6 @@ const styles = theme => ({
     maxHeight: '80vh',
     overflow: 'scroll'
   },
-
 });
 
 
@@ -269,47 +286,39 @@ class DoctorProfile extends Component {
             </form>
           </div>
         </Modal> }
-        <Grid >
-          <Cell col={6}>
-            <div style={{textAlign: 'center'}}>
-              <img className="container-div"
-                src={require('../../assets/avatarDoctor.png')}
-                alt="avatar"
-                style={{height: '200px', margin: 'auto'}}
-                 />
-            </div>
+
             {doctor ? 
-                    (<div >
-                        <Button
-                            variant="contained"
-                            className={classes.editButton}
-                            onClick={this.handleModalOpen}
-                            >
-                            Edit Profile
-                        </Button>
-                        <h2 className={classes.topHeader}>Dr. {doctor.first_name} {doctor.last_name}</h2>
-                        <h3 >{doctor.speciality}</h3>
-                        <h5 >Bio <Icon name="portrait"/></h5>
-                        <hr className={classes.divider}/>
-                          <p>{doctor.bio}</p>
-                        <hr className={classes.divider}/>
-                        <h5>Phone <Icon name="phone"/></h5>
-                            <p>{doctor.phone_number}</p>
-                        <hr className={classes.divider}/>
-                        <h5>Email <Icon name="email"/></h5>
-                            <p>{doctor.email}</p>
-                        <hr className={classes.divider}/>
-                        <h5>Address <Icon name="home"/></h5>
-                            <p>{doctor.address}</p>
-                        <hr className={classes.divider}/>
-                        <h5>Web <Icon name="language"/></h5>
-                            <p>{doctor.web}</p>
+                    (<div className={classes.container}>
+                        <Avatar src={require('../../assets/avatarDoctor.png')} className={classes.avatar}/>
+                        <div className={classes.buttons}>
+                          <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={this.handleModalOpen}
+                              >
+                              Edit Profile
+                          </Button>
+                        </div>
+
+                       <Typography variant="h3" className={classes.text}>Dr. {doctor.first_name} {doctor.last_name}</Typography>
+                       <Typography variant="h5" className={classes.text}><SchoolIcon className={classes.icons}/> {doctor.speciality}</Typography>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom ><AccountBoxIcon className={classes.icons}/> Bio</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.bio}</Typography>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom ><PhoneIcon className={classes.icons}/> Phone</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.phone_number}</Typography>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom><MailOutlineIcon className={classes.icons}/> Email</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.email}</Typography>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom><BusinessIcon className={classes.icons}/> Address</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.address}</Typography>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom><LanguageIcon className={classes.icons}/> Web</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.web}</Typography>
                     </div>) : <Loading/>}
-          </Cell>
-          {/* <Cell className="button_placeholder" col={8}>
-          </Cell> */}
-        </Grid>
-      </div>
+              </div>
     )
   }
 }
