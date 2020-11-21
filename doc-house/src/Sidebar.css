@@ -41,12 +41,13 @@
 }
 
 .sidebar__searchContainer > .MuiSvgIcon-root {
-    color: gray;
+    color: #0084ff;
     padding: 10px;
 }
 
 .sidebar__searchContainer > input {
     border: none;
+    color: #0084ff;
     outline-width: 0;
     margin-left: 10px;
 }

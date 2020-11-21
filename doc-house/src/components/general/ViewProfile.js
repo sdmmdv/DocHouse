@@ -382,7 +382,7 @@ class ViewProfile extends Component {
                     <div >
                            <hr className={classes.divider}/>
                        <Typography variant="h5" gutterBottom ><AccountBoxIcon className={classes.icons}/> Bio</Typography>
-                       <Typography variant="body1" className={classes.text}>{doctor.bio} ergergegr erg cercgecgnegnecg evrgn venr env eg evenbgvenvg engvegvnebgve vne gvenbgvnebr</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.bio}</Typography>
                            <hr className={classes.divider}/>
                        <Typography variant="h5" gutterBottom ><PhoneIcon className={classes.icons}/> Phone</Typography>
                        <Typography variant="body1" className={classes.text}>{doctor.phone_number}</Typography>

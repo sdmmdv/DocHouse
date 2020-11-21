@@ -64,7 +64,7 @@ function Chat() {
     return (
         <div className="chat">
              <div className = "chat__header">
-                 <Avatar />
+                 <Avatar className = "chat__avatar"/>
                  <div className="chat__headerInfo">
                         <h3>{roomName}</h3>
                  </div>
