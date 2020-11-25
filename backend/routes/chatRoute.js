@@ -42,17 +42,17 @@ router.post('/rooms/new', async (req, res) => {
 
 
   try {
-    const room = await Room.find({ members: {
-       $elemMatch: {
-          user_id: req.body.members[0].user_id,
-          user_id: req.body.members[1].user_id
-        }
-      }
-    });
+    // const room = await Room.find({ members: {
+    //    $elemMatch: {
+    //       user_id: req.body.members[0].user_id,
+    //       user_id: req.body.members[1].user_id
+    //     }
+    //   }
+    // });
     
-    if (room.length > 0) {
-      return res.status(200).json(room[0]);
-    }
+    // if (room.length > 0) {
+    //   return res.status(200).json(room[0]);
+    // }
 
     const newRoom = new Room({
         members: req.body.members

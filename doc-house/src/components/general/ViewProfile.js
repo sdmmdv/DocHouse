@@ -245,7 +245,7 @@ class ViewProfile extends Component {
       const doctor_id = doctor._id;
       const members = [{"user_id": user_id, "user_name": user_name},{"user_id" : doctor_id, "user_name" : doctor_name}];
       const result = await axios.post("http://localhost:5000/chat/rooms/new",{members});
-      // console.log(result);
+      console.log(result);
       if(result){
          this.props.history.push(`/chat/rooms/${result.data._id}`);
       }

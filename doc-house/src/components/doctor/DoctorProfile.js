@@ -15,6 +15,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SchoolIcon from '@material-ui/icons/School';
 import {Avatar} from '@material-ui/core';
 import PhoneIcon from '@material-ui/icons/Phone';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 
 
 
@@ -317,6 +318,9 @@ class DoctorProfile extends Component {
                            <hr className={classes.divider}/>
                        <Typography variant="h5" gutterBottom><LanguageIcon className={classes.icons}/> Web</Typography>
                        <Typography variant="body1" className={classes.text}>{doctor.web}</Typography>
+                           <hr className={classes.divider}/>
+                       <Typography variant="h5" gutterBottom ><LocalOfferIcon className={classes.icons}/> Appointment Fee</Typography>
+                       <Typography variant="body1" className={classes.text}>{doctor.appointment_fee} $</Typography>
                     </div>) : <Loading/>}
               </div>
     )
