@@ -15,7 +15,7 @@ import Modal from '@material-ui/core/Modal';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {styles} from '../../styles/styles';
+import {styles} from '../../styles/styleDashboard';
 import {TabPanel, a11yProps } from '../general/TabPanel';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';

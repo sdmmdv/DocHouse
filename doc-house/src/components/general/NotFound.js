@@ -2,26 +2,9 @@ import React, {Component} from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import { styles } from '../../styles/styleNotFound';
 import Navbar from './Navbar';
 
-const styles = theme => ({
-  container: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    height: '400px',
-    justifyContent: 'center',
-    left: '50%',
-    outline: 'none',
-    position: 'absolute',
-    textAlign: 'center',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '90%',
-    padding: theme.spacing(3),
-    boxShadow: theme.shadows[3]
-  }
-});
 
 class NotFound extends Component {
   render() { 

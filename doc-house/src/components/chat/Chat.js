@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import "../../Chat.css";
+import "../../styles/Chat.css";
 import { Avatar} from '@material-ui/core';
 import InsertEmotionIcon from '@material-ui/icons/InsertEmoticon';
 import axios from '../../axios';

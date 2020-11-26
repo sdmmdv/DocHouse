@@ -4,32 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Navbar from './Navbar';
 import { NavLink } from 'react-router-dom';
+import {styles} from '../../styles/styleHomepage';
 
-const styles = theme => ({
-    container: {
-      marginTop: '50px',
-    //   alignItems: 'center',
-      display: 'flex',
-      flexDirection: 'column',
-      height: theme.spacing(50),
-    //   justifyContent: 'center',
-      backgroundColor: '#f5f6ff',
-      left: '50%',
-      outline: 'none',
-      position: 'absolute',
-      overflow: 'scroll',
-      top: '50%',
-      padding: theme.spacing(6),
-      transform: 'translate(-50%, -50%)',
-      width: '70%',
-      boxShadow: theme.shadows[3],
-      borderRadius: theme.spacing(2),
-    },
-    link: {
-        textDecoration: 'none',
-        color: '#3f51b5'
-    },
-});
 
 class HomePage extends Component {
     render() { 

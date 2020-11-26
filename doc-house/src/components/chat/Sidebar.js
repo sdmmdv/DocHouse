@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import "../../Sidebar.css";
+import "../../styles/Sidebar.css";
 import SearchOutlined from '@material-ui/icons/SearchOutlined';
 import SidebarChat from './SidebarChat';
 import axios from '../../axios';

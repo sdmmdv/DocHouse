@@ -96,17 +96,6 @@ router.get('/rooms/user/:id', async (req, res) => {
 });
 
 
-// // Get all the messages
-// router.get('/messages', async (req, res) => {
-//   try {
-//     const messages = await Message.find();
-//     res.status(200).json(messages);
-//   } catch (error) {
-//     res.status(500).json({err});
-//   }
-// });
-
-
 //Get room name by id
 router.get('/rooms/:roomId', async (req, res) => {
   const {roomId} = req.params;
