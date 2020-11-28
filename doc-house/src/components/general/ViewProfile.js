@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import { Grid, Cell} from 'react-mdl';
-import axios from 'axios';
+import axios from '../../axios';
 import Navbar from './Navbar';
 import { NavLink } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
@@ -67,7 +67,7 @@ class ViewProfile extends Component {
     try{
         const { subject, explanation, time } = this.state;
         const token = localStorage.getItem('auth-token');
-        const userRes = await axios.get("http://localhost:5000/users/current-user", {
+        const userRes = await axios.get("/users/current-user", {
           headers: { "x-auth-token": token },
         });
         // console.log(this.state);
@@ -87,7 +87,7 @@ class ViewProfile extends Component {
 
         else {
                   await axios.post(
-                    "http://localhost:5000/requests/create-request", request,
+                    "/requests/create-request", request,
                     {headers: { "x-auth-token": token },
                   }).then((res) => {
                     // console.log("RESPONSE ==== : ", res);
@@ -103,7 +103,7 @@ class ViewProfile extends Component {
   handleReviewSubmit = async (e) => {
       e.preventDefault();
       const token = localStorage.getItem('auth-token');
-      const userRes = await axios.get("http://localhost:5000/users/current-user", {
+      const userRes = await axios.get("/users/current-user", {
         headers: { "x-auth-token": token },
       });
       const author = userRes.data.first_name + ' ' + userRes.data.last_name;
@@ -111,7 +111,7 @@ class ViewProfile extends Component {
       const review = {author,opinion,rating};
       // console.log(doctor);
       try {
-        axios.patch(`http://localhost:5000/general/post-review/${doctor._id}`, review, {headers: {"x-auth-token": token}})
+        axios.patch(`/general/post-review/${doctor._id}`, review, {headers: {"x-auth-token": token}})
         .then(() => {
           window.location.reload();
         })        
@@ -124,7 +124,7 @@ class ViewProfile extends Component {
     try {
       const {doctor} = this.state;
       const token = localStorage.getItem('auth-token');
-      const userRes = await axios.get("http://localhost:5000/users/current-user", {
+      const userRes = await axios.get("/users/current-user", {
         headers: { "x-auth-token": token },
       });
       const user_name = userRes.data.first_name + ' ' + userRes.data.last_name;
@@ -132,7 +132,7 @@ class ViewProfile extends Component {
       const user_id = userRes.data.id;
       const doctor_id = doctor._id;
       const members = [{"user_id": user_id, "user_name": user_name},{"user_id" : doctor_id, "user_name" : doctor_name}];
-      const result = await axios.post("http://localhost:5000/chat/rooms/new",{members});
+      const result = await axios.post("/chat/rooms/new",{members});
       console.log(result);
       if(result){
          this.props.history.push(`/chat/rooms/${result.data._id}`);
@@ -146,7 +146,7 @@ class ViewProfile extends Component {
     try {
         const token = localStorage.getItem('auth-token');  
         const doctorId = this.props.location.pathname.split('/').pop();
-        const result_doctor = await axios.get(`http://localhost:5000/doctors/${doctorId}`,
+        const result_doctor = await axios.get(`/doctors/${doctorId}`,
                                     {headers: {"x-auth-token": token}});
                                 
         // console.log(result_doctor);

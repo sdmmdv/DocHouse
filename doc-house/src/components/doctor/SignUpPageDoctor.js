@@ -15,7 +15,7 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import axios from 'axios';
+import axios from '../../axios';
 import Navbar from '../general/Navbar';
 import Specs from '../../assets/specialities';
 import { Alert, AlertTitle } from '@material-ui/lab';
@@ -95,7 +95,7 @@ class SignUpPageDoctor extends Component {
 
       try {
         await axios.post(
-          "http://localhost:5000/doctors/signup", doctor
+          "/doctors/signup", doctor
         );
         this.setState({
           errors: {},

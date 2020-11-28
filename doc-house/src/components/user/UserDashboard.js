@@ -10,7 +10,7 @@ import Navbar from '../general/Navbar';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
+import axios from '../../axios';
 import Modal from '@material-ui/core/Modal';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -70,11 +70,11 @@ class UserDashboard extends Component {
 
         try {
             const token = localStorage.getItem('auth-token');  
-            const userRes = await axios.get("http://localhost:5000/users/current-user", {
+            const userRes = await axios.get("/users/current-user", {
               headers: { "x-auth-token": token },});
             const creator_id = userRes.data.id;
 
-            const result = await axios.get("http://localhost:5000/requests/user-request", {
+            const result = await axios.get("/requests/user-request", {
               headers: {"x-auth-token": token },
               params:  {"creator_id": creator_id, "status": status}
             });
@@ -125,7 +125,7 @@ class UserDashboard extends Component {
       const creator_visibility = false;
     try {
       const token = localStorage.getItem('auth-token');  
-      axios.patch(`http://localhost:5000/requests/hide_creator/${target_id}`, {creator_visibility}, {headers: {"x-auth-token": token}})
+      axios.patch(`/requests/hide_creator/${target_id}`, {creator_visibility}, {headers: {"x-auth-token": token}})
       .then(() => {
         window.location.reload();
       })
@@ -151,7 +151,7 @@ class UserDashboard extends Component {
 
       try {
         const token = localStorage.getItem('auth-token');  
-        axios.patch(`http://localhost:5000/requests/update-payment-status/${modalInfo._id}`, {payment_status}, {headers: {"x-auth-token": token}})
+        axios.patch(`/requests/update-payment-status/${modalInfo._id}`, {payment_status}, {headers: {"x-auth-token": token}})
       } catch (error) {
         console.log(error)
       }

@@ -14,7 +14,7 @@ import validateSignupUser from '../../validation/validateSignupUser';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import axios from 'axios';
+import axios from '../../axios';
 import Navbar from '../general/Navbar';
 import {styles} from '../../styles/styleSignUpPageUser';
 
@@ -71,7 +71,7 @@ class SignUpPageUser extends Component {
 
       try {
         await axios.post(
-          "http://localhost:5000/users/signup", user
+          "/users/signup", user
         );
         this.setState({
           errors: {},

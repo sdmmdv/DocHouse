@@ -22,7 +22,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
+import axios from '../../axios';
 
 import {styles} from '../../styles/styleNavbar';
 
@@ -58,7 +58,7 @@ class Navbar extends Component {
       checkUserType = async () => {
         let token = localStorage.getItem("auth-token");
         const tokenRes = await axios.post(
-                  "http://localhost:5000/general/tokenIsValid",
+                  "/general/tokenIsValid",
                     null,
                   { headers: { "x-auth-token": token } }
         );

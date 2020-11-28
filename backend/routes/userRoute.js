@@ -120,24 +120,6 @@ router.patch('/:id', auth, async (req, res) => {
   }
 });
 
-router.post("/tokenIsValid", async (req, res) => {
-  try {
-    const token = req.header("x-auth-token");
-    if (!token) return res.json(false);
-
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    if (!verified) return res.json(false);
-
-    //this point you have to make sure if user is USER/ or DOCTOR
-    const user = await User.findById(verified.id);
-    if (!user) return res.json(false);
-
-    return res.json(true);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 // Delete a user
 router.delete("/delete", auth, async (req, res) => {
   try {

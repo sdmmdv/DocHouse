@@ -11,7 +11,7 @@ function Sidebar() {
 
     useEffect(() => {
         if(user._id){
-            axios.get(`chat/rooms/user/${user._id}`).then(res => {
+            axios.get(`/chat/rooms/user/${user._id}`).then(res => {
                 setRooms(res.data);
             });
         }

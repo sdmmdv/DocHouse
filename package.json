@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run client\" \"npm run server\"",
-    "server": "cd backend && nodemon server.js",
+    "server": "cd backend && node server.js",
     "client": "cd doc-house && npm start"
   },
   "keywords": [],

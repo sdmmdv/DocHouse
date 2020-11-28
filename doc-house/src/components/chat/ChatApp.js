@@ -14,7 +14,7 @@ function ChatApp() {
         const token = localStorage.getItem('auth-token');
         // console.log(token);
         const checkAuth = async () => {
-            const userRes = await axios.post("http://localhost:5000/general/tokenIsValid",null, {
+            const userRes = await axios.post("/general/tokenIsValid",null, {
                 headers: { "x-auth-token": token },
             });
             setUser({...userRes.data.result, type: userRes.data.type});

@@ -155,4 +155,15 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+
+// Delete a doctor
+router.delete("/delete", auth, async (req, res) => {
+  try {
+    const deletedDoctor = await Doctor.findByIdAndDelete(req.doctor);
+    res.json(deletedDoctor);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

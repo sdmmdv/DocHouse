@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
-import axios from 'axios';
+import axios from '../../axios';
 import Navbar from '../general/Navbar';
 import Loading from '../general/Loading';
 import { withStyles } from '@material-ui/core/styles';
@@ -33,12 +33,12 @@ class UserProfile extends Component {
             token = "";
             }
         const tokenRes = await axios.post(
-          "http://localhost:5000/general/tokenIsValid",
+          "/general/tokenIsValid",
           null,
           { headers: { "x-auth-token": token } }
         );
         if (tokenRes.data) {
-          const userRes = await axios.get("http://localhost:5000/users/current-user", {
+          const userRes = await axios.get("/users/current-user", {
             headers: { "x-auth-token": token },
           });
           this.setState({
@@ -82,7 +82,7 @@ class UserProfile extends Component {
       };
 
       try {
-        axios.patch(`http://localhost:5000/users/${user.id}`, updates, {headers: {"x-auth-token": token}})
+        axios.patch(`/users/${user.id}`, updates, {headers: {"x-auth-token": token}})
         .then(() => {
           window.location.reload();
         })

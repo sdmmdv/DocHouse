@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios from '../../axios';
 import Navbar from '../general/Navbar';
 import Loading from '../general/Loading';
 import { withStyles } from '@material-ui/core/styles';
@@ -38,14 +38,14 @@ class DoctorProfile extends Component {
             token = "";
             }
         const tokenRes = await axios.post(
-          "http://localhost:5000/general/tokenIsValid",
+          "/general/tokenIsValid",
           null,
           { headers: { "x-auth-token": token } }
         );
             
         // console.log(tokenRes.data);
         if (tokenRes.data.isValid) {
-          const doctorRes = await axios.get("http://localhost:5000/doctors/current-doctor", {
+          const doctorRes = await axios.get("/doctors/current-doctor", {
             headers: { "x-auth-token": token },
           });
           // console.log(doctorRes);
@@ -96,7 +96,7 @@ class DoctorProfile extends Component {
       };
 
       try {
-        axios.patch(`http://localhost:5000/doctors/${doctor.id}`, updates, {headers: {"x-auth-token": token}})
+        axios.patch(`/doctors/${doctor.id}`, updates, {headers: {"x-auth-token": token}})
         .then(() => {
           window.location.reload();
         })

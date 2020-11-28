@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import axios from 'axios';
+import axios from '../../axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -56,7 +56,7 @@ class SearchDoctor extends Component {
     try {
       const token = localStorage.getItem('auth-token');
       // make appropriate search result
-      const result = await axios.get('http://localhost:5000/doctors/',
+      const result = await axios.get('/doctors/',
         {headers: {"x-auth-token": token},
         params: {'condition_docname': condition_docname, 'city_region': city_region}
       });            

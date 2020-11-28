@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -58,7 +58,7 @@ class LoginPageUser extends Component {
 
         try {
           const loginRes = await axios.post(
-            "http://localhost:5000/users/login",
+            "/users/login",
             loginUser
           );
           

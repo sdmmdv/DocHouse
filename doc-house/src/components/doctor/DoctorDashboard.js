@@ -10,7 +10,7 @@ import Navbar from '../general/Navbar';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
+import axios from '../../axios';
 import Modal from '@material-ui/core/Modal';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -50,11 +50,11 @@ class DoctorDashboard extends Component {
 
         try {
             const token = localStorage.getItem('auth-token');  
-            const doctorRes = await axios.get("http://localhost:5000/doctors/current-doctor", {
+            const doctorRes = await axios.get("/doctors/current-doctor", {
               headers: { "x-auth-token": token },});
             const receiver_id = doctorRes.data.id;
 
-            const result = await axios.get("http://localhost:5000/requests/doctor-request", {
+            const result = await axios.get("/requests/doctor-request", {
               headers: {"x-auth-token": token },
               params:  {"receiver_id": receiver_id, "status": status}
             });
@@ -97,7 +97,7 @@ class DoctorDashboard extends Component {
       const receiver_visibility = false;
     try {
       const token = localStorage.getItem('auth-token');  
-      axios.patch(`http://localhost:5000/requests/hide_receiver/${target_id}`, {receiver_visibility}, {headers: {"x-auth-token": token}})
+      axios.patch(`/requests/hide_receiver/${target_id}`, {receiver_visibility}, {headers: {"x-auth-token": token}})
       .then(() => {
         window.location.reload();
       })
@@ -112,7 +112,7 @@ class DoctorDashboard extends Component {
       const status = 'accepted';
     try {
       const token = localStorage.getItem('auth-token');  
-      axios.patch(`http://localhost:5000/requests/accept/${modalInfo._id}`, {status}, {headers: {"x-auth-token": token}})
+      axios.patch(`/requests/accept/${modalInfo._id}`, {status}, {headers: {"x-auth-token": token}})
       .then(() => {
         window.location.reload();
       })
@@ -127,7 +127,7 @@ class DoctorDashboard extends Component {
       const status = 'rejected';
     try {
       const token = localStorage.getItem('auth-token');  
-      axios.patch(`http://localhost:5000/requests/reject/${modalInfo._id}`, {status}, {headers: {"x-auth-token": token}})
+      axios.patch(`/requests/reject/${modalInfo._id}`, {status}, {headers: {"x-auth-token": token}})
       .then(() => {
         window.location.reload();
       })
