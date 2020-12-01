@@ -38,11 +38,11 @@ const Root = () => (
   </Switch>
 )
 
-const App = withRouter(Root)
+export const AppWithRouter = withRouter(Root)
 
 const Main = () => (
   <Router history={history}>
-    <App/>
+    <AppWithRouter/>
   </Router>
 )
 
