@@ -152,7 +152,7 @@ class ViewProfile extends Component {
         // console.log(result_doctor);
         this.setState({doctor: result_doctor.data});
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
   }
 

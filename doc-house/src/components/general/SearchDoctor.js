@@ -38,6 +38,7 @@ const formLabelsTheme = createMuiTheme({
 class SearchDoctor extends Component {
   state = {
     searched: false,
+    submitted: false,
     condition_docname: '',
     city_region: '',
     speciality: '',
@@ -51,6 +52,7 @@ class SearchDoctor extends Component {
   };
 
   handleSubmit = async (e) => {
+    this.setState({submitted: true})
     e.preventDefault();
     const { condition_docname, city_region } = this.state;
     try {
