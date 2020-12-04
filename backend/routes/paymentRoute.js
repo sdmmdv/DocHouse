@@ -1,9 +1,5 @@
 const router = require('express').Router();
-const bcrypt = require('bcrypt');
-const express = require('express');
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const auth = require('../middleware/auth');
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { v4: uuidv4 } = require('uuid');
 // uuidv4();
@@ -13,7 +9,7 @@ router.post("/checkout", async (req, res) => {
     let status = '';
     try {
       const { checkout, token } = req.body;
-      // console.log(checkout);
+      console.log(checkout, token);
   
       const customer = await stripe.customers.create({
         email: token.email,

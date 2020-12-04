@@ -37,7 +37,13 @@ app.use((req, res, next) => {
 });
 
 
-mongoose.connect(process.env.DB_URI, {
+const DB_URI = process.env.NODE_ENV === 'test' ? process.env.DB_TEST_URI : process.env.DB_URI;
+
+if (process.env.NODE_ENV){
+    console.log('Server mode: ', process.env.NODE_ENV);
+}
+
+mongoose.connect(DB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
@@ -78,7 +84,6 @@ app.use('/doctors', doctorsRouter);
 app.use('/requests', requestsRouter);
 app.use('/chat', chatRouter);
 app.use('/payment', paymentRouter);
-
 
 
 app.listen(port,() => {

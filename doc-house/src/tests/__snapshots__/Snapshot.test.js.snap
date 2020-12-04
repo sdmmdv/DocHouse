@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshots renders correctly 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <withRouter(Root) />
+</Router>
+`;
+
+exports[`Snapshots renders correctly 2`] = `
+<ContextProvider
+  value={
+    Object {
+      "user": Object {},
+    }
+  }
+>
+  <div>
+    <WithStyles(Navbar) />
+    <div
+      className="app"
+    >
+      <div
+        className="app__body"
+      >
+        <Sidebar />
+        <Chat />
+      </div>
+    </div>
+  </div>
+</ContextProvider>
+`;

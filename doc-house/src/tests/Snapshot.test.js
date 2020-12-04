@@ -6,7 +6,7 @@ import ChatApp from '../components/chat/ChatApp';
 
 
 
-describe('Snapshot Main', () => {
+describe('Snapshots', () => {
     it("renders correctly", () => {
         const tree = shallow(<Main />);
         expect(toJSON(tree)).toMatchSnapshot();

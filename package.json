@@ -4,20 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "test": "concurrently \"npm run server-test\" \"jest\"",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd backend && node server.js",
+    "server-test": "cd backend && NODE_ENV=test node server.js",
     "client": "cd doc-house && npm start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-jest": "^24.9.0",
     "bcrypt": "^5.0.0",
     "concurrently": "^5.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jest": "^24.9.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.7",
     "nodemon": "^2.0.6",
@@ -25,5 +28,17 @@
     "stripe": "^8.121.0",
     "uuid": "^8.3.1",
     "validator": "^13.1.17"
+  },
+  "devDependencies": {
+    "supertest": "^6.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "testPathIgnorePatterns": [
+      "/doc-house/"
+    ]
   }
 }
