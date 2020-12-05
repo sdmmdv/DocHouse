@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 
 
 describe("Testing users API endpoints", () => {
-    
+    jest.setTimeout(10000);
+
     beforeAll(async done => {
             await mongoose.connect('mongodb+srv://sadi22:sadi22@cluster0.cim8y.mongodb.net/test?retryWrites=true&w=majority', {
                 useNewUrlParser: true,
