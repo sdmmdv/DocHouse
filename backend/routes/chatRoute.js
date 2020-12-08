@@ -35,24 +35,17 @@ router.post('/messages/new', async (req, res) => {
 // Create new a room
 router.post('/rooms/new', async (req, res) => {
 
-// "members" : [
-//     {"user_id" : "id1", "user_name" : "username1"},
-//     {"user_id" : "id2", "user_name" : "username2"}
-// ]
-
-
   try {
-    // const room = await Room.find({ members: {
-    //    $elemMatch: {
-    //       user_id: req.body.members[0].user_id,
-    //       user_id: req.body.members[1].user_id
-    //     }
-    //   }
-    // });
+
+    const room = await Room.find({ $and: [ 
+      { members : { $elemMatch : { user_id: req.body.members[0].user_id } } },   
+      { members : { $elemMatch : { user_id: req.body.members[1].user_id } } } ]});
+
+    console.log(room);
     
-    // if (room.length > 0) {
-    //   return res.status(200).json(room[0]);
-    // }
+    if (room.length > 0) {
+      return res.status(200).json(room[0]);
+    }
 
     const newRoom = new Room({
         members: req.body.members
