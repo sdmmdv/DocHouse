@@ -11,6 +11,14 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+const path = require("path");
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.resolve(__dirname, "../doc-house/build")));
+    app.get("*", function (request, response) {
+        response.sendFile(path.resolve(__dirname, "../doc-house/build", "index.html"));
+    });
+}
 
 
 // Pusher for realtime synchronization (socket)
