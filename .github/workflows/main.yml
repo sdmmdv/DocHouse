@@ -12,6 +12,9 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  
+env:
+  CI: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -32,10 +35,7 @@ jobs:
           run: npm install
 
         - name: Run Server Test
-          run: CI=true npm run server-test
-          env:
-            CI: true
+          run: npm run server-test
+          
         - name: Run Client Test
-          run: cd doc-house && CI=true npm test
-          env:
-            CI: true
+          run: cd doc-house && npm test
