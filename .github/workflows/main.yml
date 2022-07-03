@@ -32,10 +32,10 @@ jobs:
           run: npm install
 
         - name: Run Server Test
-          run: npm run server-test
+          run: CI=true npm run server-test
           env:
             CI: true
         - name: Run Client Test
-          run: cd doc-house && npm test
+          run: cd doc-house && CI=true npm test
           env:
             CI: true
