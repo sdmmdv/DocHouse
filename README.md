@@ -3,7 +3,11 @@
 MERN full stack web application that provides doctor appointment services. The application
 intended to serve two sorts of user audience: patients and doctors, who are required to register in
 order to use services, whereas, guests will be able to collect general details and information about
-the provided facilities. Technologies used in development: Node js, Express js, MongoDb, React js. 
+the provided facilities. Technologies used in development: Node js, Express js, MongoDb, React js.
+
+## Demo
+
+[DocHouse WebApp](https://doc-house.herokuapp.com/)
 
 ## Installation
 
@@ -17,7 +21,7 @@ application using the `npm install` command.
 4. Navigate to the client repository using `cd doc-house`. Install all dependencies for
 the client application using `npm install` command.
 5. To test the server application run `npm test` command.
-To test the client application run `doc-house && npm test` command.
+To test the client application run `npm client-test` command.
 6. Navigate back to the root repository, and run `npm start` which will run both client
 and server application concurrently.
 7. If there have not occurred prior errors until this step, npm successfully will redirect

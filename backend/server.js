@@ -94,6 +94,19 @@ app.use('/chat', chatRouter);
 app.use('/payment', paymentRouter);
 
 
-app.listen(port,() => {
+server = app.listen(port,() => {
     console.log('Server listening on port:', port);
 })
+
+//Set a minute for server test max threshold
+if (process.env.NODE_ENV === 'test'){
+    setTimeout(() => {
+        process.exit()
+    }, 60000);
+}
+
+process.on('SIGTERM', () => {
+    server.close(() => {
+      console.log('Process terminated');
+    });
+});
