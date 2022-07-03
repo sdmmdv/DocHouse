@@ -144,7 +144,7 @@ class LoginPageUser extends Component {
             </form>
             </MuiThemeProvider>
             <Typography className={classes.footer} variant="body1">
-              <NavLink to="/log-transition" className={classes.link}>
+              <NavLink to="/signup-user" className={classes.link}>
                   {'Don\'t have an account? Sign up here.'}
               </NavLink>
             </Typography>
