@@ -31,11 +31,11 @@ jobs:
           with: 
             node-version: "14.x"
 
-        - name: Install dependencies
+        - name: Install Server dependencies
           run: npm install
-
-        - name: Run Server Test
-          run: npm run server-test
+          
+        - name: Install Client dependencies
+          run: npm run install-client
           
         - name: Run Client Test
           run: cd doc-house && npm test
