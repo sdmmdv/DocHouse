@@ -31,7 +31,11 @@ jobs:
         - name: Install dependencies
           run: npm install
 
-        - name: Run test
-          run: npm test
+        - name: Run Server Test
+          run: npm run server-test
+          env:
+            CI: true
+        - name: Run Client Test
+          run: cd doc-house && npm test
           env:
             CI: true
