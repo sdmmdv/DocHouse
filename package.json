@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "concurrently \"npm run server-test\" \"jest\"",
+    "test": "concurrently \"npm run server-test\" \"jest --runInBand\"",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd backend && node server.js",
     "install-client": "cd doc-house && npm install --force",
     "heroku-postbuild": "npm run install-client && npm run client",
     "server-test": "cd backend && NODE_ENV=test node server.js",
+    "client-test": "cd doc-house && npm test",
     "client": "cd doc-house && npm start"
   },
   "keywords": [],
