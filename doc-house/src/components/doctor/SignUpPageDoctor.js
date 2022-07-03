@@ -130,7 +130,7 @@ class SignUpPageDoctor extends Component {
             {successPage && (             
               <Alert severity="success" className={classes.successText}>
                 <AlertTitle className={classes.link}>Successfull registration!</AlertTitle>
-                    <NavLink to="/log-transition" className={classes.link}>
+                    <NavLink to="/login-doctor" className={classes.link}>
                       {'Click here to log in.'}
                     </NavLink>
               </Alert>
@@ -250,7 +250,7 @@ class SignUpPageDoctor extends Component {
             </form>
             </MuiThemeProvider>
             <Typography className={classes.footer} variant="body1">
-              <NavLink to="/log-transition" className={classes.link}>
+              <NavLink to="/login-doctor" className={classes.link}>
                 {'Already have an account? Log in here. '}
               </NavLink>
             </Typography>
