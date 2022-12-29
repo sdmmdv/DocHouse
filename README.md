@@ -30,26 +30,52 @@ you to **Dochouse** homepage on your default browser.
 ### Environment Config
 
 Application is in development mode. Add your environment variables of database and external service credentials
-to the /backend/.env file. In production mode, for Heroku migrate following env variables to config vars.
+to the /backend/.env file. In production mode, configure environment variables and secrets in [render](https://render.com/docs/configure-environment-variables)
+Make sure following variables are well-defined.
+
 * `DB_URI=''`
 * `DB_TEST_URI=''`
 * `JWT_SECRET=''`
 * `STRIPE_SECRET=''`
 
+### Deployment
+
+Client and server applications will be deployed seperately using [render platfrom](https://render.com)
+To deploy FrontEnd go to the dashboard, Select New+ --> Static Site
+Continue with following recommended variables, leave others as they are.
+    - Name : <unique-name-for-client-app>
+    - Build Command : npm run build
+    - Publish Directory : build
+    - Branch : <name-of-branch>
+    - Root Directory : doc-house
+
+To deploy Backend got to the dsahboard, Select New+ --> Web Service
+Continue with following recommended varibales, leave others as they are.
+From the dashboard, Select New+ --> Web Service
+    - Name : <unique-name-for-service-app>
+    - Build Command : npm start 
+    - Start Command : npm run server
+    - Branch : <name-of-branch>
+
+### Continuous Integration
+
+[Github CI workflow](https://github.com/sdmmdv/DocHouse/blob/.github/workflows/mainCI.yml) used to automate following operations of application: build, test and deploy to clouds.
+Make sure to define deployment related secrets in github project. Source: [How?](https://docs.github.com/en/rest/actions/secrets?apiVersion=2022-11-28)
+
 ## Screenshots
 
 **HomePage**                     |  **Login**
 :-------------------------------:|:---------------------------------:
-![HomePage](https://github.com/MoneiBall/DocHouse/blob/master/screenshots/homepage.png)  |  ![Login](https://github.com/MoneiBall/DocHouse/blob/master/screenshots/loginUser.png)
+![HomePage](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/homepage.png)  |  ![Login](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/loginUser.png)
 **Sidebar**                      |  **Profile**
-![Sidebar](https://github.com/MoneiBall/DocHouse/blob/master/screenshots/doctorSidebar.png)  |  ![Profile](https://github.com/MoneiBall/DocHouse/blob/master/screenshots/doctorProfile.png)
+![Sidebar](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/doctorSidebar.png)  |  ![Profile](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/doctorProfile.png)
 **Search**                       |  **Review**
-![Search](https://github.com/MoneiBall/DocHouse/blob/master/screenshots/searchDoctor.png)  |  ![Review](https://github.com/MoneiBall/DocHouse/blob/master/screenshots/reviewDoctor.png)
+![Search](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/searchDoctor.png)  |  ![Review](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/reviewDoctor.png)
 **Payment**                      |  **Chat**
-![Payment](https://github.com/MoneiBall/DocHouse/blob/master/screenshots/paymentStep2.png)  |  ![Chat](https://github.com/MoneiBall/DocHouse/blob/master/screenshots/doctorChat.png)
+![Payment](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/paymentStep2.png)  |  ![Chat](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/doctorChat.png)
 
 ## Use case Diagram
-![Use Case Diagram](https://github.com/MoneiBall/DocHouse/blob/master/screenshots/usecase_diag.png)
+![Use Case Diagram](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/usecase_diag.png)
 
 ## Future improvements
 * Providing advanced testing methods, in particular more integration tests.
