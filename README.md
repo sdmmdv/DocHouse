@@ -14,7 +14,7 @@ the provided facilities. Technologies used in development: Node js, Express js, 
 In order to run the application in local environment follow instructions below:
 
 1. Copy the following URL of github public repository of the project
-[DocHouse - Doctor Appointment Web Application](https://github.com/MoneiBall/DocHouse)
+[DocHouse - Doctor Appointment Web Application](https://github.com/sdmmdv/DocHouse)
 1. On your local machine, clone the repository to the working directory using
 `git clone <https-URL>` command.
 1. Navigate to the cloned repository, and install all dependencies for the server
@@ -66,7 +66,7 @@ Continue with following recommended values, leave others as they are.
 
 ### Continuous Integration
 
-[Github CI workflow](https://github.com/sdmmdv/DocHouse/blob/.github/workflows/mainCI.yml) used to automate following operations of application: build, test and deploy to clouds.
+[Github CI workflow](https://github.com/sdmmdv/DocHouse/blob/master/.github/workflows/mainCI.yml) used to automate following operations of application: build, test and deploy to clouds.
 Make sure to define deployment related secrets in github project. [Source](https://docs.github.com/en/rest/actions/secrets?apiVersion=2022-11-28)
 
 ## Screenshots
