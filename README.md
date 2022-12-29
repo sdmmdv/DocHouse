@@ -74,19 +74,14 @@ Make sure to define deployment related secrets in github project. [Source](https
 **HomePage**                     |  **Login**
 :-------------------------------:|:---------------------------------:
 ![HomePage](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/homepage.png)  |  ![Login](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/loginUser.png)
-![HomePage](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/homepage.png)  |  ![Login](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/loginUser.png)
 **Sidebar**                      |  **Profile**
-![Sidebar](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/doctorSidebar.png)  |  ![Profile](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/doctorProfile.png)
 ![Sidebar](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/doctorSidebar.png)  |  ![Profile](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/doctorProfile.png)
 **Search**                       |  **Review**
 ![Search](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/searchDoctor.png)  |  ![Review](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/reviewDoctor.png)
-![Search](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/searchDoctor.png)  |  ![Review](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/reviewDoctor.png)
 **Payment**                      |  **Chat**
-![Payment](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/paymentStep2.png)  |  ![Chat](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/doctorChat.png)
 ![Payment](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/paymentStep2.png)  |  ![Chat](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/doctorChat.png)
 
 ## Use case Diagram
-![Use Case Diagram](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/usecase_diag.png)
 ![Use Case Diagram](https://github.com/sdmmdv/DocHouse/blob/master/screenshots/usecase_diag.png)
 
 ## Future improvements
