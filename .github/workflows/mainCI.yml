@@ -1,0 +1,65 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  workflow_dispatch:
+
+env:
+  CI: true
+
+jobs:
+
+  build_and_test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+        - uses: actions/checkout@v2
+        - name: Use Node.js
+          uses: actions/setup-node@v2
+          with: 
+            node-version: "14.x"
+
+        - name: Install Server dependencies
+          run: npm install
+          
+        - name: Install Client dependencies
+          run: npm run install-client
+        
+        - name: Run Server Test
+          run: npm run server-test
+          
+        - name: Run Client Test
+          run: npm run client-test
+
+  deploy:
+
+    name: Deploy to Render
+
+    needs: [build_and_test]
+
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Deploy Backend
+        uses: bounceapp/render-action@0.2.0
+        with:
+          email: ${{ secrets.RENDER_EMAIL }}
+          password: ${{ secrets.RENDER_PASSWORD }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          service-id: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
+      - name: Deploy Frontend
+        uses: bounceapp/render-action@0.2.0
+        with:
+          email: ${{ secrets.RENDER_EMAIL }}
+          password: ${{ secrets.RENDER_PASSWORD }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          service-id: ${{ secrets.RENDER_FRONTEND_SERVICE_ID }}
