@@ -46,20 +46,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    if: github.ref == 'refs/heads/master'
-
     steps:
-      - name: Deploy Backend
-        uses: bounceapp/render-action@0.2.0
-        with:
-          email: ${{ secrets.RENDER_EMAIL }}
-          password: ${{ secrets.RENDER_PASSWORD }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          service-id: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
       - name: Deploy Frontend
         uses: bounceapp/render-action@0.2.0
         with:
           email: ${{ secrets.RENDER_EMAIL }}
           password: ${{ secrets.RENDER_PASSWORD }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          service-id: ${{ secrets.RENDER_FRONTEND_SERVICE_ID }}
+          service-id: srv-cemvs682i3molpjtea10
