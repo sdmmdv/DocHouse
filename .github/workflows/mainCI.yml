@@ -26,9 +26,18 @@ jobs:
           with: 
             node-version: "14.x"
 
+        - name: Configure dotenv
+          run: |
+            DOTENV="backend/.env"
+            touch ${DOTENV}
+            echo "DB_URI=${{ secrets.DB_URI }}" >> ${DOTENV}
+            echo "DB_TEST_URI=${{ secrets.DB_TEST_URI }}" >> ${DOTENV}
+            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> ${DOTENV}
+            echo "STRIPE_SECRET=${{ secrets.STRIPE_SECRET }}" >> ${DOTENV}
+
         - name: Install Server dependencies
           run: npm install
-          
+
         - name: Install Client dependencies
           run: npm run install-client
         
